@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <meta name="theme-color" content="#CC5A02"> 
+    
+    <link rel="manifest" href="manifest.json"> 
+    
     <title>Garry's Tiki Bar</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,10 +53,9 @@
         /* Style for recipe cards */
         .recipe-card {
             @apply bg-white rounded-lg shadow-lg p-4 mb-4 border border-orange-100;
-            /* Remove grab cursor from whole card */
         }
         .recipe-header {
-             @apply cursor-pointer; /* Keep pointer cursor for expanding */
+             @apply cursor-pointer;
         }
         /* Style for inventory items */
         .inventory-item {
@@ -74,12 +79,11 @@
 
         /* Style for the drag handle */
         .drag-handle {
-            @apply cursor-grab inline-block text-gray-400 hover:text-gray-600 mr-3 px-1; /* Add spacing and grab cursor */
+            @apply cursor-grab inline-block text-gray-400 hover:text-gray-600 mr-3 px-1;
         }
         .drag-handle:active {
              @apply cursor-grabbing;
         }
-
 
     </style>
     
@@ -108,9 +112,7 @@
       .icon-chevron-down::before { content: "\e118"; } /* Chevron down */
       .icon-chevron-up::before { content: "\e11f"; } /* Chevron up */
       .icon-check::before { content: "\e117"; } /* Check icon */
-      
       .icon-grip-vertical::before { content: "\e293"; } /* Grip Vertical icon for drag handle */
-      
     </style>
     
     
@@ -142,9 +144,7 @@
         <section id="recipes-section" class="section visible">
             <div class="flex justify-between items-center mb-4">
                  <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
-                 
                  <p class="text-xs text-gray-500 italic"><span class="lucide icon-grip-vertical text-xs relative top-px mr-1"></span> Drag handle to reorder</p>
-                 
             </div>
             
             <div id="recipe-list" class="space-y-4">
@@ -190,7 +190,7 @@
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v1.6</p> 
+        <p>Tiki App v1.7</p> 
         
         
     </footer>
@@ -323,15 +323,12 @@
             recipes.forEach((recipe) => {
                 const card = document.createElement('div');
                 card.dataset.id = recipe.id;
-                card.className = 'recipe-card'; // Remove grab cursor from here
+                card.className = 'recipe-card';
                 card.innerHTML = `
-                    
-                    <div class="flex justify-between items-center recipe-header"> 
-                        
-                        <span class="drag-handle lucide icon-grip-vertical" title="Drag to reorder"></span> 
-                        
-                        <h3 class="text-xl font-semibold text-amber-700 flex-grow mr-2">${recipe.name}</h3> 
-                        <span class="expand-icon lucide icon-chevron-down text-gray-500"></span> 
+                    <div class="flex justify-between items-center recipe-header">
+                        <span class="drag-handle lucide icon-grip-vertical" title="Drag to reorder"></span>
+                        <h3 class="text-xl font-semibold text-amber-700 flex-grow mr-2">${recipe.name}</h3>
+                        <span class="expand-icon lucide icon-chevron-down text-gray-500"></span>
                     </div>
                     <div class="recipe-details mt-3 pt-3 border-t border-orange-100" style="display: none;">
                         <h4 class="font-semibold mb-1 text-teal-700">Ingredients:</h4>
@@ -341,24 +338,18 @@
                         <h4 class="font-semibold mb-1 text-teal-700">Instructions:</h4>
                         <p class="text-sm mb-3">${recipe.instructions.replace(/\n/g, '<br>')}</p>
                         ${recipe.garnish ? `<h4 class="font-semibold mb-1 text-teal-700">Garnish:</h4><p class="text-sm mb-3">${recipe.garnish}</p>` : ''}
-                        
                         <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn">
                            <span class="lucide icon-trash"></span> Delete Recipe
                         </button>
                     </div>
                 `;
-                
                 const header = card.querySelector('.recipe-header');
                 const details = card.querySelector('.recipe-details');
                 const expandIcon = header.querySelector('.expand-icon');
                 const dragHandle = header.querySelector('.drag-handle');
 
-                // Click listener on the header *itself* for expanding/collapsing
                 header.addEventListener('click', (e) => {
-                     // IMPORTANT: Prevent click if the drag handle was the target
-                     if (dragHandle.contains(e.target)) {
-                         return;
-                     }
+                     if (dragHandle.contains(e.target)) { return; } // Ignore click on handle
                     const isVisible = details.style.display === 'block';
                     details.style.display = isVisible ? 'none' : 'block';
                     expandIcon.classList.toggle('icon-chevron-down', isVisible);
@@ -367,12 +358,10 @@
 
                  const deleteBtn = card.querySelector('.delete-recipe-btn');
                 deleteBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent header click event
+                    e.stopPropagation();
                     const recipeIdToDelete = card.dataset.id;
                     const recipeIndexToDelete = recipes.findIndex(r => r.id === recipeIdToDelete);
-
                     if (recipeIndexToDelete === -1) return;
-
                     if (confirm(`Are you sure you want to delete the "${recipes[recipeIndexToDelete].name}" recipe?`)) {
                         recipes.splice(recipeIndexToDelete, 1);
                         saveRecipes();
@@ -380,7 +369,6 @@
                         renderInventory();
                     }
                 });
-
                 recipeListEl.appendChild(card);
             });
             initSortable();
@@ -388,31 +376,22 @@
 
         // Initialize SortableJS on the recipe list
         function initSortable() {
-            if (sortableInstance) {
-                sortableInstance.destroy();
-            }
+            if (sortableInstance) { sortableInstance.destroy(); }
              if (recipeListEl.children.length > 1) {
                  sortableInstance = new Sortable(recipeListEl, {
-                    
-                    handle: '.drag-handle', // Specify the drag handle selector
-                    
+                    handle: '.drag-handle',
                     animation: 150,
                     ghostClass: 'sortable-ghost',
                     dragClass: 'sortable-drag',
                     onEnd: function (evt) {
                         const newIdOrder = [...recipeListEl.children].map(card => card.dataset.id);
-                        // Find the recipes based on the new ID order
-                        // Use a temporary map for efficient lookup
                         const recipeMap = new Map(recipes.map(r => [r.id, r]));
-                        const newRecipes = newIdOrder.map(id => recipeMap.get(id)).filter(Boolean); // Filter out potential undefined if IDs mismatch
-
-                        // Only update if the order actually changed and mapping was successful
+                        const newRecipes = newIdOrder.map(id => recipeMap.get(id)).filter(Boolean);
                         if (newRecipes.length === recipes.length) {
                             recipes = newRecipes;
                             saveRecipes();
                         } else {
                              console.error("Recipe mapping failed during reorder. Reverting visually.");
-                             // Re-render to be safe if something went wrong
                              renderRecipes();
                         }
                     },
@@ -420,16 +399,13 @@
             }
         }
 
-
         // Render the inventory list
         function renderInventory() {
             inventoryListEl.innerHTML = '';
             if (allIngredients.size === 0) {
                  inventoryListEl.innerHTML = '<p class="text-gray-500">No ingredients found. Add some recipes first!</p>';
-                 clearInventoryBtn.disabled = true;
-                 return;
+                 clearInventoryBtn.disabled = true; return;
             }
-
             clearInventoryBtn.disabled = false;
             [...allIngredients].forEach(ingredient => {
                  const item = document.createElement('div');
@@ -437,26 +413,21 @@
                 const isChecked = inventory.includes(ingredient);
                 const displayIngredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
                 const elementId = `inv-${ingredient.replace(/[^a-zA-Z0-9]/g, '-')}`;
-
                 item.innerHTML = `
                     <label for="${elementId}" class="flex-grow cursor-pointer mr-2">${displayIngredient}</label>
                     <input type="checkbox" id="${elementId}" data-ingredient="${ingredient}" ${isChecked ? 'checked' : ''}
                            class="form-checkbox h-5 w-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500 cursor-pointer flex-shrink-0">
                 `;
-
                 const checkbox = item.querySelector('input[type="checkbox"]');
                 checkbox.addEventListener('change', (e) => {
                     const ingredientName = e.target.dataset.ingredient;
                     if (e.target.checked) {
-                        if (!inventory.includes(ingredientName)) {
-                            inventory.push(ingredientName);
-                        }
+                        if (!inventory.includes(ingredientName)) { inventory.push(ingredientName); }
                     } else {
                         inventory = inventory.filter(item => item !== ingredientName);
                     }
                     saveInventory();
                 });
-
                 inventoryListEl.appendChild(item);
             });
         }
@@ -464,12 +435,10 @@
         // Handle adding a new recipe
         function handleAddRecipe(event) {
             event.preventDefault();
-
             const name = recipeNameInput.value.trim();
             const ingredients = recipeIngredientsInput.value.trim().split('\n').map(line => line.trim()).filter(line => line);
             const instructions = recipeInstructionsInput.value.trim();
             const garnish = recipeGarnishInput.value.trim();
-
             if (!name || ingredients.length === 0 || !instructions) {
                 console.warn('Validation Error: Please fill in Recipe Name, Ingredients, and Instructions.');
                 if (!name) recipeNameInput.classList.add('border-red-500'); else recipeNameInput.classList.remove('border-red-500');
@@ -480,20 +449,14 @@
             recipeNameInput.classList.remove('border-red-500');
             recipeIngredientsInput.classList.remove('border-red-500');
             recipeInstructionsInput.classList.remove('border-red-500');
-
             const newRecipe = {
                 id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now(),
-                name: name,
-                ingredients: ingredients,
-                instructions: instructions,
-                garnish: garnish || ''
+                name: name, ingredients: ingredients, instructions: instructions, garnish: garnish || ''
             };
-
             recipes.push(newRecipe);
             saveRecipes();
             renderRecipes();
             renderInventory();
-
             addRecipeForm.reset();
             showSection('recipes');
             console.info(`Recipe "${name}" added successfully!`);
@@ -524,7 +487,6 @@
             }
         }
 
-
         // --- Event Listeners ---
         function setupNavigation() {
             navButtons.recipes.addEventListener('click', () => showSection('recipes'));
@@ -537,7 +499,7 @@
              clearInventoryBtn.addEventListener('click', clearInventory);
          }
 
-        // --- Initialization ---
+        // --- Initialization & Service Worker Registration ---
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             renderRecipes();
@@ -545,6 +507,21 @@
             setupNavigation();
             setupForms();
             showSection('recipes');
+
+            // Register Service Worker (Moved inside DOMContentLoaded for clarity)
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', () => { // Use window load to ensure page is fully loaded
+                navigator.serviceWorker.register('sw.js') // Use relative path
+                  .then(registration => {
+                    console.log('[Main Script] ServiceWorker registration successful with scope: ', registration.scope);
+                  })
+                  .catch(error => {
+                    console.log('[Main Script] ServiceWorker registration failed: ', error);
+                  });
+              });
+            } else {
+                 console.log('[Main Script] Service workers are not supported.');
+            }
         });
 
     </script>
