@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garry's Tiki Bar</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    
+    <style type="text/tailwindcss">
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        body {
+            @apply font-['Inter',_sans-serif] bg-orange-100 text-gray-800;
+            /* Apply the SVG background pattern */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E.st0%7Bfill:%23%23b45309;%7D%3C/style%3E%3C/defs%3E%3Cpath class='st0' d='M12.2,16.9L12.2,16.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9h-0.1 C13.5,19.9,12.2,18.6,12.2,16.9z M42.2,46.9L42.2,46.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9 h-0.1C43.5,49.9,42.2,48.6,42.2,46.9z M27.1,32.1L27.1,32.1c-1.6,0-2.9-1.3-2.9-2.9v-0.1c0-1.6,1.3-2.9,2.9-2.9h0.1 c1.6,0,2.9,1.3,2.9,2.9v0.1C30.1,30.8,28.8,32.1,27.1,32.1z'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+        /* Add a semi-transparent background to the main content area for readability */
+        main {
+             @apply bg-orange-50/95 p-4 rounded-lg shadow-xl;
+        }
+        /* Simple animation for section transitions */
+        .section {
+            @apply transition-opacity duration-300 ease-in-out;
+        }
+        .section.hidden {
+            @apply opacity-0 absolute pointer-events-none;
+        }
+        .section.visible {
+            @apply opacity-100 relative;
+        }
+        /* Custom button style */
+        .btn {
+            @apply inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-75 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed;
+        }
+        .nav-btn {
+             @apply inline-flex items-center justify-center px-3 py-2 bg-amber-600 text-white font-medium rounded-md shadow-sm hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition duration-150 ease-in-out text-sm;
+        }
+        .nav-btn.active {
+            @apply bg-amber-800 ring-2 ring-amber-500 ring-offset-2;
+        }
+        /* Style for recipe cards */
+        .recipe-card {
+            @apply bg-white rounded-lg shadow-lg p-4 mb-4 border border-orange-100;
+            /* Add cursor for drag affordance */
+             cursor: grab;
+        }
+        .recipe-card:active {
+             cursor: grabbing;
+        }
+        /* Style for inventory items */
+        .inventory-item {
+             @apply flex items-center justify-between bg-white p-3 rounded-md shadow-sm mb-2;
+        }
+        /* Style for form inputs */
+        input[type="text"], textarea {
+            @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm;
+        }
+        label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+
+        /* SortableJS helper classes */
+        .sortable-ghost {
+            @apply opacity-40 bg-teal-100 border-dashed border-2 border-teal-400;
+        }
+        .sortable-drag {
+             @apply opacity-90 shadow-2xl scale-105;
+        }
+
+    </style>
+    
+    <style>
+      /* Lucide font face still needed for other icons */
+      @font-face {
+        font-family: 'LucideIcons';
+        src: url(https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf) format('truetype');
+      }
+      .lucide {
+        font-family: 'LucideIcons';
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 0.5rem;
+      }
+      /* Map remaining used icon names to characters */
+      .icon-save::before { content: "\e42e"; } /* Save icon */
+      .icon-trash::before { content: "\e50f"; } /* Trash icon */
+      .icon-chevron-down::before { content: "\e118"; } /* Chevron down */
+      .icon-chevron-up::before { content: "\e11f"; } /* Chevron up */
+      .icon-check::before { content: "\e117"; } /* Check icon */
+    </style>
+    
+    
+</head>
+<body class="p-4 max-w-2xl mx-auto">
+
+    <header class="mb-6 text-center">
+        <div class="inline-block bg-orange-50/90 p-3 rounded-lg shadow-md">
+            
+            <h1 class="text-4xl font-bold text-amber-800 mb-2 drop-shadow-md" style="font-family: 'Brush Script MT', cursive;">
+                
+                <span class="mr-3">🌴</span>Garry's Tiki Bar<span class="ml-3">🗿</span>
+            </h1>
+            <p class="text-teal-700 font-medium drop-shadow-sm">Your personal digital cocktail menu</p>
+        </div>
+    </header>
+
+    <nav class="mb-6 flex justify-center space-x-3">
+        
+        <button id="nav-recipes" class="nav-btn active">
+            <span class="mr-2">📓</span>Recipes
+        </button>
+        
+        <button id="nav-inventory" class="nav-btn">
+            <span class="mr-2">🍹</span>Inventory
+        </button>
+        
+        <button id="nav-add-recipe" class="nav-btn">
+            <span class="mr-2">📝</span>Add Recipe
+        </button>
+    </nav>
+
+    <main class="bg-orange-50/95 p-4 rounded-lg shadow-xl">
+        <section id="recipes-section" class="section visible">
+            <div class="flex justify-between items-center mb-4">
+                 <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
+                 <p class="text-xs text-gray-500 italic">Drag to reorder</p>
+            </div>
+            
+            <div id="recipe-list" class="space-y-4">
+                <p class="text-gray-500">Loading recipes...</p>
+            </div>
+        </section>
+
+        <section id="inventory-section" class="section hidden">
+            <h2 class="text-2xl font-semibold text-teal-800 mb-4">My Ingredient Inventory</h2>
+            <p class="text-sm text-gray-600 mb-4">Check the ingredients you currently have in stock.</p>
+            <div id="inventory-list" class="space-y-2">
+                <p class="text-gray-500">Loading inventory...</p>
+            </div>
+             <button id="clear-inventory-btn" class="mt-4 btn bg-red-600 hover:bg-red-700 focus:ring-red-500">
+                
+                <span class="lucide icon-trash"></span>Clear All Inventory
+            </button>
+        </section>
+
+        <section id="add-recipe-section" class="section hidden">
+            <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
+            <form id="add-recipe-form" class="space-y-4 bg-white/95 p-6 rounded-lg shadow">
+                <div>
+                    <label for="recipe-name">Recipe Name:</label>
+                    <input type="text" id="recipe-name" required class="border">
+                </div>
+                <div>
+                    <label for="recipe-ingredients">Ingredients (one per line, e.g., "2 oz Rum"):</label>
+                    <textarea id="recipe-ingredients" rows="5" required class="border"></textarea>
+                </div>
+                <div>
+                    <label for="recipe-instructions">Instructions:</label>
+                    <textarea id="recipe-instructions" rows="5" required class="border"></textarea>
+                </div>
+                 <div>
+                    <label for="recipe-garnish">Garnish (optional):</label>
+                    <input type="text" id="recipe-garnish" class="border">
+                </div>
+                <button type="submit" class="btn">
+                    
+                    <span class="lucide icon-save"></span>Save Recipe
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
+        <p>Tiki App v1.5</p> 
+        
+        
+    </footer>
+
+    
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+    <script>
+        // --- Constants ---
+        const RECIPES_STORAGE_KEY = 'tikiRecipes';
+        const INVENTORY_STORAGE_KEY = 'tikiInventory';
+
+        
+        // --- Initial Data (if local storage is empty) ---
+        const initialRecipes = [
+            // Recipes from previous version...
+            { id: 'mai-tai', name: 'Mai Tai (Trader Vic\'s)', ingredients: ['2 oz Aged Jamaican Rum (Appleton Estate)', '1 oz Fresh Lime Juice', '0.5 oz Orange Curaçao (Pierre Ferrand Dry Curaçao)', '0.5 oz Orgeat Syrup', '0.25 oz Simple Syrup (1:1)'], instructions: 'Shake all ingredients with crushed ice. Pour unstrained into a double old-fashioned glass. Sink the spent lime shell into the drink.', garnish: 'Mint sprig and lime shell' },
+            { id: 'zombie', name: 'Zombie (Donn Beach, 1934)', ingredients: ['1.5 oz Puerto Rican Gold Rum', '1.5 oz Aged Jamaican Rum', '1 oz 151 Proof Demerara Rum (Lemon Hart)', '0.75 oz Fresh Lime Juice', '0.5 oz Donn\'s Mix (2 parts grapefruit juice, 1 part cinnamon syrup)', '0.5 oz Falernum', '1 tsp Grenadine', 'Dash Angostura Bitters', '6 drops Pernod or Absinthe'], instructions: 'Blend with 6 oz crushed ice for 5 seconds. Pour into a tall Zombie glass. Add more crushed ice to fill.', garnish: 'Mint sprig' },
+            { id: 'painkiller', name: 'Painkiller', ingredients: ['2-4 oz Pusser\'s Rum (adjust to strength desired)', '4 oz Pineapple Juice', '1 oz Orange Juice', '1 oz Cream of Coconut (Coco Lopez)'], instructions: 'Shake well with ice. Pour into a tall glass or tiki mug filled with crushed ice.', garnish: 'Grated nutmeg and an orange slice' },
+            { id: 'jet-pilot', name: 'Jet Pilot', ingredients: ['1 oz Jamaican Black Rum', '0.75 oz Puerto Rican Gold Rum', '0.75 oz Overproof Demerara Rum (e.g., Lemon Hart 151)', '0.5 oz Fresh Lime Juice', '0.5 oz Fresh Grapefruit Juice', '0.5 oz Cinnamon Syrup', '0.5 oz Falernum', '1 dash Angostura Bitters', '1 dash Pernod or Absinthe'], instructions: 'Combine all ingredients in a blender with about 1/2 cup crushed ice. Blend for 5 seconds. Pour into a tiki mug or double old-fashioned glass.', garnish: 'Cherry and lime wheel (optional)' },
+            { id: 'three-dots-dash', name: 'Three Dots and a Dash', ingredients: ['1.5 oz Aged Rhum Agricole or Martinique Rum', '0.5 oz Demerara Rum', '0.5 oz Fresh Lime Juice', '0.5 oz Fresh Orange Juice', '0.5 oz Honey Syrup (1:1 honey and water)', '0.25 oz Falernum', '0.25 oz Allspice Dram (Pimento Dram)', '1 dash Angostura Bitters'], instructions: 'Shake all ingredients with ice cubes. Strain into a chilled pilsner glass or tiki mug filled with crushed ice.', garnish: 'Three cherries on a pick (representing the "three dots") and a pineapple chunk or frond (representing the "dash")' },
+            { id: 'navy-grog', name: 'Navy Grog (Donn Beach)', ingredients: ['1 oz Light Puerto Rican Rum', '1 oz Dark Jamaican Rum', '1 oz Demerara Rum', '0.75 oz Fresh Lime Juice', '0.75 oz Fresh White Grapefruit Juice', '1 oz Honey Syrup (1:1 honey and water) or use 3/4 oz for less sweet', 'Club Soda (optional topper)'], instructions: 'Shake all ingredients (except soda) with ice. Strain into a double old-fashioned glass filled with crushed ice (traditionally shaped into a cone using a special tool, or just fill the glass). Optionally top with a splash of club soda.', garnish: 'Mint sprig and rock candy stick (or lime wedge)' },
+            { id: 'hurricane', name: 'Hurricane (Pat O\'Brien\'s style)', ingredients: ['2 oz Light Rum', '2 oz Dark Rum', '1 oz Fresh Lime Juice', '1 oz Orange Juice', '2 oz Passion Fruit Syrup or Juice', '0.5 oz Simple Syrup (1:1)', '1 tsp Grenadine'], instructions: 'Shake all ingredients with ice cubes. Strain into a Hurricane glass filled with crushed ice.', garnish: 'Orange slice and a cherry' },
+            { id: 'scorpion', name: 'Scorpion (Trader Vic\'s)', ingredients: ['2 oz Light Puerto Rican Rum', '1 oz Brandy', '2 oz Fresh Orange Juice', '1.5 oz Fresh Lemon Juice', '0.5 oz Orgeat Syrup'], instructions: 'Shake all ingredients well with crushed ice. Pour unstrained into a large goblet or Scorpion bowl.', garnish: 'Orange slice and mint sprig (gardenia flower if serving in a bowl)' },
+            { id: 'jungle-bird', name: 'Jungle Bird', ingredients: ['1.5 oz Dark Rum (Jamaican preferred)', '0.75 oz Campari', '1.5 oz Pineapple Juice', '0.5 oz Fresh Lime Juice', '0.5 oz Simple Syrup (1:1)'], instructions: 'Shake all ingredients with ice cubes. Strain into a double old-fashioned glass filled with crushed ice or one large cube.', garnish: 'Pineapple wedge and leaves' }
+        ];
+        
+
+        // --- State ---
+        let recipes = [];
+        let inventory = []; // Array of ingredient names the user has
+        let allIngredients = new Set(); // Set of all unique ingredients across all recipes
+        let sortableInstance = null; // To hold the Sortable instance
+
+        // --- DOM Elements ---
+        const recipeListEl = document.getElementById('recipe-list');
+        const inventoryListEl = document.getElementById('inventory-list');
+        const addRecipeForm = document.getElementById('add-recipe-form');
+        const recipeNameInput = document.getElementById('recipe-name');
+        const recipeIngredientsInput = document.getElementById('recipe-ingredients');
+        const recipeInstructionsInput = document.getElementById('recipe-instructions');
+        const recipeGarnishInput = document.getElementById('recipe-garnish');
+
+        const sections = {
+            recipes: document.getElementById('recipes-section'),
+            inventory: document.getElementById('inventory-section'),
+            addRecipe: document.getElementById('add-recipe-section')
+        };
+        const navButtons = {
+            recipes: document.getElementById('nav-recipes'),
+            inventory: document.getElementById('nav-inventory'),
+            addRecipe: document.getElementById('nav-add-recipe')
+        };
+        const clearInventoryBtn = document.getElementById('clear-inventory-btn');
+
+        // --- Functions ---
+
+        // Load data from Local Storage
+        function loadData() {
+            try {
+                const storedRecipes = localStorage.getItem(RECIPES_STORAGE_KEY);
+                recipes = storedRecipes ? JSON.parse(storedRecipes) : [...initialRecipes];
+                 if (!storedRecipes && initialRecipes.length > 0) {
+                    saveRecipes();
+                }
+            } catch (e) {
+                console.error("Error loading recipes:", e);
+                recipes = [...initialRecipes];
+            }
+
+             try {
+                const storedInventory = localStorage.getItem(INVENTORY_STORAGE_KEY);
+                inventory = storedInventory ? JSON.parse(storedInventory) : [];
+                 inventory.sort();
+            } catch (e) {
+                console.error("Error loading inventory:", e);
+                inventory = [];
+            }
+            updateAllIngredients();
+        }
+
+        // Save recipes to Local Storage (respects current array order)
+        function saveRecipes() {
+            try {
+                localStorage.setItem(RECIPES_STORAGE_KEY, JSON.stringify(recipes));
+                updateAllIngredients();
+            } catch (e) {
+                console.error("Error saving recipes:", e);
+                alert("Could not save recipes. Local storage might be full or disabled.");
+            }
+        }
+
+        // Save inventory to Local Storage
+        function saveInventory() {
+             try {
+                 inventory.sort();
+                localStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify(inventory));
+            } catch (e) {
+                console.error("Error saving inventory:", e);
+                alert("Could not save inventory. Local storage might be full or disabled.");
+            }
+        }
+
+        // Update the set of all known ingredients from recipes
+        function updateAllIngredients() {
+            allIngredients.clear();
+            recipes.forEach(recipe => {
+                recipe.ingredients.forEach(ing => {
+                    let coreIngredient = ing.replace(/^[\d.-]+\s*(oz|ml|tsp|tbsp|dash|dashes|drops?)\s+/i, '');
+                    coreIngredient = coreIngredient.replace(/ *\([^)]*\) */g, "").trim();
+                     if (coreIngredient) {
+                        allIngredients.add(coreIngredient.toLowerCase());
+                    } else if (ing) {
+                        allIngredients.add(ing.toLowerCase());
+                    }
+                });
+            });
+             allIngredients = new Set([...allIngredients].sort());
+        }
+
+        // Render the list of recipes
+        function renderRecipes() {
+            recipeListEl.innerHTML = '';
+            if (recipes.length === 0) {
+                recipeListEl.innerHTML = '<p class="text-gray-500">No recipes yet. Add one!</p>';
+                return;
+            }
+
+            recipes.forEach((recipe) => {
+                const card = document.createElement('div');
+                card.dataset.id = recipe.id;
+                card.className = 'recipe-card';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center cursor-pointer recipe-header">
+                        <h3 class="text-xl font-semibold text-amber-700">${recipe.name}</h3>
+                        <span class="lucide icon-chevron-down text-gray-500"></span>
+                    </div>
+                    <div class="recipe-details mt-3 pt-3 border-t border-orange-100" style="display: none;">
+                        <h4 class="font-semibold mb-1 text-teal-700">Ingredients:</h4>
+                        <ul class="list-disc list-inside mb-3 text-sm space-y-1">
+                            ${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                        </ul>
+                        <h4 class="font-semibold mb-1 text-teal-700">Instructions:</h4>
+                        <p class="text-sm mb-3">${recipe.instructions.replace(/\n/g, '<br>')}</p>
+                        ${recipe.garnish ? `<h4 class="font-semibold mb-1 text-teal-700">Garnish:</h4><p class="text-sm mb-3">${recipe.garnish}</p>` : ''}
+                        
+                        <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn">
+                           <span class="lucide icon-trash"></span> Delete Recipe
+                        </button>
+                    </div>
+                `;
+                const header = card.querySelector('.recipe-header');
+                const details = card.querySelector('.recipe-details');
+                const icon = header.querySelector('.lucide');
+                header.addEventListener('click', () => {
+                    const isVisible = details.style.display === 'block';
+                    details.style.display = isVisible ? 'none' : 'block';
+                    icon.classList.toggle('icon-chevron-down', isVisible);
+                    icon.classList.toggle('icon-chevron-up', !isVisible);
+                });
+
+                 const deleteBtn = card.querySelector('.delete-recipe-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const recipeIdToDelete = card.dataset.id;
+                    const recipeIndexToDelete = recipes.findIndex(r => r.id === recipeIdToDelete);
+
+                    if (recipeIndexToDelete === -1) return;
+
+                    if (confirm(`Are you sure you want to delete the "${recipes[recipeIndexToDelete].name}" recipe?`)) {
+                        recipes.splice(recipeIndexToDelete, 1);
+                        saveRecipes();
+                        renderRecipes();
+                        renderInventory();
+                    }
+                });
+
+                recipeListEl.appendChild(card);
+            });
+            initSortable();
+        }
+
+        // Initialize SortableJS on the recipe list
+        function initSortable() {
+            if (sortableInstance) {
+                sortableInstance.destroy();
+            }
+             if (recipeListEl.children.length > 1) {
+                 sortableInstance = new Sortable(recipeListEl, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    onEnd: function (evt) {
+                        const newIdOrder = [...recipeListEl.children].map(card => card.dataset.id);
+                        const newRecipes = newIdOrder.map(id => recipes.find(recipe => recipe.id === id));
+                        recipes = newRecipes;
+                        saveRecipes();
+                    },
+                });
+            }
+        }
+
+
+        // Render the inventory list
+        function renderInventory() {
+            inventoryListEl.innerHTML = '';
+            if (allIngredients.size === 0) {
+                 inventoryListEl.innerHTML = '<p class="text-gray-500">No ingredients found. Add some recipes first!</p>';
+                 clearInventoryBtn.disabled = true;
+                 return;
+            }
+
+            clearInventoryBtn.disabled = false;
+            [...allIngredients].forEach(ingredient => {
+                 const item = document.createElement('div');
+                item.className = 'inventory-item';
+                const isChecked = inventory.includes(ingredient);
+                const displayIngredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
+                const elementId = `inv-${ingredient.replace(/[^a-zA-Z0-9]/g, '-')}`;
+
+                item.innerHTML = `
+                    <label for="${elementId}" class="flex-grow cursor-pointer mr-2">${displayIngredient}</label>
+                    <input type="checkbox" id="${elementId}" data-ingredient="${ingredient}" ${isChecked ? 'checked' : ''}
+                           class="form-checkbox h-5 w-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500 cursor-pointer flex-shrink-0">
+                `;
+
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('change', (e) => {
+                    const ingredientName = e.target.dataset.ingredient;
+                    if (e.target.checked) {
+                        if (!inventory.includes(ingredientName)) {
+                            inventory.push(ingredientName);
+                        }
+                    } else {
+                        inventory = inventory.filter(item => item !== ingredientName);
+                    }
+                    saveInventory();
+                });
+
+                inventoryListEl.appendChild(item);
+            });
+        }
+
+        // Handle adding a new recipe
+        function handleAddRecipe(event) {
+            event.preventDefault();
+
+            const name = recipeNameInput.value.trim();
+            const ingredients = recipeIngredientsInput.value.trim().split('\n').map(line => line.trim()).filter(line => line);
+            const instructions = recipeInstructionsInput.value.trim();
+            const garnish = recipeGarnishInput.value.trim();
+
+            if (!name || ingredients.length === 0 || !instructions) {
+                console.warn('Validation Error: Please fill in Recipe Name, Ingredients, and Instructions.');
+                if (!name) recipeNameInput.classList.add('border-red-500'); else recipeNameInput.classList.remove('border-red-500');
+                if (ingredients.length === 0) recipeIngredientsInput.classList.add('border-red-500'); else recipeIngredientsInput.classList.remove('border-red-500');
+                if (!instructions) recipeInstructionsInput.classList.add('border-red-500'); else recipeInstructionsInput.classList.remove('border-red-500');
+                return;
+            }
+            recipeNameInput.classList.remove('border-red-500');
+            recipeIngredientsInput.classList.remove('border-red-500');
+            recipeInstructionsInput.classList.remove('border-red-500');
+
+            const newRecipe = {
+                id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now(),
+                name: name,
+                ingredients: ingredients,
+                instructions: instructions,
+                garnish: garnish || ''
+            };
+
+            recipes.push(newRecipe);
+            saveRecipes();
+            renderRecipes();
+            renderInventory();
+
+            addRecipeForm.reset();
+            showSection('recipes');
+            console.info(`Recipe "${name}" added successfully!`);
+        }
+
+        // Show the specified section and hide others
+        function showSection(sectionId) {
+            Object.keys(sections).forEach(key => {
+                if (key === sectionId) {
+                    sections[key].classList.remove('hidden', 'absolute', 'pointer-events-none');
+                    sections[key].classList.add('visible', 'relative');
+                    navButtons[key].classList.add('active');
+                } else {
+                    sections[key].classList.add('hidden', 'absolute', 'pointer-events-none');
+                    sections[key].classList.remove('visible', 'relative');
+                    navButtons[key].classList.remove('active');
+                }
+            });
+             window.scrollTo(0, 0);
+        }
+
+         // Clear all inventory checks
+        function clearInventory() {
+            if (confirm("Are you sure you want to clear your entire inventory list?")) {
+                inventory = [];
+                saveInventory();
+                renderInventory();
+            }
+        }
+
+
+        // --- Event Listeners ---
+        function setupNavigation() {
+            navButtons.recipes.addEventListener('click', () => showSection('recipes'));
+            navButtons.inventory.addEventListener('click', () => showSection('inventory'));
+            navButtons.addRecipe.addEventListener('click', () => showSection('addRecipe'));
+        }
+
+         function setupForms() {
+             addRecipeForm.addEventListener('submit', handleAddRecipe);
+             clearInventoryBtn.addEventListener('click', clearInventory);
+         }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderRecipes();
+            renderInventory();
+            setupNavigation();
+            setupForms();
+            showSection('recipes');
+        });
+
+    </script>
+    
+    
+</body>
+</html>
