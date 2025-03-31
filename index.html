@@ -47,11 +47,10 @@
         /* Style for recipe cards */
         .recipe-card {
             @apply bg-white rounded-lg shadow-lg p-4 mb-4 border border-orange-100;
-            /* Add cursor for drag affordance */
-             cursor: grab;
+            /* Remove grab cursor from whole card */
         }
-        .recipe-card:active {
-             cursor: grabbing;
+        .recipe-header {
+             @apply cursor-pointer; /* Keep pointer cursor for expanding */
         }
         /* Style for inventory items */
         .inventory-item {
@@ -72,6 +71,15 @@
         .sortable-drag {
              @apply opacity-90 shadow-2xl scale-105;
         }
+
+        /* Style for the drag handle */
+        .drag-handle {
+            @apply cursor-grab inline-block text-gray-400 hover:text-gray-600 mr-3 px-1; /* Add spacing and grab cursor */
+        }
+        .drag-handle:active {
+             @apply cursor-grabbing;
+        }
+
 
     </style>
     
@@ -100,6 +108,9 @@
       .icon-chevron-down::before { content: "\e118"; } /* Chevron down */
       .icon-chevron-up::before { content: "\e11f"; } /* Chevron up */
       .icon-check::before { content: "\e117"; } /* Check icon */
+      
+      .icon-grip-vertical::before { content: "\e293"; } /* Grip Vertical icon for drag handle */
+      
     </style>
     
     
@@ -108,9 +119,7 @@
 
     <header class="mb-6 text-center">
         <div class="inline-block bg-orange-50/90 p-3 rounded-lg shadow-md">
-            
             <h1 class="text-4xl font-bold text-amber-800 mb-2 drop-shadow-md" style="font-family: 'Brush Script MT', cursive;">
-                
                 <span class="mr-3">🌴</span>Garry's Tiki Bar<span class="ml-3">🗿</span>
             </h1>
             <p class="text-teal-700 font-medium drop-shadow-sm">Your personal digital cocktail menu</p>
@@ -118,15 +127,12 @@
     </header>
 
     <nav class="mb-6 flex justify-center space-x-3">
-        
         <button id="nav-recipes" class="nav-btn active">
             <span class="mr-2">📓</span>Recipes
         </button>
-        
         <button id="nav-inventory" class="nav-btn">
             <span class="mr-2">🍹</span>Inventory
         </button>
-        
         <button id="nav-add-recipe" class="nav-btn">
             <span class="mr-2">📝</span>Add Recipe
         </button>
@@ -136,7 +142,9 @@
         <section id="recipes-section" class="section visible">
             <div class="flex justify-between items-center mb-4">
                  <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
-                 <p class="text-xs text-gray-500 italic">Drag to reorder</p>
+                 
+                 <p class="text-xs text-gray-500 italic"><span class="lucide icon-grip-vertical text-xs relative top-px mr-1"></span> Drag handle to reorder</p>
+                 
             </div>
             
             <div id="recipe-list" class="space-y-4">
@@ -151,7 +159,6 @@
                 <p class="text-gray-500">Loading inventory...</p>
             </div>
              <button id="clear-inventory-btn" class="mt-4 btn bg-red-600 hover:bg-red-700 focus:ring-red-500">
-                
                 <span class="lucide icon-trash"></span>Clear All Inventory
             </button>
         </section>
@@ -176,7 +183,6 @@
                     <input type="text" id="recipe-garnish" class="border">
                 </div>
                 <button type="submit" class="btn">
-                    
                     <span class="lucide icon-save"></span>Save Recipe
                 </button>
             </form>
@@ -184,12 +190,11 @@
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v1.5</p> 
+        <p>Tiki App v1.6</p> 
         
         
     </footer>
 
-    
     
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
@@ -318,11 +323,15 @@
             recipes.forEach((recipe) => {
                 const card = document.createElement('div');
                 card.dataset.id = recipe.id;
-                card.className = 'recipe-card';
+                card.className = 'recipe-card'; // Remove grab cursor from here
                 card.innerHTML = `
-                    <div class="flex justify-between items-center cursor-pointer recipe-header">
-                        <h3 class="text-xl font-semibold text-amber-700">${recipe.name}</h3>
-                        <span class="lucide icon-chevron-down text-gray-500"></span>
+                    
+                    <div class="flex justify-between items-center recipe-header"> 
+                        
+                        <span class="drag-handle lucide icon-grip-vertical" title="Drag to reorder"></span> 
+                        
+                        <h3 class="text-xl font-semibold text-amber-700 flex-grow mr-2">${recipe.name}</h3> 
+                        <span class="expand-icon lucide icon-chevron-down text-gray-500"></span> 
                     </div>
                     <div class="recipe-details mt-3 pt-3 border-t border-orange-100" style="display: none;">
                         <h4 class="font-semibold mb-1 text-teal-700">Ingredients:</h4>
@@ -338,19 +347,27 @@
                         </button>
                     </div>
                 `;
+                
                 const header = card.querySelector('.recipe-header');
                 const details = card.querySelector('.recipe-details');
-                const icon = header.querySelector('.lucide');
-                header.addEventListener('click', () => {
+                const expandIcon = header.querySelector('.expand-icon');
+                const dragHandle = header.querySelector('.drag-handle');
+
+                // Click listener on the header *itself* for expanding/collapsing
+                header.addEventListener('click', (e) => {
+                     // IMPORTANT: Prevent click if the drag handle was the target
+                     if (dragHandle.contains(e.target)) {
+                         return;
+                     }
                     const isVisible = details.style.display === 'block';
                     details.style.display = isVisible ? 'none' : 'block';
-                    icon.classList.toggle('icon-chevron-down', isVisible);
-                    icon.classList.toggle('icon-chevron-up', !isVisible);
+                    expandIcon.classList.toggle('icon-chevron-down', isVisible);
+                    expandIcon.classList.toggle('icon-chevron-up', !isVisible);
                 });
 
                  const deleteBtn = card.querySelector('.delete-recipe-btn');
                 deleteBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); // Prevent header click event
                     const recipeIdToDelete = card.dataset.id;
                     const recipeIndexToDelete = recipes.findIndex(r => r.id === recipeIdToDelete);
 
@@ -376,14 +393,28 @@
             }
              if (recipeListEl.children.length > 1) {
                  sortableInstance = new Sortable(recipeListEl, {
+                    
+                    handle: '.drag-handle', // Specify the drag handle selector
+                    
                     animation: 150,
                     ghostClass: 'sortable-ghost',
                     dragClass: 'sortable-drag',
                     onEnd: function (evt) {
                         const newIdOrder = [...recipeListEl.children].map(card => card.dataset.id);
-                        const newRecipes = newIdOrder.map(id => recipes.find(recipe => recipe.id === id));
-                        recipes = newRecipes;
-                        saveRecipes();
+                        // Find the recipes based on the new ID order
+                        // Use a temporary map for efficient lookup
+                        const recipeMap = new Map(recipes.map(r => [r.id, r]));
+                        const newRecipes = newIdOrder.map(id => recipeMap.get(id)).filter(Boolean); // Filter out potential undefined if IDs mismatch
+
+                        // Only update if the order actually changed and mapping was successful
+                        if (newRecipes.length === recipes.length) {
+                            recipes = newRecipes;
+                            saveRecipes();
+                        } else {
+                             console.error("Recipe mapping failed during reorder. Reverting visually.");
+                             // Re-render to be safe if something went wrong
+                             renderRecipes();
+                        }
                     },
                 });
             }
