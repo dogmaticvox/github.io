@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    
-    <meta name="theme-color" content="#CC5A02"> 
-    
-    <link rel="manifest" href="manifest.json"> 
+    <meta name="theme-color" content="#CC5A02">
+    <link rel="manifest" href="manifest.json">
     
     <title>Garry's Tiki Bar</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    
     
     <style type="text/tailwindcss">
         @tailwind base;
@@ -22,27 +18,14 @@
 
         body {
             @apply font-['Inter',_sans-serif] bg-orange-100 text-gray-800;
-            /* Apply the SVG background pattern */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E.st0%7Bfill:%23%23b45309;%7D%3C/style%3E%3C/defs%3E%3Cpath class='st0' d='M12.2,16.9L12.2,16.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9h-0.1 C13.5,19.9,12.2,18.6,12.2,16.9z M42.2,46.9L42.2,46.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9 h-0.1C43.5,49.9,42.2,48.6,42.2,46.9z M27.1,32.1L27.1,32.1c-1.6,0-2.9-1.3-2.9-2.9v-0.1c0-1.6,1.3-2.9,2.9-2.9h0.1 c1.6,0,2.9,1.3,2.9,2.9v0.1C30.1,30.8,28.8,32.1,27.1,32.1z'/%3E%3C/svg%3E");
             background-repeat: repeat;
         }
-        /* Add a semi-transparent background to the main content area for readability */
         main {
              @apply bg-orange-50/95 p-4 rounded-lg shadow-xl;
         }
-        /* Simple animation for section transitions */
-        .section {
-            @apply transition-opacity duration-300 ease-in-out;
-        }
-        .section.hidden {
-            @apply opacity-0 absolute pointer-events-none;
-        }
-        .section.visible {
-            @apply opacity-100 relative;
-        }
-        /* Custom button style */
         .btn {
-            @apply inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-75 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed;
+             @apply inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-75 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed;
         }
         .nav-btn {
              @apply inline-flex items-center justify-center px-3 py-2 bg-amber-600 text-white font-medium rounded-md shadow-sm hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition duration-150 ease-in-out text-sm;
@@ -50,125 +33,119 @@
         .nav-btn.active {
             @apply bg-amber-800 ring-2 ring-amber-500 ring-offset-2;
         }
-        /* Style for recipe cards */
+        .category-header {
+             @apply flex justify-between items-center p-3 bg-amber-200/80 rounded-lg mb-2 cursor-pointer hover:bg-amber-300/80 shadow;
+        }
+        .category-title {
+             @apply text-xl font-semibold text-amber-800;
+        }
+        .category-recipes {
+             @apply pl-4 border-l-4 border-amber-300 mb-4 space-y-3;
+        }
         .recipe-card {
-            @apply bg-white rounded-lg shadow-lg p-4 mb-4 border border-orange-100;
+             @apply bg-white rounded-lg shadow-lg p-4 border border-orange-100;
         }
         .recipe-header {
-             @apply cursor-pointer;
+             @apply flex justify-between items-center cursor-pointer;
         }
-        /* Style for inventory items */
-        .inventory-item {
-             @apply flex items-center justify-between bg-white p-3 rounded-md shadow-sm mb-2;
+        .recipe-name {
+             @apply text-lg font-semibold text-amber-700 flex-grow mr-2;
         }
-        /* Style for form inputs */
-        input[type="text"], textarea {
-            @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm;
+        .recipe-details {
+             @apply mt-3 pt-3 border-t border-orange-100 space-y-2 text-sm;
+        }
+        .detail-label {
+             @apply font-semibold text-teal-700 block;
+        }
+        .star-icon-placeholder {
+             @apply cursor-pointer text-xl relative top-px ml-2 flex-shrink-0 w-6 h-6 flex items-center justify-center;
+        }
+        .star-icon-placeholder > .lucide.icon-star {
+            @apply text-gray-400 hover:text-yellow-500;
+            margin-right: 0 !important;
+        }
+        .star-icon-placeholder > .emoji-favorite {
+            /* Emoji styles if needed */
+        }
+
+        .settings-section-container {
+             @apply mt-6 p-4 bg-white/90 rounded-lg shadow;
+        }
+        .settings-title {
+             @apply text-xl font-semibold text-teal-800 mb-3;
+        }
+        input[type="text"], textarea, input[type="file"] {
+             @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm;
         }
         label {
-            @apply block text-sm font-medium text-gray-700 mb-1;
+             @apply block text-sm font-medium text-gray-700 mb-1;
         }
-
-        /* SortableJS helper classes */
-        .sortable-ghost {
-            @apply opacity-40 bg-teal-100 border-dashed border-2 border-teal-400;
-        }
-        .sortable-drag {
-             @apply opacity-90 shadow-2xl scale-105;
-        }
-
-        /* Style for the drag handle */
-        .drag-handle {
-            @apply cursor-grab inline-block text-gray-400 hover:text-gray-600 mr-3 px-1;
-        }
-        .drag-handle:active {
-             @apply cursor-grabbing;
-        }
-
     </style>
     
     <style>
-      /* Lucide font face still needed for other icons */
       @font-face {
         font-family: 'LucideIcons';
         src: url(https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf) format('truetype');
+        font-display: swap; /* Added font-display property */
       }
-      .lucide {
-        font-family: 'LucideIcons';
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 0.5rem;
-      }
-      /* Map remaining used icon names to characters */
-      .icon-save::before { content: "\e42e"; } /* Save icon */
-      .icon-trash::before { content: "\e50f"; } /* Trash icon */
-      .icon-chevron-down::before { content: "\e118"; } /* Chevron down */
-      .icon-chevron-up::before { content: "\e11f"; } /* Chevron up */
-      .icon-check::before { content: "\e117"; } /* Check icon */
-      .icon-grip-vertical::before { content: "\e293"; } /* Grip Vertical icon for drag handle */
+      .lucide { font-family: 'LucideIcons'; font-style: normal; font-weight: normal; font-variant: normal; text-rendering: auto; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; display: inline-block; vertical-align: middle; margin-right: 0.5rem; }
+      .icon-save::before { content: "\e150"; }
+      .icon-trash::before { content: "\e18c"; }
+      .icon-chevron-down::before { content: "\e071"; }
+      .icon-chevron-up::before { content: "\e074"; }
+      .icon-star::before { content: "\e179"; }
+      .icon-upload::before { content: "\e19d"; }
+      .icon-download::before { content: "\e0b6"; }
+      .icon-settings::before { content: "\e157"; }
     </style>
-    
-    
 </head>
 <body class="p-4 max-w-2xl mx-auto">
 
     <header class="mb-6 text-center">
         <div class="inline-block bg-orange-50/90 p-3 rounded-lg shadow-md">
             <h1 class="text-4xl font-bold text-amber-800 mb-2 drop-shadow-md" style="font-family: 'Brush Script MT', cursive;">
-                <span class="mr-3">🌴</span>Garry's Tiki Bar<span class="ml-3">🗿</span>
+                <span class="mr-3">🌴</span>Garry's Tiki Bar v2<span class="ml-3">🗿</span>
             </h1>
             <p class="text-teal-700 font-medium drop-shadow-sm">Your personal digital cocktail menu</p>
         </div>
     </header>
 
     <nav class="mb-6 flex justify-center space-x-3">
-        <button id="nav-recipes" class="nav-btn active">
-            <span class="mr-2">📓</span>Recipes
-        </button>
-        <button id="nav-inventory" class="nav-btn">
-            <span class="mr-2">🍹</span>Inventory
+        <button id="nav-recipes" class="nav-btn"> <span class="mr-2">📓</span>Recipes
         </button>
         <button id="nav-add-recipe" class="nav-btn">
             <span class="mr-2">📝</span>Add Recipe
         </button>
+        <button id="nav-settings" class="nav-btn">
+             <span class="lucide icon-settings"></span>Settings
+        </button>
     </nav>
 
     <main class="bg-orange-50/95 p-4 rounded-lg shadow-xl">
-        <section id="recipes-section" class="section visible">
-            <div class="flex justify-between items-center mb-4">
-                 <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
-                 <p class="text-xs text-gray-500 italic"><span class="lucide icon-grip-vertical text-xs relative top-px mr-1"></span> Drag handle to reorder</p>
-            </div>
-            
-            <div id="recipe-list" class="space-y-4">
+        <section id="recipes-section" class="section"> <h2 class="text-2xl font-semibold text-teal-800 mb-4">Cocktail Recipes</h2>
+            <div id="recipe-categories-list">
                 <p class="text-gray-500">Loading recipes...</p>
             </div>
         </section>
 
-        <section id="inventory-section" class="section hidden">
-            <h2 class="text-2xl font-semibold text-teal-800 mb-4">My Ingredient Inventory</h2>
-            <p class="text-sm text-gray-600 mb-4">Check the ingredients you currently have in stock.</p>
-            <div id="inventory-list" class="space-y-2">
-                <p class="text-gray-500">Loading inventory...</p>
-            </div>
-             <button id="clear-inventory-btn" class="mt-4 btn bg-red-600 hover:bg-red-700 focus:ring-red-500">
-                <span class="lucide icon-trash"></span>Clear All Inventory
-            </button>
-        </section>
-
-        <section id="add-recipe-section" class="section hidden">
-            <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
+        <section id="add-recipe-section" class="section hidden"> <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
             <form id="add-recipe-form" class="space-y-4 bg-white/95 p-6 rounded-lg shadow">
                 <div>
                     <label for="recipe-name">Recipe Name:</label>
                     <input type="text" id="recipe-name" required class="border">
+                </div>
+                 <div>
+                    <label for="recipe-category">Category:</label>
+                    <input type="text" id="recipe-category" placeholder="e.g., Rum Classics, My Creations" class="border">
+                    <p class="text-xs text-gray-500 mt-1">Leave blank to add to 'User Added Recipes'.</p>
+                </div>
+                 <div>
+                    <label for="recipe-origin">Origin (Optional):</label>
+                    <input type="text" id="recipe-origin" class="border">
+                </div>
+                 <div>
+                    <label for="recipe-glassware">Glassware:</label>
+                    <input type="text" id="recipe-glassware" required class="border">
                 </div>
                 <div>
                     <label for="recipe-ingredients">Ingredients (one per line, e.g., "2 oz Rum"):</label>
@@ -179,7 +156,7 @@
                     <textarea id="recipe-instructions" rows="5" required class="border"></textarea>
                 </div>
                  <div>
-                    <label for="recipe-garnish">Garnish (optional):</label>
+                    <label for="recipe-garnish">Garnish (Optional):</label>
                     <input type="text" id="recipe-garnish" class="border">
                 </div>
                 <button type="submit" class="btn">
@@ -187,345 +164,541 @@
                 </button>
             </form>
         </section>
+
+         <section id="settings-section" class="section hidden"> <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
+            <div class="settings-section-container">
+                <h3 class="settings-title">Backup & Restore</h3>
+                <p class="text-sm text-gray-600 mb-3">Save your added recipes and favorites to a file, or restore from a previous backup.</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <button id="backup-btn" class="btn bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 w-full sm:w-auto">
+                        <span class="lucide icon-download"></span>Backup Data
+                    </button>
+                    <div>
+                         <label for="restore-input" class="btn bg-green-600 hover:bg-green-700 focus:ring-green-500 cursor-pointer w-full sm:w-auto block text-center">
+                            <span class="lucide icon-upload"></span>Restore Data
+                        </label>
+                        <input type="file" id="restore-input" accept=".json" class="hidden">
+                    </div>
+                </div>
+                 <p id="restore-message" class="text-sm mt-3 text-gray-600"></p>
+            </div>
+        </section>
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v1.7</p> 
-        
-        
-    </footer>
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+        <p>Tiki App v2.0.4</p> </footer>
 
     <script>
         // --- Constants ---
-        const RECIPES_STORAGE_KEY = 'tikiRecipes';
-        const INVENTORY_STORAGE_KEY = 'tikiInventory';
+        const RECIPES_STORAGE_KEY = 'tikiRecipes_v2';
+        const FAVORITES_STORAGE_KEY = 'tikiFavorites_v2';
+        const CATEGORY_STATE_STORAGE_KEY = 'tikiCategoryState_v2';
+        const USER_RECIPE_CATEGORY = 'User Added Recipes';
+        const FAVORITES_CATEGORY_KEY = '__FAVORITES__';
 
-        
-        // --- Initial Data (if local storage is empty) ---
-        const initialRecipes = [
-            // Recipes from previous version...
-            { id: 'mai-tai', name: 'Mai Tai (Trader Vic\'s)', ingredients: ['2 oz Aged Jamaican Rum (Appleton Estate)', '1 oz Fresh Lime Juice', '0.5 oz Orange Curaçao (Pierre Ferrand Dry Curaçao)', '0.5 oz Orgeat Syrup', '0.25 oz Simple Syrup (1:1)'], instructions: 'Shake all ingredients with crushed ice. Pour unstrained into a double old-fashioned glass. Sink the spent lime shell into the drink.', garnish: 'Mint sprig and lime shell' },
-            { id: 'zombie', name: 'Zombie (Donn Beach, 1934)', ingredients: ['1.5 oz Puerto Rican Gold Rum', '1.5 oz Aged Jamaican Rum', '1 oz 151 Proof Demerara Rum (Lemon Hart)', '0.75 oz Fresh Lime Juice', '0.5 oz Donn\'s Mix (2 parts grapefruit juice, 1 part cinnamon syrup)', '0.5 oz Falernum', '1 tsp Grenadine', 'Dash Angostura Bitters', '6 drops Pernod or Absinthe'], instructions: 'Blend with 6 oz crushed ice for 5 seconds. Pour into a tall Zombie glass. Add more crushed ice to fill.', garnish: 'Mint sprig' },
-            { id: 'painkiller', name: 'Painkiller', ingredients: ['2-4 oz Pusser\'s Rum (adjust to strength desired)', '4 oz Pineapple Juice', '1 oz Orange Juice', '1 oz Cream of Coconut (Coco Lopez)'], instructions: 'Shake well with ice. Pour into a tall glass or tiki mug filled with crushed ice.', garnish: 'Grated nutmeg and an orange slice' },
-            { id: 'jet-pilot', name: 'Jet Pilot', ingredients: ['1 oz Jamaican Black Rum', '0.75 oz Puerto Rican Gold Rum', '0.75 oz Overproof Demerara Rum (e.g., Lemon Hart 151)', '0.5 oz Fresh Lime Juice', '0.5 oz Fresh Grapefruit Juice', '0.5 oz Cinnamon Syrup', '0.5 oz Falernum', '1 dash Angostura Bitters', '1 dash Pernod or Absinthe'], instructions: 'Combine all ingredients in a blender with about 1/2 cup crushed ice. Blend for 5 seconds. Pour into a tiki mug or double old-fashioned glass.', garnish: 'Cherry and lime wheel (optional)' },
-            { id: 'three-dots-dash', name: 'Three Dots and a Dash', ingredients: ['1.5 oz Aged Rhum Agricole or Martinique Rum', '0.5 oz Demerara Rum', '0.5 oz Fresh Lime Juice', '0.5 oz Fresh Orange Juice', '0.5 oz Honey Syrup (1:1 honey and water)', '0.25 oz Falernum', '0.25 oz Allspice Dram (Pimento Dram)', '1 dash Angostura Bitters'], instructions: 'Shake all ingredients with ice cubes. Strain into a chilled pilsner glass or tiki mug filled with crushed ice.', garnish: 'Three cherries on a pick (representing the "three dots") and a pineapple chunk or frond (representing the "dash")' },
-            { id: 'navy-grog', name: 'Navy Grog (Donn Beach)', ingredients: ['1 oz Light Puerto Rican Rum', '1 oz Dark Jamaican Rum', '1 oz Demerara Rum', '0.75 oz Fresh Lime Juice', '0.75 oz Fresh White Grapefruit Juice', '1 oz Honey Syrup (1:1 honey and water) or use 3/4 oz for less sweet', 'Club Soda (optional topper)'], instructions: 'Shake all ingredients (except soda) with ice. Strain into a double old-fashioned glass filled with crushed ice (traditionally shaped into a cone using a special tool, or just fill the glass). Optionally top with a splash of club soda.', garnish: 'Mint sprig and rock candy stick (or lime wedge)' },
-            { id: 'hurricane', name: 'Hurricane (Pat O\'Brien\'s style)', ingredients: ['2 oz Light Rum', '2 oz Dark Rum', '1 oz Fresh Lime Juice', '1 oz Orange Juice', '2 oz Passion Fruit Syrup or Juice', '0.5 oz Simple Syrup (1:1)', '1 tsp Grenadine'], instructions: 'Shake all ingredients with ice cubes. Strain into a Hurricane glass filled with crushed ice.', garnish: 'Orange slice and a cherry' },
-            { id: 'scorpion', name: 'Scorpion (Trader Vic\'s)', ingredients: ['2 oz Light Puerto Rican Rum', '1 oz Brandy', '2 oz Fresh Orange Juice', '1.5 oz Fresh Lemon Juice', '0.5 oz Orgeat Syrup'], instructions: 'Shake all ingredients well with crushed ice. Pour unstrained into a large goblet or Scorpion bowl.', garnish: 'Orange slice and mint sprig (gardenia flower if serving in a bowl)' },
-            { id: 'jungle-bird', name: 'Jungle Bird', ingredients: ['1.5 oz Dark Rum (Jamaican preferred)', '0.75 oz Campari', '1.5 oz Pineapple Juice', '0.5 oz Fresh Lime Juice', '0.5 oz Simple Syrup (1:1)'], instructions: 'Shake all ingredients with ice cubes. Strain into a double old-fashioned glass filled with crushed ice or one large cube.', garnish: 'Pineapple wedge and leaves' }
-        ];
-        
+        // --- Initial Recipe Data (Directly Embedded) ---
+        const initialRecipesData = [
+          { "id": "001", "name": "Arrack Punch", "category": "RUM THROUGH THE AGES", "origin": "Created by Smuggler's Cove, inspired by traditional colonial-era punch recipes", "glassware": "Small (32-ounce) punch bowl or other decorative bowl with a ladle and cups", "ingredients": ["2 ounces fresh lemon juice", "2 ounces fresh lime juice", "3 ounces SC Demerara Syrup (page 324)", "6 ounces Batavia arrack", "2 ounces pot still lightly aged rum (overproof)", "6 ounces Carbonated Chai Tea (see Note, following)"], "instructions": "Add all the ingredients to a drink mixer tin and roll (pour back and forth a few times) with another drink mixer tin to combine the ingredients. Divide the contents in half evenly between the two tins. Add 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes to each of the two tins. With each tin, flash blend and open pour with gated finish into the serving bowl. Float a few lemon and lime slices on the punch for garnish.", "garnish": "A few slices of lemons and limes" },
+          { "id": "002", "name": "El Draque", "category": "RUM THROUGH THE AGES", "origin": "Created by Smuggler's Cove, inspired by a traditional recipe", "glassware": "Chilled coupe", "ingredients": ["5 fresh mint leaves", "3/4 ounce SC Demerara Syrup (page 324)", "3/4 ounce fresh lime juice", "2 ounces pot still aged cachaça"], "instructions": "Muddle the mint with the syrup and lime juice in a cocktail shaker. Add the cachaça and cubed or cracked ice. Shake and double-strain into a chilled coupe. Garnish with a lime wheel speared on a pirate sword cocktail pick.", "garnish": "Lime wheel with sword cocktail pick" },
+          { "id": "003", "name": "Grog", "category": "RUM THROUGH THE AGES", "origin": "Traditional recipe, adapted by Smuggler's Cove", "glassware": "Old-fashioned", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "2 ounces rum (see Note, following)"], "instructions": "Add the ingredients to a cocktail shaker filled with cracked or cubed ice. Shake and strain into an ice-filled old-fashioned glass.", "garnish": null },
+          { "id": "004", "name": "Rum Flip", "category": "RUM THROUGH THE AGES", "origin": "Traditional recipe", "glassware": "Chilled coupe", "ingredients": ["1 medium egg", "1/4 ounce SC Demerara Syrup (page 324)", "2 ounces blended aged rum"], "instructions": "Add the ingredients to drink mixer tin and dry flash without ice for 10 seconds (see page 229). Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and double-strain into a chilled coupe glass. Top with freshly grated nutmeg.", "garnish": "Freshly grated nutmeg" },
+          { "id": "005", "name": "Bombo", "category": "RUM THROUGH THE AGES", "origin": "Traditional recipe, adapted by Smuggler's Cove", "glassware": "Old-fashioned", "ingredients": ["1/4 ounce SC Demerara Syrup (page 324)", "2 ounces blended aged rum"], "instructions": "Stir the rum and syrup in a mixing glass and strain into an ice-filled old-fashioned glass. Top with grated nutmeg.", "garnish": "Freshly grated nutmeg" },
+          { "id": "006", "name": "Calibogus", "category": "RUM THROUGH THE AGES", "origin": "Smuggler's Cove modern original, inspired by traditional flavors", "glassware": "Collins or highball", "ingredients": ["3 ounces seltzer", "1/4 ounce fresh lime juice", "3/4 ounce SC Molasses Syrup (page 327)", "1 drop spruce beer soda extract (see Resources, page 335)", "3/4 ounce Zirbenz Stone Pine liqueur", "1 1/4 ounce blended aged rum"], "instructions": "Add the seltzer to the bottom of a Collins or highball glass. Add the remaining ingredients to a cocktail shaker and shake with cracked or cubed ice. Strain into the glass and carefully add cracked or cubed ice and garnish.", "garnish": "Swizzle stick" },
+          { "id": "007", "name": "Mary Pickford", "category": "RUM THROUGH THE AGES", "origin": "Prohibition-era recipe, adapted by Smuggler's Cove", "glassware": "Chilled coupe", "ingredients": ["1 1/2 ounces pineapple juice", "1 barspoon SC Grenadine (page 328)", "6 drops Luxardo Maraschino liqueur", "1 1/2 ounces blended lightly aged rum"], "instructions": "Add all the ingredients to a cocktail shaker. Add cracked or cubed ice, shake, and then double-strain into a chilled coupe.", "garnish": null },
+          { "id": "008", "name": "Daiquiri No. 1", "category": "RUM THROUGH THE AGES", "origin": "Prohibition-era recipe, adapted by Smuggler's Cove", "glassware": "Chilled coupe", "ingredients": ["3/4 ounce fresh lime juice", "1/2 ounce SC Demerara syrup (page 324)", "2 ounces blended lightly aged rum"], "instructions": "Add all the ingredients to a cocktail shaker. Add cracked or cubed ice, shake, and then double-strain into a chilled coupe.", "garnish": null },
+          { "id": "009", "name": "Hotel Nacional Special", "category": "RUM THROUGH THE AGES", "origin": "Prohibition-era recipe, adapted by Smuggler's Cove", "glassware": "Chilled coupe", "ingredients": ["3 or 4 (1-inch-square) pineapple chunks", "3/4 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "1 1/2 ounces blended lightly aged rum"], "instructions": "In cocktail shaker, muddle the pineapple chunks with the lime juice and syrup. Add the apricot liqueur and the rum, then fill with cracked or cubed ice. Shake and double-strain into a chilled coupe.", "garnish": null },
+          { "id": "010", "name": "Daisy de Santiago", "category": "RUM THROUGH THE AGES", "origin": "Prohibition-era recipe, adapted by Smuggler's Cove", "glassware": "Double old-fashioned", "ingredients": ["1 ounce fresh lime juice", "1 1/2 teaspoons SC Demerara Syrup (page 324)", "1 ounce seltzer", "1/2 ounce Yellow Chartreuse", "1 1/2 ounces blended lightly aged rum"], "instructions": "Add all the ingredients to a cocktail shaker. Add cracked or cubed ice. Shake and strain into a double old-fashioned glass filled with crushed ice. Add garnish.", "garnish": "Mint sprig" },
+          { "id": "011", "name": "El Presidente", "category": "RUM THROUGH THE AGES", "origin": "Prohibition-era recipe, adapted by Smuggler's Cove", "glassware": "Chilled coupe", "ingredients": ["1/4 teaspoon SC Grenadine (page 328)", "3/4 ounce dry vermouth", "1/2 ounce Pierre Ferrand Dry Curaçao", "1 1/2 ounces blended lightly aged rum"], "instructions": "Add all the ingredients to a cocktail shaker. Add cracked or cubed ice, shake, and then double-strain into a chilled coupe.", "garnish": null },
+          { "id": "012", "name": "Twelve Mile Limit", "category": "RUM THROUGH THE AGES", "origin": "Prohibition-era drink, created by journalist Tommy Millard", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce fresh lemon juice", "1/2 ounce SC Grenadine (page 328)", "1 ounce blended lightly aged rum", "1/2 ounce rye", "1/2 ounce brandy"], "instructions": "Add all the ingredients to a cocktail shaker. Add cracked or cubed ice, shake, and then double-strain into a chilled coupe.", "garnish": "Lemon twist" },
+          { "id": "013", "name": "Parisian Blonde", "category": "RUM THROUGH THE AGES", "origin": "Adapted by Erik Ellestad", "glassware": "Chilled coupe", "ingredients": ["1 ounce Pierre Ferrand Dry Curaçao", "1 ounce blended aged rum", "1 ounce sweet cream (see Note, following)"], "instructions": "In a mixing glass, stir together the curaçao and rum with cracked or cubed ice. Strain into a chilled coupe. Carefully pour the sweet cream over the back of a spoon to float on top. Garnish with freshly grated cinnamon.", "garnish": "Freshly grated cinnamon" },
+          { "id": "014", "name": "Cora Middleton", "category": "RUM THROUGH THE AGES", "origin": "Adapted by Smuggler's Cove", "glassware": "Chilled coupe", "ingredients": ["2 teaspoons egg white", "2 ounces blended aged rum", "3/4 ounce fresh lime juice", "1/4 ounce SC Demerara Syrup (page 324)", "1/2 ounce Small Hand Foods Raspberry Gum Syrup"], "instructions": "Combine the egg white and rum in a drink mixer tin and dry flash without ice for 10 seconds (see page 229). Transfer contents to a cocktail shaker and add the remaining ingredients, then shake with cracked or cubed ice. Double-strain into a chilled coupe. Drop 1 dash of bitters on top of the surface of the drink for garnish.", "garnish": "1 dash Angostura bitters" },
+          { "id": "015", "name": "Millionaire Cocktail (No. 1)", "category": "RUM THROUGH THE AGES", "origin": "Adapted by Smuggler's Cove", "glassware": "Chilled coupe", "ingredients": ["3/4 ounce fresh lime juice", "1 dash SC Grenadine (page 328)", "3/4 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "3/4 ounce black pot still rum (see page 198) or blended aged rum", "3/4 ounce sloe gin"], "instructions": "Add all the ingredients to a cocktail shaker with cracked or cubed ice. Shake and double-strain into a chilled coupe. Garnish with a lime wheel.", "garnish": "Lime wheel" },
+          { "id": "016", "name": "Batida de Maracujá e Coco", "category": "RUM THROUGH THE AGES", "origin": "Traditional Brazilian recipes, adapted by Smuggler's Cove", "glassware": "Old-fashioned", "ingredients": ["3/4 ounce passion fruit puree", "2 ounces coconut milk", "1 ounce pot still aged cachaça (see page 199)", "1 ounce sweetened condensed milk"], "instructions": "Add the passion fruit puree, coconut milk, and cachaça to a drink mixer tin. Add 6 ounces of crushed ice, and then the condensed milk (if you put condensed milk in first, it can get too cold and stick to the tin before integrating). Flash blend and open pour with gated finish into an old-fashioned glass.", "garnish": "Mint sprig" },
+          { "id": "017", "name": "Wray & Ting", "category": "RUM THROUGH THE AGES", "origin": "Traditional Jamaican drink", "glassware": "Collins or highball", "ingredients": ["1 1/2 ounces Wray & Nephew White Overproof Rum", "4 ounces Ting grapefruit soda"], "instructions": "Fill a Collins or highball glass with cracked or cubed ice. Add the rum. Top with grapefruit soda and stir. Squeeze a lime wedge and drop in.", "garnish": "Lime wedge" },
+          { "id": "018", "name": "Hibiscus Rum Punch", "category": "RUM THROUGH THE AGES", "origin": "Smuggler's Cove original, based on traditional recipes", "glassware": "Collins or highball", "ingredients": ["2 ounces seltzer", "1/2 ounce fresh lime juice", "1 ounce SC Hibiscus Liqueur (see page 331)", "1 1/2 ounces blended aged rum (Jamaica)", "1/3 ounce SC Demerara Syrup (page 324)"], "instructions": "Add the seltzer to a Collins or highball glass. Add the remaining ingredients to a cocktail shaker. Fill with cracked or cubed ice. Shake and double-strain into the glass. Carefully add cracked or cubed ice to the glass and garnish.", "garnish": "Edible hibiscus flower on a plastic pick or lime wheel" },
+          { "id": "019", "name": "TI' PUNCH / TI' PUNCH VIEUX", "category": "RUM THROUGH THE AGES", "origin": "Traditional Martinique recipe", "glassware": "Old-fashioned", "ingredients": ["1 teaspoon Martinique sugarcane syrup", "2 ounces cane AOC Martinique rhum agricole blanc (substitute an élevé sous bois, or rhum vieux for a Ti' Punch Vieux)", "1 small rounded chunk of fresh lime (cut from the side of the lime, approximately the size of a quarter, with some pulp attached)"], "instructions": "In an old-fashioned glass, add the sugarcane syrup and rhum. Swizzle with a barspoon or lélé. Squeeze the lime round over the drink and drop it into the glass. (The squeeze should yield 6 to 10 drops of lime juice.)", "garnish": null },
+          { "id": "020", "name": "Barbados Rum Punch", "category": "RUM THROUGH THE AGES", "origin": "Smuggler's Cove original based on traditional recipes", "glassware": "Footed pilsner", "ingredients": ["1 ounce fresh lime juice", "1 ounce SC Demerara Syrup (page 324)", "2 ounces blended aged rum (Barbados)", "1 dash Angostura bitters"], "instructions": "Fill a footed pilsner with cubed or cracked ice. Add all the ingredients to a cocktail shaker. Fill with cubed or cracked ice. Shake and strain into the glass. Top with grated nutmeg.", "garnish": "Freshly grated nutmeg" },
+          { "id": "021", "name": "Jamaican Milk Punch", "category": "RUM THROUGH THE AGES", "origin": "Smuggler's Cove original, inspired by traditional recipes", "glassware": "Double old-fashioned", "ingredients": ["1 ounce whole milk", "1 ounce heavy whipping cream", "3/4 ounce SC Demerara Syrup (page 324)", "1 ounce black blended rum (Jamaica)", "6 drops vanilla extract", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 \"agitator cubes.\" Flash blend and open pour with gated finish into a double old-fashioned glass. Top with grated nutmeg.", "garnish": "Freshly grated nutmeg" },
+          { "id": "022", "name": "Corn and Oil", "category": "RUM THROUGH THE AGES", "origin": "Traditional Barbados recipe. adapted by Smuggler's Cove", "glassware": "Old-fashioned", "ingredients": ["1/2 ounce John D. Taylor's Velvet Falernum", "2 ounces blended aged rum (Barbados)", "2 to 4 dashes Angostura bitters"], "instructions": "Add all the ingredients to an old-fashioned glass and fill with crushed ice. Stir to combine until frost forms on the outside of the glass.", "garnish": null },
+          { "id": "023", "name": "Queen's Park Swizzle", "category": "RUM THROUGH THE AGES", "origin": "Traditional Trinidad recipe", "glassware": "Collins or highball", "ingredients": ["4 mint leaves", "1/2 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "2 ounces black blended rum", "2 dashes Angostura bitters"], "instructions": "Gently muddle the mint leaves with the lime juice and syrup in a Collins or highball glass. Add the rum and bitters. Add crushed ice until the glass is three-quarters full, then use a barspoon or lélé to swizzle. Top up with additional crushed ice as needed to fill the glass. Add garnish.", "garnish": "Swizzle napkin wrap (see page 245) and mint sprig" },
+          { "id": "024", "name": "The Chadburn", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce tawny port", "1/2 ounce natural pear liqueur (such as Mathilde Poire)", "2 ounces blended aged rum", "6 drops Bittermens Xocolati (Chocolate) Mole bitters"], "instructions": "Add all the ingredients to a mixing glass. Fill with cracked or cubed ice. Stir and strain into a chilled coupe.", "garnish": null },
+          { "id": "025", "name": "A Wish for Grace", "category": "RUM THROUGH THE AGES", "origin": "Created by Steven Liles", "glassware": "Chilled coupe", "ingredients": ["3/4 ounce fresh lemon juice", "1/2 ounce 2:1 Simple Syrup (page 324)", "1/2 ounce Pierre Ferrand Dry Curaçao", "1 1/2 ounces pot still lightly aged rum (New England)", "1/4 ounce Blandy's 5 Year Verdelho Madeira", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a cocktail shaker filled with cracked or cubed ice. Shake and strain into a chilled coupe and garnish.", "garnish": "Lemon twist" },
+          { "id": "026", "name": "Hot Buttered Rum", "category": "RUM THROUGH THE AGES", "origin": "Smuggler's Cove original, adapted from historic recipes", "glassware": "8 1/2-ounce Irish Coffee glass", "ingredients": ["3 barspoons SC Hot Buttered Rum Batter (recipe follows)", "1 1/2 ounces blended aged rum", "6 ounces hot water"], "instructions": "Add the batter and rum to the mug. Top with hot water and stir well. Add garnish.", "garnish": "Cinnamon stick" },
+          { "id": "027", "name": "SC Hot Buttered Rum Batter", "category": "RUM THROUGH THE AGES", "origin": null, "glassware": null, "ingredients": ["1 teaspoon freshly ground cinnamon", "1 teaspoon freshly ground nutmeg", "1 teaspoon freshly ground black pepper", "3/4 teaspoon ground cloves", "1/2 teaspoon ground allspice", "1/2 teaspoon ground anise seed", "2 cups salted butter", "4 cups packed golden brown sugar", "2 tablespoons Brer Rabbit Mild Molasses", "1 teaspoon vanilla extract"], "instructions": "Combine the cinnamon, nutmeg, black pepper, cloves, allspice, and anise seed in a small bowl and set aside. Melt the butter in a saucepan over low heat. Add the sugar and stir. Add the molasses and vanilla extract and stir. Finally, stir in the spice mixture. At first, as you stir to combine, the butter will form a separate layer. Continue to stir over low heat until all the ingredients combine, including the butter, about 15 minutes. Remove from the heat. Let cool slightly. While still warm and malleable, pour the batter into a storage container. Let cool completely, then seal air-tight, and store in the refrigerator where it will keep until the expiration date of the butter used to make it; note that date before you start the recipe.", "garnish": null },
+          { "id": "028", "name": "Abricot Vieux", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1 1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "2 ounces cane AOC Martinique rhum agricole vieux", "1 dash Angostura bitters", "1 dash orange bitters"], "instructions": "Combine all the ingredients in a mixing glass filled with cracked or cubed ice and stir. Strain into a chilled coupe. Express orange peel oil over the drink and discard the peel.", "garnish": "Orange peel oil" },
+          { "id": "029", "name": "Paniolo Old-Fashioned", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Old-fashioned", "ingredients": ["1 teaspoon Li Hing Mui Syrup (page 332)", "2 ounces blended aged rum", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a mixing glass filled with cracked or cubed ice and stir. Strain into an old-fashioned glass over a large single ice cube or ice ball. Express oil from the orange peel over the drink and drop the peel into the drink.", "garnish": "Orange peel" },
+          { "id": "030", "name": "Port Royal", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["3/4 ounce fresh lime juice", "3/4 ounce SC Jerk Syrup (page 329)", "1 1/2 ounces blended lightly aged rum", "1/2 ounce Wray & Nephew white overproof rum", "5 drops SC Hellfire Tincture (page 332)"], "instructions": "Add all the ingredients to a cocktail shaker. Add cracked or cubed ice and shake. Double-strain into a chilled coupe. Top with five spread-out drops of Hellfire Tincture on the surface of the cocktail.", "garnish": null },
+          { "id": "031", "name": "Kingston Palaka", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce fresh lemon juice", "1/4 teaspoon li hing mui powder (see Resources, page 335)", "1 ounce Drambuie", "1 1/2 ounces blended aged rum (Jamaica)"], "instructions": "Combine all the ingredients in a cocktail shaker. Shake and strain into a chilled coupe and add garnish.", "garnish": "Lemon peel" },
+          { "id": "032", "name": "Donn Day Afternoon", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Double old-fashioned", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce SC Cinnamon Syrup (page 327)", "4 ounces chilled Stiegl-Radler Grapefruit Beer", "2 ounces cane AOC Martinique rhum agricole blanc"], "instructions": "Add all the ingredients to a double old-fashioned glass. Gently add cracked or cubed ice and stir. Express oil from the grapefruit peel and then drop the peel into the drink.", "garnish": "Grapefruit peel" },
+          { "id": "033", "name": "Baie du Galion", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce Green Chartreuse", "1/4 ounce Drambuie", "2 ounces cane AOC Martinique rhum agricole blanc"], "instructions": "Add all the ingredients to a mixing glass. Fill with cracked or cubed ice. Stir and strain into a chilled coupe. Add garnish.", "garnish": "Lemon twist" },
+          { "id": "034", "name": "Agricole Guava Cooler", "category": "RUM THROUGH THE AGES", "origin": "Created by Martin Cate", "glassware": "Collins or highball glass", "ingredients": ["2 ounces Bundaberg guava soda", "3/4 ounce fresh lime juice", "3/4 ounce Licor 43 spiced liqueur", "2 ounces cane AOC Martinique rhum agricole blanc", "2 dashes Angostura bitters"], "instructions": "Add the guava soda to a Collins or highball glass, then add the remaining ingredients to a cocktail shaker with cracked or cubed ice. Shake and strain into the glass. Gently add cracked or cubed ice to fill the glass, then add garnish.", "garnish": "Mint sprig, cinnamon stick, and lime wheel" },
+          { "id": "035", "name": "Richard Sealebach", "category": "RUM THROUGH THE AGES", "origin": "Created by Rebecca Cate, inspired by the classic Seelbach cocktail from the Seelbach Hotel", "glassware": "Champagne flute", "ingredients": ["1/2 ounce Pierre Ferrand Dry Curaçao", "1 ounce R. L. Seale 10 Year rum", "7 dashes Angostura bitters", "7 dashes Peychaud's bitters", "4 ounces chilled champagne"], "instructions": "Combine all the ingredients except the champagne in a mixing glass filled with cracked or cubed ice. Stir and strain into a champagne flute and top with chilled champagne. Add garnish.", "garnish": "Lemon twist" },
+          { "id": "036", "name": "Cosa Nostra #2", "category": "RUM THROUGH THE AGES", "origin": "Created by Dane Barca", "glassware": "Footed pilsner", "ingredients": ["3/4 ounce fresh lemon juice", "1 1/2 ounces Amaro Averna", "1 ounce blended lightly aged rum", "1 dash Angostura bitters", "2 ounces real ginger ale"], "instructions": "Add all the ingredients except the ginger ale to a footed pilsner glass. Add cracked or cubed ice. Top with ginger ale and stir very gently to combine, then add garnish.", "garnish": "Lemon twist and swizzle stick" },
+          { "id": "037", "name": "Spontaneous Rumbustion", "category": "RUM THROUGH THE AGES", "origin": "Created by Dane Barca", "glassware": "8 1/2-ounce Irish coffee or other heat-resistant glass", "ingredients": ["3/4 ounce fresh lemon juice", "1/2 ounce SC Honey Syrup (page 325)", "1 1/2 ounces black blended overproof rum", "1/2 ounce pot still lightly aged rum (overproof)", "4 ounces boiling water"], "instructions": "Combine the lemon juice and honey in an Irish coffee glass. Add both rums to a Blue Blazer mug (see Resources, page 335). Add the boiling water. Use a lighter to ignite the liquid and pass that flaming liquid back and forth from one Blue Blazer mug to a second Blue Blazer mug for a few seconds. When the flame turns orange, immediately pour the flaming contents of Blue Blazer mug into the Irish coffee glass and put out the flame by placing mug on top of the glass. Garnish with and express a sizable lemon peel long enough to rest on top of the Irish coffee glass.", "garnish": "Long lemon peel" },
+          { "id": "038", "name": "AKU AKU", "category": "THE BIRTH OF TIKI", "origin": "Based on Don the Beachcomber's Missionary's Downfall", "glassware": "Chilled coupe", "ingredients": ["5 (1-inch-square) chunks fresh pineapple", "8 mint leaves", "1 ounce fresh lime juice", "Scant 1/2 ounce SC Demerara Syrup (page 324)", "1/2 ounce natural peach liqueur (such as Mathilde, Combier, or Giffard)", "1 1/2 ounces blended lightly aged rum"], "instructions": "Muddle the pineapple chunks in a drink mixer tin. Add the remaining ingredients and 12 ounces of crushed ice and flash blend for 10 seconds. Double-strain into a chilled coupe glass. Float a large mint leaf on the surface of the drink or rest a small cluster of mint sprigs against the side of the glass to garnish.", "garnish": "Large mint leaf or a small cluster of mint sprigs" },
+          { "id": "039", "name": "PUPULE", "category": "THE BIRTH OF TIKI", "origin": "Don the Beachcomber, mid-1930s", "glassware": "Footed pilsner", "ingredients": ["Spiral-cut orange peel", "3/4 ounce fresh lime juice", "3/4 ounce fresh orange juice", "1/4 ounce SC Cinnamon Syrup (page 327)", "1/4 ounce SC Vanilla Syrup (page 326)", "1/4 ounce St. Elizabeth Allspice Dram", "2 ounces column still aged rum", "1 dash Angostura bitters"], "instructions": "Line a footed pilsner glass with the orange peel with one end hanging over the rim of the glass. Add the remaining ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into the glass. Add garnish.", "garnish": "Swizzle stick and mint sprig" },
+          { "id": "040", "name": "DON'S OWN GROG", "category": "THE BIRTH OF TIKI", "origin": "Don the Beachcomber, circa 1937", "glassware": "Double old-fashioned", "ingredients": ["3/4 ounce fresh lime juice", "1/4 ounce SC Demerara Syrup (page 324)", "1 dash SC Grenadine (page 328)", "1/2 ounce Leopold Brothers Rocky Mountain Blackberry Liqueur", "1 ounce blended aged rum", "1/2 ounce blended lightly aged rum", "1/2 ounce black blended rum", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a double old-fashioned glass. Top with freshly grated nutmeg.", "garnish": "Freshly grated nutmeg" },
+          { "id": "041", "name": "PORT AU PRINCE", "category": "THE BIRTH OF TIKI", "origin": "Don the Beachcomber, circa late 1930s", "glassware": "Footed pilsner", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce pineapple juice", "1/4 ounce SC Demerara Syrup (page 324)", "1 dash SC Grenadine (page 328)", "1/2 ounce John D. Taylor's Velvet Falernum", "1 1/2 ounces cane coffey still aged rum (see page 199)", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a footed pilsner glass. Add garnish.", "garnish": "Lime wedge speared with a cocktail umbrella" },
+          { "id": "042", "name": "Three Dots and a Dash", "category": "THE BIRTH OF TIKI", "origin": "Don the Beachcomber", "glassware": "Footed pilsner", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce fresh orange juice", "1/2 ounce SC Honey Syrup (page 325)", "1/4 ounce John D. Taylor's Velvet Falernum", "1/4 ounce St. Elizabeth Allspice Dram", "1 1/2 ounces cane AOC Martinique rhum agricole vieux", "1/2 ounce blended aged rum", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a footed pilsner glass. Add garnish.", "garnish": "Three maraschino cherries and a pineapple chunk speared on a cocktail pick, or three maraschino cherries on a cocktail pick plus a pineapple frond" },
+          { "id": "043", "name": "Mexican El Diablo", "category": "THE BIRTH OF TIKI", "origin": null, "glassware": "Collins or highball", "ingredients": ["1 lime wedge", "1/2 ounce fresh lime juice", "1/2 ounce natural crème de cassis", "1 1/2 ounces blanco tequila", "4 ounces real ginger ale"], "instructions": "Squeeze and the drop lime wedge into a Collins or highball glass. Fill glass with cracked ice. Build the drink by adding the remaining ingredients; stir. Garnish with a swizzle stick.", "garnish": "Swizzle stick" },
+          { "id": "044", "name": "Port Light", "category": "THE BIRTH OF TIKI", "origin": null, "glassware": "Footed pilsner", "ingredients": ["1 ounce egg white", "2 ounces bourbon", "1 ounce fresh lemon juice", "3/4 ounce SC Honey Syrup (page 325)", "1/2 ounce SC Passion Fruit Syrup (page 325)"], "instructions": "Combine the egg white and bourbon in a drink mixer tin and dry flash without ice for 10 seconds (see page 229). Then add the remaining ingredients. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a footed pilsner glass and garnish.", "garnish": "Swizzle stick" },
+          { "id": "045", "name": "Demerara Dry Float", "category": "THE BIRTH OF TIKI", "origin": "Don the Beachcomber", "glassware": "Double old-fashioned glass and an old-fashioned or small shot glass", "ingredients": ["3/4 ounce black blended overproof rum", "2 ounces fresh lime juice", "1 teaspoon fresh lemon juice", "1 1/2 ounces SC Passion Fruit Syrup (page 325)", "1/4 ounce SC Demerara Syrup (page 324)", "1/4 ounce Luxardo Maraschino liqueur", "1 1/2 ounces blended aged rum"], "instructions": "Pour the overproof rum into a separate old-fashioned or shot glass and set aside. Add the remaining ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a double old-fashioned glass, and serve with the side of overproof rum (the side of danger!). Encourage guests to pour as much or as little of the overproof rum into their drink as they like, and experience how the drink flavor changes.", "garnish": null },
+          { "id": "046", "name": "Jet Pilot", "category": "THE GOLDEN ERA", "origin": "The Luau, 1950s", "glassware": "Double old-fashioned", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce fresh grapefruit juice", "1/2 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce John D. Taylor's Velvet Falernum", "1 ounce black blended rum", "3/4 ounce blended aged rum", "3/4 ounce black blended overproof rum", "1 dash Herbstura (page 228)"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a double old-fashioned glass.", "garnish": null },
+          { "id": "047", "name": "Halekulani Cocktail", "category": "THE GOLDEN ERA", "origin": "House Without a Key lounge, Halekulani Hotel, Waikiki Beach, circa 1930s", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce fresh lemon juice", "1/2 ounce fresh orange juice", "1/2 ounce pineapple juice", "1/4 ounce SC Demerara Syrup (page 324)", "1/2 teaspoon SC Grenadine (page 328)", "1 1/2 ounces bourbon", "1 dash Angostura bitters"], "instructions": "Combine all the ingredients in a cocktail shaker with cracked or cubed ice. Shake and double-strain into a chilled coupe and garnish with an edible orchid on the edge of the glass.", "garnish": "Edible orchid" },
+          { "id": "048", "name": "Sidewinder's Fang", "category": "THE GOLDEN ERA", "origin": "Lanai, San Mateo, California, circa 1960s", "glassware": "Large (22-ounce) brandy snifter", "ingredients": ["Sidewinder's Fang peel (see page 242)", "1 1/2 ounces fresh lime juice", "1 1/2 ounces fresh orange juice", "1 1/2 ounces SC Passion Fruit Syrup (page 325)", "3 ounces seltzer", "1 ounce blended aged rum", "1 ounce black blended rum"], "instructions": "Line a snifter with the Sidewinder's Fang peel, with one end hanging over the rim of the glass. Fill glass with cracked or cubed ice to hold the peel in place. Put the remaining ingredients in a drink mixer tin with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend then strain into the snifter. Garnish with a mint sprig.", "garnish": "Mint sprig" },
+          { "id": "049", "name": "Hawaiian Sunset", "category": "THE GOLDEN ERA", "origin": "Aku Aku, circa 1960s", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce fresh lemon juice", "1/2 ounce SC Orgeat (page 330)", "1 teaspoon SC Grenadine (page 328)", "1 1/2 ounces vodka"], "instructions": "Add all the ingredients to a cocktail shaker and shake with cracked or cubed ice. Double-strain into a chilled coupe. Garnish with a lime peel.", "garnish": "Lime peel" },
+          { "id": "050", "name": "Captain's Grog", "category": "THE GOLDEN ERA", "origin": "Captain's Inn, Long Beach, California, circa 1962", "glassware": "Double old-fashioned", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce fresh grapefruit juice", "1/2 ounce grade A maple syrup", "3 drops pure vanilla extract", "3 drops pure almond extract", "1 ounce seltzer", "1/2 ounce John D. Taylor's Velvet Falernum", "1/2 ounce Pierre Ferrand Dry Curaçao", "3/4 ounce black blended rum", "3/4 ounce blended lightly aged rum", "3/4 ounce blended aged rum"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a double old-fashioned glass. Add garnish.", "garnish": "Mint sprig" },
+          { "id": "051", "name": "Suffering Bastard", "category": "THE GOLDEN ERA", "origin": "Shepheard's Hotel, Cairo, 1942", "glassware": "Collins or highball", "ingredients": ["4 ounces ginger beer", "1/2 ounce fresh lime juice", "1/4 ounce SC Demerara Syrup (page 324)", "1 ounce London dry gin", "1 ounce brandy", "2 dashes Angostura bitters"], "instructions": "Add the ginger beer to a Collins or highball glass, then add the remaining ingredients to a cocktail shaker. Fill with cracked or cubed ice. Shake and strain the contents into the glass and gently fill with cubed or cracked ice and then garnish.", "garnish": "Mint sprig and swizzle stick" },
+          { "id": "052", "name": "Merciless Virgin", "category": "THE GOLDEN ERA", "origin": "Skipper Kent's", "glassware": "Footed pilsner", "ingredients": ["3/4 ounce fresh lemon juice", "1/2 ounce seltzer", "1/2 ounce Cherry Heering liqueur", "1/2 ounce John D. Taylor's Velvet Falernum", "1/4 ounce Pierre Ferrand Dry Curaçao", "1 1/2 ounces blended lightly aged rum"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a footed pilsner glass. Add garnish.", "garnish": "Maraschino cherries on a cocktail pick" },
+          { "id": "053", "name": "Saturn", "category": "THE GOLDEN ERA", "origin": "Created by J. \"Popo\" Galsini", "glassware": "Chilled coupe", "ingredients": ["3/4 ounce fresh lemon juice", "1/2 ounce SC Passion Fruit Syrup (page 325)", "1/4 ounce SC Orgeat (page 330)", "1/4 ounce John D. Taylor's Velvet Falernum", "1 1/4 ounce London dry gin"], "instructions": "Add all the ingredients to a cocktail shaker. Fill with cracked ice. Shake and strain into a chilled coupe. Rest garnish on top of the drink.", "garnish": "Long spiral-cut lemon peel wrapped into rings" },
+          { "id": "054", "name": "TIKI BOWL", "category": "THE GOLDEN ERA", "origin": "Kon-Tiki, Portland, Oregon, 1960", "glassware": "Small (16-to 20-ounce) scorpion bowl or other decorative bowl", "ingredients": ["1 1/2 ounces fresh orange juice", "3/4 ounce fresh lime juice", "1 ounce SC Honey Syrup (page 325)", "1 1/2 ounce black blended rum", "1 ounce black blended overproof rum", "1 ounce column still aged rum", "2 dashes Herbstura (page 228)"], "instructions": "Combine all ingredients in a drink mixer tin. Fill with 18 ounces crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a tiki bowl for two and float garnish in bowl.", "garnish": "Edible orchid" },
+          { "id": "055", "name": "Hurricane", "category": "THE GOLDEN ERA", "origin": "Pat O'Briens, New Orleans, circa 1940s", "glassware": "Small (15-ounce) hurricane (\"squall\") glass", "ingredients": ["2 ounces fresh lemon juice", "2 ounces SC Passion Fruit Syrup (page 325)", "4 ounces black blended rum"], "instructions": "Combine all the ingredients in a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a hurricane glass. Add garnish.", "garnish": "Wind-ravaged cocktail umbrella speared into a lemon wedge" },
+          { "id": "056", "name": "Mundo Perdido", "category": "THE TIKI REVIVAL", "origin": "Created exclusively for Smuggler's Cove by Jeff \"Beachbum\" Berry, 2009", "glassware": "Chilled coupe", "ingredients": ["3/4 ounce fresh lemon juice", "1/4 ounce SC Cinnamon Syrup (page 327)", "1/4 ounce SC Demerara Syrup (page 324)", "1/2 ounce apple brandy", "1 1/2 ounces black blended rum"], "instructions": "Combine all the ingredients in a cocktail shaker with cracked or cubed ice. Shake and double-strain into a chilled coupe.", "garnish": null },
+          { "id": "057", "name": "Formidable Dragon", "category": "THE TIKI REVIVAL", "origin": "Created by Martin Cate", "glassware": "Large (22-ounce) brandy snifter", "ingredients": ["3/4 ounce fresh lemon juice", "3/4 ounce fresh lime juice", "1/2 ounce SC Honey Syrup (page 325)", "3/4 ounce SC Molasses Syrup (page 327)", "1/2 ounce Amaro Di Angostura", "1 1/2 ounces blended aged rum", "1 ounce black blended rum", "1/4 ounce pot still lightly aged rum (overproof)", "1 ounce seltzer"], "instructions": "Add all the ingredients to a drink mixer tin filled with 18 ounces crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a snifter and add garnish.", "garnish": "Edible orchid, multiple mint sprigs, and a swizzle stick" },
+          { "id": "058", "name": "LEI LANI VOLCANO 2.0 (Α.Κ.Α. LEI LANI NOUVEAU)", "category": "THE TIKI REVIVAL", "origin": "Smuggler's Cove original inspired by the Lei Lani Volcano from Walt Disney World, circa 1970s", "glassware": "Collins or highball", "ingredients": ["3 ounces Bundaberg Guava soda", "1 1/2 ounces pineapple juice", "3/4 ounce lime juice", "1 ounce SC Coconut Cream (page 328)", "1 1/2 ounces blended aged rum"], "instructions": "Add the guava soda to a Collins or highball glass, then add the remaining ingredients to a cocktail shaker and fill with cracked or cubed ice. Shake and double-strain into a Collins or highball glass. Gently add cracked or cubed ice to the glass and then garnish.", "garnish": "Edible orchid" },
+          { "id": "059", "name": "Tradewinds", "category": "THE TIKI REVIVAL", "origin": "Circa 1970s", "glassware": "Zombie", "ingredients": ["1 ounce fresh lemon juice", "1 1/2 ounces SC Coconut Cream (page 328)", "1 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "1 ounce black blended rum", "1 ounce blended lightly aged rum"], "instructions": "Add all the ingredients to a drink mixer tin and fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a footed pilsner glass. Add garnish.", "garnish": "Lemon wedge speared with a cocktail umbrella turned inside out (as if the wind has gently blown it open)" },
+          { "id": "060", "name": "Peachtree Punch 2.0", "category": "THE TIKI REVIVAL", "origin": "Smuggler's Cove original inspired by the Trader Vic's Peachtree Punch", "glassware": "Double old-fashioned", "ingredients": ["1/2 fresh yellow or white peach, pitted, and coarsely chopped into chunks (with skin)", "3 ounces fresh orange juice", "1/2 ounce fresh lemon juice", "1 ounce SC Coconut Cream (page 328)", "1/4 ounce natural peach liqueur (such as Mathilde Peach or Combier Crème de Pêche de Vigne)", "2 ounces blended lightly aged rum", "1 ounce seltzer"], "instructions": "Add the peach chunks, orange juice, and lemon juice to drink mixer tin and muddle the peach. Add the remaining ingredients. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and double-strain into a double old-fashioned glass filled with cracked or cubed ice. Garnish with grated nutmeg and a peach wedge on the rim of the glass.", "garnish": "Grated nutmeg and peach wedge" },
+          { "id": "061", "name": "Jungle Bird", "category": "THE TIKI REVIVAL", "origin": "Kuala Lumpur Hilton, circa 1978", "glassware": "Collins or highball", "ingredients": ["2 ounces pineapple juice", "1/2 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "3/4 ounce Campari", "1 1/2 ounces black blended rum"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a Collins or highball glass and add garnish.", "garnish": "Pineapple fronds" },
+          { "id": "062", "name": "Golden Gun", "category": "THE TIKI REVIVAL", "origin": null, "glassware": "Collins or highball", "ingredients": ["3/4 ounce fresh lime juice", "1/2 ounce fresh grapefruit juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "1 ounce blended aged rum", "1 ounce blended lightly aged rum", "2 dashes Angostura bitters"], "instructions": "Fill a Collins or highball glass with cracked or cubed ice. Add all the ingredients to a cocktail shaker filled with cracked or cubed ice. Shake and strain into the Collins or highball glass. Your choice of garnish.", "garnish": "Participants didn't have any garnish at their table, so garnish as you see fit!" },
+          { "id": "063", "name": "Hinky Dinks Fizzy", "category": "THE TIKI REVIVAL", "origin": "Trader Vic's, 1984", "glassware": "Large (22-ounce) brandy snifter", "ingredients": ["2 ounces sparkling wine", "1 1/2 ounces pineapple juice", "1/2 ounce fresh lime juice", "1/2 ounce SC Passion Fruit Syrup (page 325)", "1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "1 ounce London dry gin", "1 ounce blended lightly aged rum"], "instructions": "Pour the sparkling wine into a snifter. Add the remaining ingredients to a drink mixer tin. Fill the tin with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into the snifter. Garnish with a mint sprig.", "garnish": "Mint sprig" },
+          { "id": "064", "name": "Pampanito", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Collins or highball", "ingredients": ["1 ounce fresh lemon juice", "1 ounce SC Molasses Syrup (page 327)", "2 1/2 ounces seltzer", "1/4 ounce St. Elizabeth Allspice Dram", "1 1/2 ounces black blended rum", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a Collins or highball glass. Garnish with a lemon twist.", "garnish": "Lemon twist" },
+          { "id": "065", "name": "Max's Mistake", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Large (22-ounce) brandy snifter", "ingredients": ["1 ounce fresh lemon juice", "1 ounce SC Passion Fruit Syrup (page 325)", "1/2 ounce SC Honey Syrup (page 325)", "2 ounces London dry gin", "1 dash Angostura bitters", "2 ounces Fentimans Victorian Lemonade (or any quality dry sparkling lemonade)"], "instructions": "Combine all the ingredients in a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into the snifter. Add garnish.", "garnish": "Mint sprig" },
+          { "id": "066", "name": "La Guildive", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1 ounce ginger beer", "1/2 ounce fresh lime juice", "1/2 ounce Licor 43", "1/2 ounce natural peach liqueur (such as Mathilde Peach or Combier Crème de Pêche de Vigne)", "2 ounces blended aged rum", "Pinch of freshly grated cinnamon"], "instructions": "Add the ginger beer to a chilled coupe. Combine the remaining ingredients in a cocktail shaker and shake with cracked or cubed ice. Double-strain the shaken ingredients into the coupe. Garnish with a lime twist.", "garnish": "Lime twist" },
+          { "id": "067", "name": "The Twenty Seventy Swizzle", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Collins or highball", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/2 ounce SC Honey Syrup (page 325)", "1/4 ounce St. Elizabeth Allspice Dram", "1 ounce column still aged rum", "1 ounce black blended overproof rum", "1 dash Herbstura (page 228)", "Pinch of freshly grated nutmeg"], "instructions": "Add all the ingredients to a Collins or highball glass, then add crushed iced until the glass is three-quarters full. Use a bar spoon or lélé to swizzle. Top up with additional crushed ice as needed to fill the glass and garnish.", "garnish": "Swizzle napkin wrap (see page 245), mint sprig, and swizzle stick" },
+          { "id": "068", "name": "Shudders in a Whisper", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Large (22-ounce) brandy snifter", "ingredients": ["3/4 ounce fresh lime juice", "1/2 ounce SC Passion Fruit Syrup (page 325)", "1/2 ounce natural pear liqueur (such as Mathilde Poire)", "1/4 ounce Drambuie liqueur", "2 ounces seltzer", "2 ounces column still aged rum", "2 dashes Peychaud's bitters", "1 dash Angostura bitters"], "instructions": "Add all of the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a snifter. Add garnish.", "garnish": "Edible orchid and mint sprig" },
+          { "id": "069", "name": "Cuevas", "category": "CREATING THE SPACE", "origin": "Created by Dane Barca", "glassware": "Chilled coupe", "ingredients": ["1/4 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce Punt e Mes", "1/4 ounce tawny port", "2 ounces blended aged rum", "6 drops Bittermens 'Elemakule Tiki bitters"], "instructions": "Add all the ingredients to a mixing glass. Fill with cracked or cubed ice. Stir and strain into a chilled coupe. Float a maraschino cherry in the center for garnish.", "garnish": "Maraschino cherry" },
+          { "id": "070", "name": "Norwegian Paralysis", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate, inspired by the Polynesian Paralysis", "glassware": "Collins or highball", "ingredients": ["1 1/2 ounces fresh orange juice", "1 1/2 ounces pineapple juice", "1/2 ounce fresh lemon juice", "1/4 ounce SC Demerara Syrup (page 324)", "1/4 ounce SC Orgeat (page 330)", "1 1/2 ounces aquavit"], "instructions": "Add all the ingredients to a cocktail shaker. Fill with cracked ice. Shake and strain contents into a Collins or highball glass filled with cracked ice. Garnish with a lemon wedge speared with a cocktail umbrella.", "garnish": "Lemon wedge speared with a cocktail umbrella" },
+          { "id": "071", "name": "Juan Ho Royale", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["2 ounces champagne or sparkling wine", "3/4 ounce fresh lime juice", "1/2 ounce SC Orgeat (page 330)", "1/2 ounce blue curaçao", "1/2 ounce John D. Taylor's Velvet Falernum", "1 1/2 ounces tequila blanco"], "instructions": "Pour the champagne into a chilled coupe. Add the remaining ingredients to a cocktail shaker and shake with cracked or cubed ice. Double-strain into the chilled coupe.", "garnish": null },
+          { "id": "072", "name": "Chartreuse Swizzle", "category": "CREATING THE SPACE", "origin": "Created by Marcovaldo Dionysos", "glassware": "Collins or Zombie glass", "ingredients": ["1 ounce pineapple juice", "3/4 ounce fresh lime juice", "1/2 ounce John D. Taylor's Velvet Falernum", "1 1/2 ounces Green Chartreuse"], "instructions": "Combine all the ingredients in a Collins or Zombie glass. Fill the glass with crushed ice until it is three-quarters full. Swizzle with a lélé or barspoon. Top up with additional crushed ice as needed to fill the glass. Add garnish.", "garnish": "Swizzle napkin wrap (see page 245), freshly grated nutmeg and mint sprig" },
+          { "id": "073", "name": "Roselita", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Collins or highball glass", "ingredients": ["1 1/2 ounces seltzer", "1/2 ounce fresh lime juice", "1/2 ounce SC Orgeat (page 330)", "1/2 ounce SC Hibiscus Liqueur (page 331)", "1/2 ounce natural pear liqueur (such as Mathilde Poire)", "1 1/2 ounces column still aged rum", "1 dash Peychaud's bitters"], "instructions": "Add the seltzer to a Collins or highball glass. Add the remaining ingredients to a cocktail shaker with cracked or cubed ice. Shake and strain into the glass and carefully add cracked or cubed ice. Garnish with an edible hibiscus flower on a cocktail pick or skewer.", "garnish": "Edible hibiscus flower on cocktail pick or skewer" },
+          { "id": "074", "name": "Center of the Galaxy", "category": "CREATING THE SPACE", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/2 ounce SC Honey Syrup (page 325)", "1/2 ounce St. George Raspberry Liqueur", "2 ounces blended aged rum", "Pinch of freshly ground cinnamon"], "instructions": "Combine all the ingredients in a cocktail shaker filled with cracked or cubed ice. Shake and double-strain into a chilled coupe. Float a lime wheel in the center of the drink and rest a raspberry in the center.", "garnish": "Raspberry and a lime wheel" },
+          { "id": "075", "name": "Callaloo Cooler", "category": "CREATING THE SPACE", "origin": "Created by Melissa Garcia", "glassware": "Collins or highball", "ingredients": ["1 ounce seltzer", "1/2 ounce fresh lime juice", "1/2 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce Cherry Heering", "2 ounces blended lightly aged rum", "1 dash Angostura bitters"], "instructions": "Pour the seltzer in a Collins or highball glass. Add remaining ingredients to a cocktail shaker with cubed or cracked ice. Shake and strain into the Collins or highball glass. Carefully add cubed or cracked ice to the glass to fill and garnish with grated cinnamon and a mint sprig.", "garnish": "Grated cinnamon and mint sprig" },
+          { "id": "076", "name": "Top Notch Volcano", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Large (32-to 48-ounce) scorpion bowl and long (20-inch) luau straws or other punch bowl or decorative bowl with a ladle and cups.", "ingredients": ["4 ounces fresh lime juice", "4 ounces pineapple juice", "1 ounce passion fruit puree", "3 ounces SC Demerara Syrup (page 324)", "1 ounce Luxardo Maraschino liqueur", "4 ounces blended lightly aged rum", "4 ounces blended aged rum"], "instructions": "Add all the ingredients in a drink mixer tin without ice and roll (pour back and forth a few times) with another drink mixer tin to combine ingredients. Divide the contents in half evenly between the two tins. Add 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes to each of the two tins. With each tin, flash blend and open pour with gated finish into a four-person ceramic scorpion bowl. Serve with 20-inch luau straws for easier sharing. Serve on fire!", "garnish": "Fire (see page 245). Otherwise, sliced limes and oranges." },
+          { "id": "077", "name": "The Naked Ape", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Ape \"Fez Wearin\" Monkey Mug (or other tiki mug or double old-fashioned)", "ingredients": ["1/2 ounce fresh lemon juice", "1/2 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce Giffard Banane du Brésil banana liqueur", "1 1/2 ounces black blended rum", "1/2 ounce pot still lightly aged rum (overproof)", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes. Flash blend and open pour with gated finish into a tiki mug or double old-fashioned glass.", "garnish": null },
+          { "id": "078", "name": "Swizzle Français", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Collins or highball", "ingredients": ["1 1/2 ounce fresh lime juice", "1/2 ounce Martinique sugarcane syrup", "1/4 ounce St. Elizabeth Allspice Dram", "2 ounces cane AOC Martinique rhum agricole vieux", "Pinch of fresh ground nutmeg"], "instructions": "Combine all the ingredients in a Collins or highball glass and fill the glass three-quarters full with crushed ice. Swizzle with a lélé or barspoon. Top up with additional crushed ice as needed to fill the glass and garnish.", "garnish": "Swizzle napkin wrap (see page 245) and mint sprig" },
+          { "id": "079", "name": "Sparkling Mai Tai", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Champagne flute or coupe", "ingredients": ["1/4 ounce fresh lime juice", "1/4 ounce SC Orgeat (page 330)", "1/2 ounce Pierre Ferrand Dry Curaçao", "1/4 ounce black blended overproof rum", "1/2 ounce blended aged rum", "4 ounces chilled sparkling wine"], "instructions": "Pour all the ingredients except the sparking wine into a mixing glass. Stir with cracked or cubed ice. Strain into a chilled champagne flute or coupe and top with sparkling wine, then garnish.", "garnish": "Lime twist and mint leaf" },
+          { "id": "080", "name": "The Ernesto", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Double old-fashioned", "ingredients": ["2 ounces Ting grapefruit soda", "1 ounce fresh lime juice", "1 ounce SC Honey Syrup (page 325)", "1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)", "2 ounces tequila blanco", "1 dash Herbstura (page 228)"], "instructions": "Pour the grapefruit soda into a double old-fashioned glass. Add the remaining ingredients to a cocktail shaker filled with cracked or cubed ice. Shake and strain into the double old-fashioned glass. Carefully add cracked or cubed ice to the glass and garnish.", "garnish": "Lime wheel and edible orchid" },
+          { "id": "081", "name": "The Sexpert", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1/2 ounce fresh lemon juice", "1/2 ounce SC Passion Fruit Syrup (page 325)", "1/2 ounce John D. Taylor's Velvet Falernum", "1 1/2 ounces Peruvian pisco", "1/2 ounce gin", "6 drops Bittermens Burlesque bitters"], "instructions": "Combine all the ingredients in a cocktail shaker and fill with cracked or cubed ice. Shake and double-strain into a chilled coupe and add garnish.", "garnish": "Edible orchid or hibiscus flower" },
+          { "id": "082", "name": "Smuggler's Rum Barrel", "category": "CURATING THE EXPERIENCE", "origin": null, "glassware": null, "ingredients": [], "instructions": null, "garnish": null },
+          { "id": "083", "name": "Hana Reviver", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Footed pilsner", "ingredients": ["1 ounce fresh lemon juice", "1 ounce SC Passion Fruit Honey (page 325)", "1/4 barspoon li hing mui powder (see Resources, page 335)", "2 ounces seltzer", "1 barspoon Maraschino liqueur", "2 ounces pot still unaged rum (see page 197)"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and then open pour with gated finish into a footed pilsner glass. Add garnish.", "garnish": "Mint sprig and a swizzle stick." },
+          { "id": "084", "name": "Kaiteur Swizzle", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Collins or highball", "ingredients": ["3/4 ounce fresh lime juice", "1/2 ounce Grade A maple syrup", "1/2 ounce John D. Taylor's Velvet Falernum", "2 ounces blended aged rum (Guyana)", "2 dashes Angostura bitters"], "instructions": "Add all the ingredients to a Collins or highball glass and fill the glass three-quarters full with crushed ice. Swizzle with a lélé or barspoon. Top up with additional crushed ice as needed to fill the glass and garnish.", "garnish": "Swizzle napkin wrap (see page 245) and mint sprig" },
+          { "id": "085", "name": "The Expedition", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Kuhiko tiki mug or other 16-ounce mug or glass", "ingredients": ["1 ounce fresh lime juice", "1/2 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce SC Honey Syrup (page 325)", "1/4 ounce SC Vanilla Syrup (page 326)", "2 ounces seltzer", "1/4 ounce Bittermens New Orleans Coffee Liqueur", "2 ounces black blended rum", "1 ounce bourbon"], "instructions": "Add all the ingredients to a drink mixer tin with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a mug or glass. Add garnish.", "garnish": "Edible orchid" },
+          { "id": "086", "name": "The Undead Gentleman", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Chilled coupe", "ingredients": ["1 dash absinthe blanc", "1/2 ounce fresh lime juice", "1/2 ounce fresh grapefruit juice (white or pink)", "1/2 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce John D. Taylor's Velvet Falernum", "1 ounce black blended overproof rum", "1 1/2 ounces blended aged rum", "1 dash Angostura bitters"], "instructions": "Rinse a chilled cocktail coupe with absinthe blanc. Add the remaining ingredients to a cocktail shaker with cracked or cubed ice. Shake and double-strain into a chilled coupe and add garnish.", "garnish": "Intertwined lime and grapefruit twists" },
+          { "id": "087", "name": "The Dead Reckoning", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Collins or highball glass", "ingredients": ["1 ounce seltzer", "1 ounce fresh lemon juice", "1 ounce pineapple juice", "1/2 ounce Grade A maple syrup", "1/2 ounce SC Vanilla Brandy (see Note, following)", "1/2 ounce tawny port", "2 ounces blended aged rum", "1 dash Angostura bitters"], "instructions": "Add the seltzer to a Collins or highball glass. Add the remaining ingredients to a drink mixer tin. Add 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes to the drink mixer tin and flash blend. Strain the contents into the glass over the seltzer. Carefully fill the glass with cracked or cubed ice and add garnish.", "garnish": "Pineapple fronds, mint sprig, and lemon spiral" },
+          { "id": "088", "name": "Falinum", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Tiki Kaimuki mug or double old-fashioned glass", "ingredients": ["1 ounce fresh lemon juice", "1 ounce SC Coconut Cream (page 328)", "1 ounce seltzer", "1/2 ounce John D. Taylor's Velvet Falernum", "2 ounces column still aged rum", "1 dash orange bitters"], "instructions": "Combine all the ingredients in a drink mixer tin and fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a mug or double old-fashioned glass.", "garnish": null },
+          { "id": "089", "name": "Humuhumunukunukuapua'a", "category": "CURATING THE EXPERIENCE", "origin": "Created by Marcovaldo Dionysos", "glassware": "Double old-fashioned", "ingredients": ["3/4 ounce fresh lemon juice", "3/4 ounce pineapple juice", "1/2 ounce SC Orgeat (page 330)", "2 ounces gin", "2 dashes Peychaud's bitters"], "instructions": "Add all the ingredients to a cocktail shaker and fill with crushed ice. Shake and open pour into a double old-fashioned glass. Garnish with an edible orchid and maraschino cherries.", "garnish": "Edible orchid and maraschino cherries on a cocktail pick" },
+          { "id": "090", "name": "Finkelgrog", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Double old-fashioned", "ingredients": ["1/2 ounce fresh lime juice", "1/2 ounce fresh grapefruit juice", "1/4 ounce SC Orgeat (page 330)", "1/2 ounce Napa Wine Syrup (see Note, following)", "1/2 ounce Licor 43", "1 ounce blended lightly aged rum", "1 ounce black blended rum", "1 ounce seltzer", "Pinch of freshly ground cinnamon"], "instructions": "Combine all the ingredients in a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a double old-fashioned glass.", "garnish": "Zesty conversation" },
+          { "id": "091", "name": "For Pete's Sake", "category": "CURATING THE EXPERIENCE", "origin": "Created by Martin Cate", "glassware": "Double old-fashioned", "ingredients": ["3/4 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/2 ounce SC Hibiscus Liqueur (page 331)", "1/2 ounce Cherry Heering", "1 1/2 ounces Peruvian pisco", "1 dash Angostura bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and then open pour with gated finish into a double old-fashioned glass. Set the cherry-hibiscus garnish across the rim of the glass.", "garnish": "Maraschino cherry inserted into an edible hibiscus flower speared on a 6-inch black cocktail pick or short swizzle stick" },
+          { "id": "092", "name": "Boo Loo", "category": "THE THEATER OF THE EXOTIC COCKTAIL", "origin": "Circa 1965", "glassware": "Hollowed-out pineapple with the core removed (see page 238)", "ingredients": ["6 (1-inch-square) chunks fresh pineapple", "2 1/2 ounces pineapple juice", "1 1/2 ounces fresh lime juice", "1 1/4 ounces SC Honey Syrup (page 325)", "1 1/2 ounces blended aged rum", "1 1/2 ounces column still aged rum", "3/4 ounce black blended rum", "3/4 ounce black blended overproof rum", "1 1/2 ounces seltzer"], "instructions": "Add the pineapple chunks, pineapple juice, and lime juice to a drink mixer tin and muddle. Add the syrup, the four rums, and the seltzer with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into a hollowed-out pineapple that has the core removed. Replace the lid and add two straws.", "garnish": "Pineapple lid with two straw holes (see page 238)" },
+          { "id": "093", "name": "Caribeño", "category": "THE THEATER OF THE EXOTIC COCKTAIL", "origin": "Traditional Caribbean recipe", "glassware": "Drained young coconut shell (see page 238)", "ingredients": ["4 ounces coconut water", "1/4 ounce SC Demerara Syrup (page 324)", "2 ounces column still lightly aged rum (see page 198) or London dry gin"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator cubes.\" Flash blend and strain into a coconut shell filled with cracked or cubed ice.", "garnish": null },
+          { "id": "094", "name": "Monk's Respite", "category": "THE THEATER OF THE EXOTIC COCKTAIL", "origin": "Created by Steven Liles", "glassware": "Drained young coconut shell (see page 238)", "ingredients": ["3 ounces fresh coconut water", "1/2 ounce fresh lemon juice", "1/4 ounce SC Honey Syrup (page 325)", "1/4 ounce Yellow Chartreuse", "1 1/2 ounces Broker's gin", "1 ounce seltzer", "1 dash orange bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour with gated finish into the empty coconut shell.", "garnish": null },
+          { "id": "095", "name": "The Mastadon", "category": "THE THEATER OF THE EXOTIC COCKTAIL", "origin": "Created by Alex Smith", "glassware": "Hollowed-out pineapple (see page 238)", "ingredients": ["3 ounces pineapple juice", "1/2 ounce fresh lime juice", "1 ounce passion fruit puree", "1/2 ounce Licor 43", "1/2 ounce Maraschino liqueur", "1 1/2 ounces blended aged rum", "1 1/2 ounces bourbon", "2 dashes Peychaud's bitters"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour into a hollowed-out pineapple and add garnish.", "garnish": "Pineapple lid with a straw hole cut out (see page 238) or Mermaid Island (see page 252)" },
+          { "id": "096", "name": "Piñata", "category": "THE THEATER OF THE EXOTIC COCKTAIL", "origin": "Created by Marcovaldo Dionysos", "glassware": "Hollowed-out pineapple (see page 238)", "ingredients": ["3 ounces pineapple juice", "1 ounce fresh lemon juice", "1/4 to 1/2 ounce SC Demerara Syrup (page 324)", "1 ounce ginger liqueur", "1/4 ounce St. Elizabeth Allspice Dram", "1 ounce black blended rum", "1 ounce blended lightly aged rum"], "instructions": "Add all the ingredients to a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator\" cubes. Flash blend and open pour into a hollowed-out pineapple. Garnish with freshly grated nutmeg.", "garnish": "Freshly grated nutmeg" },
+          { "id": "097", "name": "Bumboat", "category": "THE THEATER OF THE EXOTIC COCKTAIL", "origin": "Created by Justin Oliver", "glassware": "Hollowed-out pineapple (see page 238)", "ingredients": ["2 ounces pineapple juice", "1 1/2 ounces fresh lemon juice", "3/4 ounce SC Cinnamon Syrup (page 327)", "1 ounce rye", "1 ounce blended lightly aged rum", "3 drops almond extract", "6 drops Bittermens 'Elemakule Tiki bitters", "3/4 ounce black blended overproof rum"], "instructions": "Combine all the ingredients except the overproof rum in a drink mixer tin. Fill with 12 ounces of crushed ice and 4 to 6 small \"agitator cubes.\" Flash blend and then open pour with gated finish into the hollowed-out pineapple. Float the overproof rum by gently pouring on top of the drink. Add garnish.", "garnish": "A pineapple lid with a straw hole cut out (see page 238) or Mermaid Island (see page 252)" },
+          { "id": "098", "name": "Planter's Punch", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Traditional, adapted by Smuggler's Cove, 2009", "glassware": "Collins or highball", "ingredients": ["1 ounce fresh lime juice", "3/4 ounce SC Demerara syrup (page 324)", "1/4 ounce St. Elizabeth Allspice Dram", "3 ounces blended aged rum (Jamaica)", "2 dashes Angostura bitters"], "instructions": "Combine all ingredients in a drink mixer tin with 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes. Flash blend and then open pour with gated finish into a Collins or highball glass. Garnish with Jamaican sunshine (oh-and a mint sprig).", "garnish": "Mint Sprig" },
+          { "id": "099", "name": "Mai Tai", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Trader Vic, 1944, adapted by Smuggler's Cove", "glassware": "Double old-fashioned glass", "ingredients": ["3/4 ounce fresh lime juice", "1/4 ounce SC Mai Tai Rich Simple Syrup (page 326)", "1/4 ounce SC orgeat syrup (page 330)", "1/2 ounce Pierre Ferrand dry curaçao", "2 ounces blended aged rum (see pages 262-64 for details)"], "instructions": "Combine all ingredients with 12 ounces of crushed ice and a few cubes in a cocktail shaker. Shake until a frost forms on the shaker and pour the entire contents into a double old-fashioned glass. Garnish with a spent lime shell and mint sprig.", "garnish": "Spent lime shell and mint sprig" },
+          { "id": "100", "name": "Doctor Funk", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Trader Vic, 1946, adapted by Smuggler's Cove", "glassware": "Double old-fashioned", "ingredients": ["1/2 ounce fresh lemon juice", "1/4 ounce SC Grenadine (page 328)", "1/2 ounce fresh lime juice", "1/2 ounce SC Demerara Simple Syrup (page 324)", "1/4 ounce Herbsaint", "2 1/4 ounce black pot still rum (see page 198)", "1 ounce seltzer"], "instructions": "Add all ingredients to drink mixer tin with 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes. Flash blend and open pour with gated finish into a double old-fashioned. Garnish with a ti leaf or pineapple fronds.", "garnish": "Ti leaf or pineapple fronds" },
+          { "id": "101", "name": "Zombie", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Donn Beach, 1934, adapted by Smuggler's Cove", "glassware": "Zombie glass", "ingredients": ["3/4 ounce fresh lime juice", "1/4 ounce fresh grapefruit juice", "1/4 ounce SC Cinnamon Syrup (page 327)", "1 teaspoon SC Grenadine (page 328)", "1/2 ounce John D. Taylor's Velvet Falernum", "1 1/2 ounces blended aged rum", "1 1/2 ounces column still aged rum", "1 ounce black blended overproof rum", "2 dashes Herbstura"], "instructions": "Combine all ingredients in a drink mixer tin with 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes. Flash blend and open pour with gated finish into a Zombie glass. Garnish with a mint sprig and healthy dose of trepidation.", "garnish": "Mint sprig" },
+          { "id": "102", "name": "Navy Grog", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Trader Vic's version, 1940s, adapted by Smuggler's Cove", "glassware": "Double old-fashioned", "ingredients": ["3/4 ounce fresh lime juice", "3/4 ounce fresh grapefruit juice", "1/4 ounce SC Demerara syrup (page 324)", "1/4 ounce St. Elizabeth Allspice Dram", "1 ounce pot still lightly aged (overproof) rum", "1 ounce blended lightly aged rum", "1 ounce column still aged rum"], "instructions": "Flash blend and open pour with gated finish into a double old-fashioned glass. Garnish with a mint sprig or rock candy stick and a toast to sailors of yore.", "garnish": "Mint sprig or Rock Candy Stick or Ice Cone" },
+          { "id": "103", "name": "Scorpion", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "The Luau, 1958, adapted by Smuggler's Cove", "glassware": "Large (32-48 ounce) scorpion bowl and long 20\" luau straws (see Resources) or other punch bowl or decorative bowl with a ladle and cups.", "ingredients": ["2 ounces fresh lime juice", "4 ounces fresh orange juice", "1 1/2 ounces SC Demerara syrup (page 324)", "2 ounces SC Orgeat (page 330)", "2 ounces brandy", "4 ounces London Dry Gin", "4 ounces blended lightly aged rum"], "instructions": "Combine all ingredients in a mixing tin without ice and roll (pour back and forth) with another mixing tin to combine ingredients evenly and split in half. Add ice to each cup and flash blend with a drink mixer for 3 seconds. Pour contents of both cups into a 4-person ceramic Scorpion Bowl. Serve with 20-inch luau straws for easier sharing. Add fire to taste.", "garnish": null },
+          { "id": "104", "name": "Fog Cutter", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Trader Vic, 1940s, adapted by Smuggler's Cove", "glassware": "Zombie glass or Fog Cutter mug", "ingredients": ["1 1/2 ounce fresh lemon juice", "1 1/2 ounce fresh orange juice", "1/2 ounce SC Orgeat (page 330)", "1 ounce pisco", "1/2 ounce gin", "2 ounces blended lightly aged rum", "1/2 ounce oloroso sherry"], "instructions": "Combine all ingredients except the sherry in a drink mixer tin with 12 ounces of crushed ice and 4 to 6 \"agitator\" cubes. Flash blend and open pour with gated finish into a Zombie glass or Fog Cutter mug. Float sherry by gently pouring on top of the surface of the drink and then garnish.", "garnish": "Swizzle stick and mint sprig" },
+          { "id": "105", "name": "Singapore Sling", "category": "EIGHT ESSENTIAL EXOTIC ELIXIRS", "origin": "Classic, adapted by Smuggler's Cove", "glassware": "Collins or highball", "ingredients": ["2 ounces seltzer", "3/4 ounce fresh lemon juice", "1/4 ounce SC Demerara Syrup (page 324)", "1/2 ounce Cherry Heering liqueur", "1/4 ounce Benedictine", "1 1/2 ounce London Dry Gin", "1 dash Angostura bitters", "1 dash orange bitters"], "instructions": "Add the seltzer to the bottom of a Collins or highball glass. Add the rest of ingredients to a cocktail shaker with cubed or cracked ice. Shake and strain into the glass. Gently add cubed or cracked ice to glass and add garnish.", "garnish": "Lemon wedge speared with a cocktail umbrella" },
+          { "id": "106", "name": "HONDO HATTIE'S JUNGLE PUNCH!", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["1 ounce fresh lemon juice", "1/2 ounce SC Honey Syrup (page 325)", "1/4 ounce blue curaçao", "1/4 ounce tawny port", "1/2 ounce John D. Taylor's Velvet Falernum", "1/4 ounce natural pear liqueur (such as Mathilde Poire)", "2 ounces blended aged rum", "1 dash Angostura bitters"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredients except the ice in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to the dispenser or serve over a large block or smaller blocks of ice in a punch bowl. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": null },
+          { "id": "107", "name": "Kahiko Punch", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["1 ounce fresh lemon juice", "1 1/2 ounces SC Passion Fruit Honey (page 325)", "1/2 ounce SC Cinnamon Syrup (page 327)", "1/2 ounce SC Hibiscus Liqueur (page 331)", "2 ounces pot still unaged rum (see page 197)", "6 drops Bittermans 'Elemakule Tiki bitters"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredients except the ice in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to the dispenser or serve over a large block or smaller blocks of ice in a punch bowl. Garnish individual servings with an edible orchid. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": "Edible orchid" },
+          { "id": "108", "name": "Triumvirate Punch", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["3/4 ounce fresh lime juice", "1 ounce SC Passion Fruit Honey (page 325)", "1/4 ounce St. Elizabeth Allspice Dram", "1 1/2 ounces pot still unaged rum (see page 197)", "2 dashes Angostura bitters", "Pinch of freshly grated nutmeg"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredients in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to dispenser or serve over a large block or smaller blocks of ice in a punch bowl. Garnish individual servings with mint and a smile. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": "Mint and a smile" },
+          { "id": "109", "name": "Eureka Punch", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["1 1/2 ounces fresh lemon juice", "1 ounce SC Honey Syrup (page 325)", "1/2 ounce Yellow Chartreuse", "1 1/2 ounces column still aged rum", "1 dash Angostura bitters", "2 ounces real ginger ale"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredients except the ginger ale in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to the dispenser or serve over a large block or smaller blocks of ice in a punch bowl. Top with ginger ale and stir. Garnish individual servings with a lemon wedge or twist and a mint sprig. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": "Lemon wedge or twist and mint sprig" },
+          { "id": "110", "name": "Yuletidal Wave", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["2 ounces pineapple juice", "1 ounce fresh lemon juice", "1/2 ounce natural pear liqueur (such as Mathilde Poire)", "1/2 ounce Licor 43", "1/4 ounce St. Elizabeth Allspice Dram", "1/2 ounce brandy", "1 ounce bourbon", "1 ounce column still aged rum"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredients except the ice in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to the dispenser or serve over a large block or smaller blocks of ice in a punch bowl. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": null },
+          { "id": "111", "name": "Rumbustion Punch", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["1 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/4 ounce SC Cinnamon Syrup (page 327)", "1 ounce blended aged rum", "1 ounce blended lightly aged rum", "2 dashes Herbstura (page 228)"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredient except the ice in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to dispenser or serve over a large block or smaller blocks of ice in a punch bowl. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": null }
+        ]; // End of initialRecipesData
 
         // --- State ---
-        let recipes = [];
-        let inventory = []; // Array of ingredient names the user has
-        let allIngredients = new Set(); // Set of all unique ingredients across all recipes
-        let sortableInstance = null; // To hold the Sortable instance
+        let allRecipes = [];
+        let favoriteRecipeIds = [];
+        let categoriesState = {}; // { [categoryKey]: isExpandedBoolean }
 
         // --- DOM Elements ---
-        const recipeListEl = document.getElementById('recipe-list');
-        const inventoryListEl = document.getElementById('inventory-list');
+        const recipeCategoriesListEl = document.getElementById('recipe-categories-list');
         const addRecipeForm = document.getElementById('add-recipe-form');
-        const recipeNameInput = document.getElementById('recipe-name');
-        const recipeIngredientsInput = document.getElementById('recipe-ingredients');
-        const recipeInstructionsInput = document.getElementById('recipe-instructions');
-        const recipeGarnishInput = document.getElementById('recipe-garnish');
+        const backupBtn = document.getElementById('backup-btn');
+        const restoreInput = document.getElementById('restore-input');
+        const restoreMessageEl = document.getElementById('restore-message');
 
         const sections = {
             recipes: document.getElementById('recipes-section'),
-            inventory: document.getElementById('inventory-section'),
-            addRecipe: document.getElementById('add-recipe-section')
+            addRecipe: document.getElementById('add-recipe-section'),
+            settings: document.getElementById('settings-section')
         };
         const navButtons = {
             recipes: document.getElementById('nav-recipes'),
-            inventory: document.getElementById('nav-inventory'),
-            addRecipe: document.getElementById('nav-add-recipe')
+            addRecipe: document.getElementById('nav-add-recipe'),
+            settings: document.getElementById('nav-settings')
         };
-        const clearInventoryBtn = document.getElementById('clear-inventory-btn');
 
         // --- Functions ---
 
-        // Load data from Local Storage
         function loadData() {
-            try {
-                const storedRecipes = localStorage.getItem(RECIPES_STORAGE_KEY);
-                recipes = storedRecipes ? JSON.parse(storedRecipes) : [...initialRecipes];
-                 if (!storedRecipes && initialRecipes.length > 0) {
-                    saveRecipes();
+            const storedRecipes = localStorage.getItem(RECIPES_STORAGE_KEY);
+            const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
+            const storedCategoryStates = localStorage.getItem(CATEGORY_STATE_STORAGE_KEY);
+
+            if (storedRecipes) {
+                try {
+                    const parsedRecipes = JSON.parse(storedRecipes);
+                    allRecipes = Array.isArray(parsedRecipes) ? parsedRecipes : [...initialRecipesData];
+                } catch (e) {
+                    console.error("Error parsing stored recipes:", e);
+                    allRecipes = [...initialRecipesData];
                 }
-            } catch (e) {
-                console.error("Error loading recipes:", e);
-                recipes = [...initialRecipes];
+            } else {
+                allRecipes = [...initialRecipesData];
             }
 
-             try {
-                const storedInventory = localStorage.getItem(INVENTORY_STORAGE_KEY);
-                inventory = storedInventory ? JSON.parse(storedInventory) : [];
-                 inventory.sort();
-            } catch (e) {
-                console.error("Error loading inventory:", e);
-                inventory = [];
+            if (storedFavorites) {
+                 try {
+                    const parsedFavorites = JSON.parse(storedFavorites);
+                    favoriteRecipeIds = Array.isArray(parsedFavorites) ? parsedFavorites : [];
+                } catch (e) {
+                    console.error("Error parsing stored favorites:", e);
+                    favoriteRecipeIds = [];
+                }
+            } else {
+                favoriteRecipeIds = [];
             }
-            updateAllIngredients();
-        }
 
-        // Save recipes to Local Storage (respects current array order)
-        function saveRecipes() {
-            try {
-                localStorage.setItem(RECIPES_STORAGE_KEY, JSON.stringify(recipes));
-                updateAllIngredients();
-            } catch (e) {
-                console.error("Error saving recipes:", e);
-                alert("Could not save recipes. Local storage might be full or disabled.");
+            if (storedCategoryStates) {
+                try {
+                    const parsedStates = JSON.parse(storedCategoryStates);
+                    categoriesState = (typeof parsedStates === 'object' && parsedStates !== null) ? parsedStates : {};
+                } catch (e) {
+                     console.error("Error parsing stored category states:", e);
+                     categoriesState = {};
+                }
+            } else {
+                 categoriesState = {};
             }
-        }
-
-        // Save inventory to Local Storage
-        function saveInventory() {
-             try {
-                 inventory.sort();
-                localStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify(inventory));
-            } catch (e) {
-                console.error("Error saving inventory:", e);
-                alert("Could not save inventory. Local storage might be full or disabled.");
-            }
-        }
-
-        // Update the set of all known ingredients from recipes
-        function updateAllIngredients() {
-            allIngredients.clear();
-            recipes.forEach(recipe => {
-                recipe.ingredients.forEach(ing => {
-                    let coreIngredient = ing.replace(/^[\d.-]+\s*(oz|ml|tsp|tbsp|dash|dashes|drops?)\s+/i, '');
-                    coreIngredient = coreIngredient.replace(/ *\([^)]*\) */g, "").trim();
-                     if (coreIngredient) {
-                        allIngredients.add(coreIngredient.toLowerCase());
-                    } else if (ing) {
-                        allIngredients.add(ing.toLowerCase());
+            
+            if (!storedRecipes) saveRecipes();
+            if (!storedFavorites) saveFavorites();
+            if (!storedCategoryStates) {
+                getAllCategories().forEach(catKey => {
+                    if (!(catKey in categoriesState)) {
+                        categoriesState[catKey] = (catKey === FAVORITES_CATEGORY_KEY && favoriteRecipeIds.length > 0);
                     }
                 });
-            });
-             allIngredients = new Set([...allIngredients].sort());
+                saveCategoryStates();
+            }
         }
 
-        // Render the list of recipes
-        function renderRecipes() {
-            recipeListEl.innerHTML = '';
-            if (recipes.length === 0) {
-                recipeListEl.innerHTML = '<p class="text-gray-500">No recipes yet. Add one!</p>';
+        function saveRecipes() { localStorage.setItem(RECIPES_STORAGE_KEY, JSON.stringify(allRecipes)); }
+        function saveFavorites() { localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteRecipeIds)); }
+        function saveCategoryStates() { localStorage.setItem(CATEGORY_STATE_STORAGE_KEY, JSON.stringify(categoriesState)); }
+
+        function getAllCategories() {
+            const categories = new Set();
+            if (favoriteRecipeIds.length > 0) categories.add(FAVORITES_CATEGORY_KEY);
+            allRecipes.forEach(recipe => categories.add(recipe.category || USER_RECIPE_CATEGORY));
+            if (allRecipes.some(r => r.category === USER_RECIPE_CATEGORY) && !categories.has(USER_RECIPE_CATEGORY)) {
+                categories.add(USER_RECIPE_CATEGORY);
+            }
+            return [...categories].sort((a, b) => {
+                if (a === FAVORITES_CATEGORY_KEY) return -1; if (b === FAVORITES_CATEGORY_KEY) return 1;
+                if (a === USER_RECIPE_CATEGORY) return -1; if (b === USER_RECIPE_CATEGORY) return 1;
+                return (a || '').localeCompare(b || '');
+            });
+        }
+
+        function renderRecipeList() {
+            recipeCategoriesListEl.innerHTML = '';
+            const categories = getAllCategories();
+
+            if (allRecipes.length === 0 && favoriteRecipeIds.length === 0) {
+                recipeCategoriesListEl.innerHTML = '<p class="text-gray-500">No recipes found. Add one!</p>';
                 return;
             }
 
-            recipes.forEach((recipe) => {
-                const card = document.createElement('div');
-                card.dataset.id = recipe.id;
-                card.className = 'recipe-card';
-                card.innerHTML = `
-                    <div class="flex justify-between items-center recipe-header">
-                        <span class="drag-handle lucide icon-grip-vertical" title="Drag to reorder"></span>
-                        <h3 class="text-xl font-semibold text-amber-700 flex-grow mr-2">${recipe.name}</h3>
-                        <span class="expand-icon lucide icon-chevron-down text-gray-500"></span>
-                    </div>
-                    <div class="recipe-details mt-3 pt-3 border-t border-orange-100" style="display: none;">
-                        <h4 class="font-semibold mb-1 text-teal-700">Ingredients:</h4>
-                        <ul class="list-disc list-inside mb-3 text-sm space-y-1">
-                            ${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+            categories.forEach(categoryKey => {
+                let categoryRecipes = [];
+                let categoryDisplayName = categoryKey;
+
+                if (categoryKey === FAVORITES_CATEGORY_KEY) {
+                    categoryDisplayName = "⭐ Favorites";
+                    const currentRecipeIds = new Set(allRecipes.map(r => r.id));
+                    favoriteRecipeIds = favoriteRecipeIds.filter(favId => currentRecipeIds.has(favId));
+                    saveFavorites();
+                    categoryRecipes = allRecipes.filter(r => favoriteRecipeIds.includes(r.id));
+                    if (categoryRecipes.length === 0) return;
+                } else {
+                    categoryDisplayName = categoryKey === USER_RECIPE_CATEGORY ? "👤 User Added Recipes" : categoryKey;
+                    categoryRecipes = allRecipes.filter(r => (r.category || USER_RECIPE_CATEGORY) === categoryKey);
+                     if (categoryRecipes.length === 0 && categoryKey === USER_RECIPE_CATEGORY && !allRecipes.some(r => r.category === USER_RECIPE_CATEGORY)) {
+                        const hasActualUserCategory = allRecipes.some(r => r.category === USER_RECIPE_CATEGORY);
+                        if (!hasActualUserCategory) return;
+                     }
+                }
+                categoryRecipes.sort((a, b) => a.name.localeCompare(b.name));
+
+                const categoryContainer = document.createElement('div');
+                categoryContainer.classList.add('category-container', 'mb-4');
+                const isExpanded = categoriesState[categoryKey] === true;
+
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `
+                    <span class="category-title">${categoryDisplayName} (${categoryRecipes.length})</span>
+                    <span class="lucide ${isExpanded ? 'icon-chevron-up' : 'icon-chevron-down'} text-gray-600"></span>
+                `;
+
+                const recipesContainer = document.createElement('div');
+                recipesContainer.className = 'category-recipes';
+                if (!isExpanded) recipesContainer.classList.add('hidden');
+
+                if (categoryRecipes.length > 0) {
+                    categoryRecipes.forEach(recipe => recipesContainer.appendChild(createRecipeCard(recipe)));
+                } else {
+                     recipesContainer.innerHTML = `<p class="text-sm text-gray-500 italic p-2">No recipes in this category yet.</p>`;
+                }
+
+                header.addEventListener('click', () => {
+                    categoriesState[categoryKey] = !categoriesState[categoryKey];
+                    saveCategoryStates();
+                    recipesContainer.classList.toggle('hidden');
+                    header.querySelector('.lucide').classList.toggle('icon-chevron-up', categoriesState[categoryKey]);
+                    header.querySelector('.lucide').classList.toggle('icon-chevron-down', !categoriesState[categoryKey]);
+                });
+                categoryContainer.appendChild(header);
+                categoryContainer.appendChild(recipesContainer);
+                recipeCategoriesListEl.appendChild(categoryContainer);
+            });
+        }
+
+        function createRecipeCard(recipe) {
+            const card = document.createElement('div');
+            card.className = 'recipe-card';
+            card.dataset.id = recipe.id;
+            const isFavorited = favoriteRecipeIds.includes(recipe.id);
+            const originText = recipe.origin ? `<div><span class="detail-label">Origin:</span> ${recipe.origin}</div>` : '';
+            const glasswareText = `<div><span class="detail-label">Glassware:</span> ${recipe.glassware || 'N/A'}</div>`;
+            const categoryText = `<div><span class="detail-label">Category:</span> ${recipe.category || USER_RECIPE_CATEGORY}</div>`;
+            const ingredientsList = recipe.ingredients && Array.isArray(recipe.ingredients)
+                ? recipe.ingredients.map(ing => `<li>${ing}</li>`).join('') : '<li>No ingredients listed</li>';
+            const instructionsText = recipe.instructions ? recipe.instructions.replace(/\n/g, '<br>') : 'No instructions provided.';
+            const garnishText = recipe.garnish ? `<div><span class="detail-label">Garnish:</span> ${recipe.garnish}</div>` : '';
+
+            let starHTML = isFavorited 
+                ? `<span class="emoji-favorite">🍹</span>` 
+                : `<span class="lucide icon-star"></span>`; // Lucide star for non-favorite
+
+            card.innerHTML = `
+                <div class="recipe-header">
+                    <span class="recipe-name">${recipe.name || 'Unnamed Recipe'}</span>
+                    <span class="star-icon-placeholder" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">
+                        ${starHTML}
+                    </span>
+                </div>
+                <div class="recipe-details hidden">
+                    ${originText}
+                    ${glasswareText}
+                    ${categoryText}
+                    <div>
+                        <span class="detail-label">Ingredients:</span>
+                        <ul class="list-disc list-inside ml-4">
+                            ${ingredientsList}
                         </ul>
-                        <h4 class="font-semibold mb-1 text-teal-700">Instructions:</h4>
-                        <p class="text-sm mb-3">${recipe.instructions.replace(/\n/g, '<br>')}</p>
-                        ${recipe.garnish ? `<h4 class="font-semibold mb-1 text-teal-700">Garnish:</h4><p class="text-sm mb-3">${recipe.garnish}</p>` : ''}
-                        <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn">
-                           <span class="lucide icon-trash"></span> Delete Recipe
-                        </button>
                     </div>
-                `;
-                const header = card.querySelector('.recipe-header');
-                const details = card.querySelector('.recipe-details');
-                const expandIcon = header.querySelector('.expand-icon');
-                const dragHandle = header.querySelector('.drag-handle');
+                    <div><span class="detail-label">Instructions:</span> ${instructionsText}</div>
+                    ${garnishText}
+                    <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn mt-2">
+                       <span class="lucide icon-trash"></span> Delete Recipe
+                    </button>
+                </div>
+            `;
+            const header = card.querySelector('.recipe-header');
+            const details = card.querySelector('.recipe-details');
+            const starIconPlaceholder = card.querySelector('.star-icon-placeholder');
 
-                header.addEventListener('click', (e) => {
-                     if (dragHandle.contains(e.target)) { return; } // Ignore click on handle
-                    const isVisible = details.style.display === 'block';
-                    details.style.display = isVisible ? 'none' : 'block';
-                    expandIcon.classList.toggle('icon-chevron-down', isVisible);
-                    expandIcon.classList.toggle('icon-chevron-up', !isVisible);
-                });
-
-                 const deleteBtn = card.querySelector('.delete-recipe-btn');
-                deleteBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const recipeIdToDelete = card.dataset.id;
-                    const recipeIndexToDelete = recipes.findIndex(r => r.id === recipeIdToDelete);
-                    if (recipeIndexToDelete === -1) return;
-                    if (confirm(`Are you sure you want to delete the "${recipes[recipeIndexToDelete].name}" recipe?`)) {
-                        recipes.splice(recipeIndexToDelete, 1);
-                        saveRecipes();
-                        renderRecipes();
-                        renderInventory();
-                    }
-                });
-                recipeListEl.appendChild(card);
+            header.addEventListener('click', (e) => {
+                if (starIconPlaceholder.contains(e.target)) return;
+                details.classList.toggle('hidden');
             });
-            initSortable();
-        }
-
-        // Initialize SortableJS on the recipe list
-        function initSortable() {
-            if (sortableInstance) { sortableInstance.destroy(); }
-             if (recipeListEl.children.length > 1) {
-                 sortableInstance = new Sortable(recipeListEl, {
-                    handle: '.drag-handle',
-                    animation: 150,
-                    ghostClass: 'sortable-ghost',
-                    dragClass: 'sortable-drag',
-                    onEnd: function (evt) {
-                        const newIdOrder = [...recipeListEl.children].map(card => card.dataset.id);
-                        const recipeMap = new Map(recipes.map(r => [r.id, r]));
-                        const newRecipes = newIdOrder.map(id => recipeMap.get(id)).filter(Boolean);
-                        if (newRecipes.length === recipes.length) {
-                            recipes = newRecipes;
-                            saveRecipes();
-                        } else {
-                             console.error("Recipe mapping failed during reorder. Reverting visually.");
-                             renderRecipes();
-                        }
-                    },
-                });
-            }
-        }
-
-        // Render the inventory list
-        function renderInventory() {
-            inventoryListEl.innerHTML = '';
-            if (allIngredients.size === 0) {
-                 inventoryListEl.innerHTML = '<p class="text-gray-500">No ingredients found. Add some recipes first!</p>';
-                 clearInventoryBtn.disabled = true; return;
-            }
-            clearInventoryBtn.disabled = false;
-            [...allIngredients].forEach(ingredient => {
-                 const item = document.createElement('div');
-                item.className = 'inventory-item';
-                const isChecked = inventory.includes(ingredient);
-                const displayIngredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
-                const elementId = `inv-${ingredient.replace(/[^a-zA-Z0-9]/g, '-')}`;
-                item.innerHTML = `
-                    <label for="${elementId}" class="flex-grow cursor-pointer mr-2">${displayIngredient}</label>
-                    <input type="checkbox" id="${elementId}" data-ingredient="${ingredient}" ${isChecked ? 'checked' : ''}
-                           class="form-checkbox h-5 w-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500 cursor-pointer flex-shrink-0">
-                `;
-                const checkbox = item.querySelector('input[type="checkbox"]');
-                checkbox.addEventListener('change', (e) => {
-                    const ingredientName = e.target.dataset.ingredient;
-                    if (e.target.checked) {
-                        if (!inventory.includes(ingredientName)) { inventory.push(ingredientName); }
-                    } else {
-                        inventory = inventory.filter(item => item !== ingredientName);
-                    }
-                    saveInventory();
-                });
-                inventoryListEl.appendChild(item);
+            starIconPlaceholder.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(recipe.id, starIconPlaceholder);
             });
+            card.querySelector('.delete-recipe-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm(`Are you sure you want to delete "${recipe.name}"? This cannot be undone.`)) {
+                    deleteRecipe(recipe.id);
+                }
+            });
+            return card;
         }
 
-        // Handle adding a new recipe
+        function toggleFavorite(recipeId, starElementContainer) {
+            const index = favoriteRecipeIds.indexOf(recipeId);
+            let isNowFavorited = false;
+            if (index > -1) {
+                favoriteRecipeIds.splice(index, 1);
+                isNowFavorited = false;
+            } else {
+                favoriteRecipeIds.push(recipeId);
+                isNowFavorited = true;
+            }
+            saveFavorites();
+            
+            if (starElementContainer) {
+                starElementContainer.innerHTML = isNowFavorited 
+                    ? `<span class="emoji-favorite">🍹</span>` 
+                    : `<span class="lucide icon-star"></span>`; // Ensure this line correctly adds the Lucide classes
+                starElementContainer.title = isNowFavorited ? 'Remove from Favorites' : 'Add to Favorites';
+            }
+            renderRecipeList(); 
+        }
+
+        function deleteRecipe(recipeId) {
+            allRecipes = allRecipes.filter(r => r.id !== recipeId);
+            favoriteRecipeIds = favoriteRecipeIds.filter(id => id !== recipeId);
+            saveRecipes();
+            saveFavorites();
+            renderRecipeList();
+        }
+
         function handleAddRecipe(event) {
             event.preventDefault();
-            const name = recipeNameInput.value.trim();
-            const ingredients = recipeIngredientsInput.value.trim().split('\n').map(line => line.trim()).filter(line => line);
-            const instructions = recipeInstructionsInput.value.trim();
-            const garnish = recipeGarnishInput.value.trim();
-            if (!name || ingredients.length === 0 || !instructions) {
-                console.warn('Validation Error: Please fill in Recipe Name, Ingredients, and Instructions.');
-                if (!name) recipeNameInput.classList.add('border-red-500'); else recipeNameInput.classList.remove('border-red-500');
-                if (ingredients.length === 0) recipeIngredientsInput.classList.add('border-red-500'); else recipeIngredientsInput.classList.remove('border-red-500');
-                if (!instructions) recipeInstructionsInput.classList.add('border-red-500'); else recipeInstructionsInput.classList.remove('border-red-500');
+            const form = event.target;
+            const name = form['recipe-name'].value.trim();
+            let category = form['recipe-category'].value.trim() || USER_RECIPE_CATEGORY;
+            const origin = form['recipe-origin'].value.trim();
+            const glassware = form['recipe-glassware'].value.trim();
+            const ingredients = form['recipe-ingredients'].value.trim().split('\n').map(line => line.trim()).filter(line => line);
+            const instructions = form['recipe-instructions'].value.trim();
+            const garnish = form['recipe-garnish'].value.trim();
+
+            if (!name || !glassware || ingredients.length === 0 || !instructions) {
+                 alert('Please fill in at least Recipe Name, Glassware, Ingredients, and Instructions.');
                 return;
             }
-            recipeNameInput.classList.remove('border-red-500');
-            recipeIngredientsInput.classList.remove('border-red-500');
-            recipeInstructionsInput.classList.remove('border-red-500');
             const newRecipe = {
-                id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now(),
-                name: name, ingredients: ingredients, instructions: instructions, garnish: garnish || ''
+                id: `user-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now()}`,
+                name, category, origin: origin || '', glassware, ingredients, instructions, garnish: garnish || ''
             };
-            recipes.push(newRecipe);
+            allRecipes.push(newRecipe);
             saveRecipes();
-            renderRecipes();
-            renderInventory();
-            addRecipeForm.reset();
+            if (!(category in categoriesState)) {
+                 categoriesState[category] = true; 
+                 saveCategoryStates();
+            }
+            renderRecipeList();
+            form.reset();
             showSection('recipes');
-            console.info(`Recipe "${name}" added successfully!`);
+            alert(`Recipe "${name}" added to category "${category}"!`);
         }
 
-        // Show the specified section and hide others
-        function showSection(sectionId) {
+        function handleBackup() {
+            const backupData = { version: "tiki-app-v2", recipes: allRecipes, favorites: favoriteRecipeIds, categoryStates };
+            try {
+                const jsonString = JSON.stringify(backupData, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                const date = new Date();
+                const dateString = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+                a.download = `tiki_app_backup_${dateString}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                restoreMessageEl.textContent = 'Backup file generated successfully!';
+                restoreMessageEl.className = 'text-sm mt-3 text-green-600';
+            } catch (e) {
+                console.error("Error creating backup:", e);
+                restoreMessageEl.textContent = 'Error creating backup file.';
+                restoreMessageEl.className = 'text-sm mt-3 text-red-600';
+            }
+        }
+
+        function handleRestore(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            restoreMessageEl.textContent = 'Reading file...';
+            restoreMessageEl.className = 'text-sm mt-3 text-gray-600';
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    if (!backupData || backupData.version !== "tiki-app-v2" || !Array.isArray(backupData.recipes) || !Array.isArray(backupData.favorites)) {
+                         throw new Error("Invalid or incompatible backup file format.");
+                    }
+                    if (!confirm(`Restore data from "${file.name}"? This will OVERWRITE current data.`)) {
+                        restoreInput.value = ''; restoreMessageEl.textContent = 'Restore cancelled.'; return;
+                    }
+                    allRecipes = backupData.recipes;
+                    favoriteRecipeIds = backupData.favorites;
+                    categoriesState = backupData.categoryStates || {};
+                    saveRecipes(); saveFavorites(); saveCategoryStates();
+                    renderRecipeList();
+                    restoreMessageEl.textContent = `Data restored from ${file.name}.`;
+                    restoreMessageEl.className = 'text-sm mt-3 text-green-600';
+                    alert('Data restored successfully!');
+                    showSection('recipes');
+                } catch (error) {
+                    console.error("Error restoring data:", error);
+                    restoreMessageEl.textContent = `Error: ${error.message}`;
+                    restoreMessageEl.className = 'text-sm mt-3 text-red-600';
+                } finally {
+                     restoreInput.value = '';
+                }
+            };
+            reader.onerror = () => {
+                 restoreMessageEl.textContent = 'Error reading file.';
+                 restoreMessageEl.className = 'text-sm mt-3 text-red-600';
+                 restoreInput.value = '';
+            };
+            reader.readAsText(file);
+        }
+
+        function showSection(sectionIdToShow) {
             Object.keys(sections).forEach(key => {
-                if (key === sectionId) {
-                    sections[key].classList.remove('hidden', 'absolute', 'pointer-events-none');
-                    sections[key].classList.add('visible', 'relative');
-                    navButtons[key].classList.add('active');
-                } else {
-                    sections[key].classList.add('hidden', 'absolute', 'pointer-events-none');
-                    sections[key].classList.remove('visible', 'relative');
-                    navButtons[key].classList.remove('active');
+                const sectionElement = sections[key];
+                const buttonElement = navButtons[key];
+                if (sectionElement) {
+                    sectionElement.classList.toggle('hidden', key !== sectionIdToShow);
+                    buttonElement?.classList.toggle('active', key === sectionIdToShow);
                 }
             });
-             window.scrollTo(0, 0);
+            window.scrollTo(0, 0);
         }
 
-         // Clear all inventory checks
-        function clearInventory() {
-            if (confirm("Are you sure you want to clear your entire inventory list?")) {
-                inventory = [];
-                saveInventory();
-                renderInventory();
-            }
-        }
-
-        // --- Event Listeners ---
         function setupNavigation() {
-            navButtons.recipes.addEventListener('click', () => showSection('recipes'));
-            navButtons.inventory.addEventListener('click', () => showSection('inventory'));
-            navButtons.addRecipe.addEventListener('click', () => showSection('addRecipe'));
+            Object.keys(navButtons).forEach(key => {
+                const button = navButtons[key];
+                if (button) {
+                    button.addEventListener('click', () => showSection(key));
+                }
+            });
         }
 
-         function setupForms() {
-             addRecipeForm.addEventListener('submit', handleAddRecipe);
-             clearInventoryBtn.addEventListener('click', clearInventory);
+        function setupFormsAndButtons() {
+             addRecipeForm?.addEventListener('submit', handleAddRecipe);
+             backupBtn?.addEventListener('click', handleBackup);
+             restoreInput?.addEventListener('change', handleRestore);
          }
 
-        // --- Initialization & Service Worker Registration ---
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
-            renderRecipes();
-            renderInventory();
+            renderRecipeList();
             setupNavigation();
-            setupForms();
-            showSection('recipes');
+            setupFormsAndButtons();
+            showSection('recipes'); // Default to recipes section, also sets initial active button
 
-            // Register Service Worker (Moved inside DOMContentLoaded for clarity)
             if ('serviceWorker' in navigator) {
-              window.addEventListener('load', () => { // Use window load to ensure page is fully loaded
-                navigator.serviceWorker.register('sw.js') // Use relative path
-                  .then(registration => {
-                    console.log('[Main Script] ServiceWorker registration successful with scope: ', registration.scope);
-                  })
-                  .catch(error => {
-                    console.log('[Main Script] ServiceWorker registration failed: ', error);
-                  });
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                  .then(reg => console.log('[Main Script] ServiceWorker registration successful scope: ', reg.scope))
+                  .catch(err => console.log('[Main Script] ServiceWorker registration failed: ', err));
               });
-            } else {
-                 console.log('[Main Script] Service workers are not supported.');
             }
         });
-
     </script>
-    
-    
 </body>
 </html>
