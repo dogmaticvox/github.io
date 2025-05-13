@@ -14,7 +14,8 @@ const urlsToCache = [
   'https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf', // Lucide font
   // Paths to your icon files
   'icons/icon-192x192.png',
-  'icons/icon-512x512.png'
+  'icons/icon-512x512.png',
+  'images/tiki-background.png'
 ];
 
 // Install event: Open cache and add app shell files
