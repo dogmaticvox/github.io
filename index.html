@@ -18,15 +18,29 @@
 
         body {
             @apply font-['Inter',_sans-serif] bg-orange-100 text-gray-800;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E.st0%7Bfill:%23%23b45309;%7D%3C/style%3E%3C/defs%3E%3Cpath class='st0' d='M12.2,16.9L12.2,16.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9h-0.1 C13.5,19.9,12.2,18.6,12.2,16.9z M42.2,46.9L42.2,46.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9 h-0.1C43.5,49.9,42.2,48.6,42.2,46.9z M27.1,32.1L27.1,32.1c-1.6,0-2.9-1.3-2.9-2.9v-0.1c0-1.6,1.3-2.9,2.9-2.9h0.1 c1.6,0,2.9,1.3,2.9,2.9v0.1C30.1,30.8,28.8,32.1,27.1,32.1z'/%3E%3C/svg%3E");
-            background-repeat: repeat;
+            /* Previous SVG background: */
+            /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E.st0%7Bfill:%23%23b45309;%7D%3C/style%3E%3C/defs%3E%3Cpath class='st0' d='M12.2,16.9L12.2,16.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9h-0.1 C13.5,19.9,12.2,18.6,12.2,16.9z M42.2,46.9L42.2,46.9c0-1.6,1.3-2.9,2.9-2.9h0.1c1.6,0,2.9,1.3,2.9,2.9v0.1c0,1.6-1.3,2.9-2.9,2.9 h-0.1C43.5,49.9,42.2,48.6,42.2,46.9z M27.1,32.1L27.1,32.1c-1.6,0-2.9-1.3-2.9-2.9v-0.1c0-1.6,1.3-2.9,2.9-2.9h0.1 c1.6,0,2.9,1.3,2.9,2.9v0.1C30.1,30.8,28.8,32.1,27.1,32.1z'/%3E%3C/svg%3E"); */
+            
+            /* New PNG background - replace 'images/tiki-background.png' with the actual path to your image */
+            background-image: url("images/tiki-background.png"); 
+            background-repeat: repeat; /* This ensures the image tiles */
+
+            /* Optional: Control the size of the image before tiling. 
+               If your PNG is very large and you want each tile to be smaller, uncomment and adjust.
+               For example, to make each instance of the image 150px wide and tall: */
+            /* background-size: 150px 150px; */
+
+            /* Optional: Make the background fixed so it doesn't scroll with the content. */
+            /* background-attachment: fixed; */
         }
         main {
-             @apply bg-orange-50/95 p-4 rounded-lg shadow-xl;
+             @apply bg-orange-50/95 p-4 rounded-lg shadow-xl; /* Semi-transparent so background can be seen */
         }
+        /* Base button styles */
         .btn {
              @apply inline-flex items-center justify-center px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-75 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed;
         }
+        /* Navigation specific button styles */
         .nav-btn {
              @apply inline-flex items-center justify-center px-3 py-2 bg-amber-600 text-white font-medium rounded-md shadow-sm hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition duration-150 ease-in-out text-sm;
         }
@@ -77,18 +91,41 @@
         input[type="text"], textarea, input[type="file"] {
              @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm;
         }
+        /* Ensure the file input specifically is hidden if the class fails */
+        input[type="file"].hidden {
+             display: none !important;
+        }
         label {
              @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+        /* Ensure labels styled as buttons inherit block display if needed, but .btn uses inline-flex */
+        label.btn {
+            /* No need for 'block' here as .btn is inline-flex */
         }
     </style>
     
     <style>
+      /* Lucide Icons Font Face */
       @font-face {
         font-family: 'LucideIcons';
         src: url(https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf) format('truetype');
-        font-display: swap; /* Added font-display property */
+        font-display: swap; 
       }
-      .lucide { font-family: 'LucideIcons'; font-style: normal; font-weight: normal; font-variant: normal; text-rendering: auto; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; display: inline-block; vertical-align: middle; margin-right: 0.5rem; }
+      /* Base Lucide Icon Styles */
+      .lucide { 
+          font-family: 'LucideIcons'; 
+          font-style: normal; 
+          font-weight: normal; 
+          font-variant: normal; 
+          text-rendering: auto; 
+          line-height: 1; 
+          -webkit-font-smoothing: antialiased; 
+          -moz-osx-font-smoothing: grayscale; 
+          display: inline-block; 
+          vertical-align: middle; 
+          margin-right: 0.5rem; /* Default spacing for icons next to text */
+      }
+      /* Specific Icon Mappings */
       .icon-save::before { content: "\e150"; }
       .icon-trash::before { content: "\e18c"; }
       .icon-chevron-down::before { content: "\e071"; }
@@ -122,13 +159,15 @@
     </nav>
 
     <main class="bg-orange-50/95 p-4 rounded-lg shadow-xl">
-        <section id="recipes-section" class="section"> <h2 class="text-2xl font-semibold text-teal-800 mb-4">Cocktail Recipes</h2>
+        <section id="recipes-section" class="section"> 
+            <h2 class="text-2xl font-semibold text-teal-800 mb-4">Cocktail Recipes</h2>
             <div id="recipe-categories-list">
-                <p class="text-gray-500">Loading recipes...</p>
+                <p class="text-gray-500">Loading recipes...</p> 
             </div>
         </section>
 
-        <section id="add-recipe-section" class="section hidden"> <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
+        <section id="add-recipe-section" class="section hidden"> 
+            <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
             <form id="add-recipe-form" class="space-y-4 bg-white/95 p-6 rounded-lg shadow">
                 <div>
                     <label for="recipe-name">Recipe Name:</label>
@@ -165,19 +204,20 @@
             </form>
         </section>
 
-         <section id="settings-section" class="section hidden"> <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
+         <section id="settings-section" class="section hidden"> 
+             <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
             <div class="settings-section-container">
                 <h3 class="settings-title">Backup & Restore</h3>
                 <p class="text-sm text-gray-600 mb-3">Save your added recipes and favorites to a file, or restore from a previous backup.</p>
                 <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                    <button id="backup-btn" class="btn bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 w-full sm:w-auto">
+                    <button id="backup-btn" class="btn bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 w-full sm:w-auto sm:min-w-[160px]">
                         <span class="lucide icon-download"></span>Backup Data
                     </button>
                     <div>
-                         <label for="restore-input" class="btn bg-green-600 hover:bg-green-700 focus:ring-green-500 cursor-pointer w-full sm:w-auto block text-center">
+                         <label for="restore-input" class="btn bg-green-600 hover:bg-green-700 focus:ring-green-500 cursor-pointer w-full sm:w-auto sm:min-w-[160px]">
                             <span class="lucide icon-upload"></span>Restore Data
                         </label>
-                        <input type="file" id="restore-input" accept=".json" class="hidden">
+                        <input type="file" id="restore-input" accept=".json" class="hidden" style="display: none;">
                     </div>
                 </div>
                  <p id="restore-message" class="text-sm mt-3 text-gray-600"></p>
@@ -186,7 +226,8 @@
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v2.0.4</p> </footer>
+        <p>Tiki App v2.0.4</p> 
+    </footer>
 
     <script>
         // --- Constants ---
@@ -311,136 +352,208 @@
           { "id": "111", "name": "Rumbustion Punch", "category": "THE TIKI PARTY", "origin": "Created by Martin Cate", "glassware": "Punch glassware (see page 303 for ideas)", "ingredients": ["1 ounce fresh lime juice", "1/2 ounce SC Demerara Syrup (page 324)", "1/4 ounce SC Cinnamon Syrup (page 327)", "1 ounce blended aged rum", "1 ounce blended lightly aged rum", "2 dashes Herbstura (page 228)"], "instructions": "Multiply the ingredient quantities by the number of guests. Combine all the ingredient except the ice in a beverage dispenser or other sealable container and whisk together. Chill for 1 to 2 hours prior to serving. Add large blocks of ice to dispenser or serve over a large block or smaller blocks of ice in a punch bowl. See pages 300 to 303 for tips on preparing, chilling, and serving your punch.", "garnish": null }
         ]; // End of initialRecipesData
 
-        // --- State ---
-        let allRecipes = [];
-        let favoriteRecipeIds = [];
-        let categoriesState = {}; // { [categoryKey]: isExpandedBoolean }
+        // --- State Variables ---
+        let allRecipes = []; // Holds all recipe objects
+        let favoriteRecipeIds = []; // Holds IDs of favorited recipes
+        let categoriesState = {}; // Tracks expanded/collapsed state: { [categoryKey]: isExpandedBoolean }
 
-        // --- DOM Elements ---
+        // --- DOM Element References ---
         const recipeCategoriesListEl = document.getElementById('recipe-categories-list');
         const addRecipeForm = document.getElementById('add-recipe-form');
         const backupBtn = document.getElementById('backup-btn');
         const restoreInput = document.getElementById('restore-input');
         const restoreMessageEl = document.getElementById('restore-message');
 
+        // References to main sections
         const sections = {
             recipes: document.getElementById('recipes-section'),
             addRecipe: document.getElementById('add-recipe-section'),
             settings: document.getElementById('settings-section')
         };
+        // References to navigation buttons
         const navButtons = {
             recipes: document.getElementById('nav-recipes'),
             addRecipe: document.getElementById('nav-add-recipe'),
             settings: document.getElementById('nav-settings')
         };
 
-        // --- Functions ---
+        // --- Core Functions ---
 
+        /**
+         * Loads recipes, favorites, and category states from localStorage.
+         * Falls back to initial data if nothing is stored or if parsing fails.
+         */
         function loadData() {
             const storedRecipes = localStorage.getItem(RECIPES_STORAGE_KEY);
             const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
             const storedCategoryStates = localStorage.getItem(CATEGORY_STATE_STORAGE_KEY);
 
+            // Load Recipes
             if (storedRecipes) {
                 try {
                     const parsedRecipes = JSON.parse(storedRecipes);
+                    // Basic validation: ensure it's an array
                     allRecipes = Array.isArray(parsedRecipes) ? parsedRecipes : [...initialRecipesData];
                 } catch (e) {
                     console.error("Error parsing stored recipes:", e);
-                    allRecipes = [...initialRecipesData];
+                    allRecipes = [...initialRecipesData]; // Fallback on error
                 }
             } else {
-                allRecipes = [...initialRecipesData];
+                allRecipes = [...initialRecipesData]; // Fallback if nothing stored
             }
 
+            // Load Favorites
             if (storedFavorites) {
                  try {
                     const parsedFavorites = JSON.parse(storedFavorites);
+                    // Basic validation: ensure it's an array
                     favoriteRecipeIds = Array.isArray(parsedFavorites) ? parsedFavorites : [];
                 } catch (e) {
                     console.error("Error parsing stored favorites:", e);
-                    favoriteRecipeIds = [];
+                    favoriteRecipeIds = []; // Fallback on error
                 }
             } else {
-                favoriteRecipeIds = [];
+                favoriteRecipeIds = []; // Fallback if nothing stored
             }
 
+            // Load Category States
             if (storedCategoryStates) {
                 try {
                     const parsedStates = JSON.parse(storedCategoryStates);
+                    // Basic validation: ensure it's an object
                     categoriesState = (typeof parsedStates === 'object' && parsedStates !== null) ? parsedStates : {};
                 } catch (e) {
                      console.error("Error parsing stored category states:", e);
-                     categoriesState = {};
+                     categoriesState = {}; // Fallback on error
                 }
             } else {
-                 categoriesState = {};
+                 categoriesState = {}; // Fallback if nothing stored
             }
             
+            // Initial save if data wasn't loaded from storage
             if (!storedRecipes) saveRecipes();
             if (!storedFavorites) saveFavorites();
+            // Initialize category states if not loaded (defaulting to expanded)
             if (!storedCategoryStates) {
                 getAllCategories().forEach(catKey => {
                     if (!(catKey in categoriesState)) {
-                        categoriesState[catKey] = (catKey === FAVORITES_CATEGORY_KEY && favoriteRecipeIds.length > 0);
+                        // Default Favorites to expanded only if it has items
+                        categoriesState[catKey] = (catKey === FAVORITES_CATEGORY_KEY && favoriteRecipeIds.length > 0) || (catKey !== FAVORITES_CATEGORY_KEY); 
                     }
                 });
                 saveCategoryStates();
             }
         }
 
-        function saveRecipes() { localStorage.setItem(RECIPES_STORAGE_KEY, JSON.stringify(allRecipes)); }
-        function saveFavorites() { localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteRecipeIds)); }
-        function saveCategoryStates() { localStorage.setItem(CATEGORY_STATE_STORAGE_KEY, JSON.stringify(categoriesState)); }
+        /** Saves the current `allRecipes` array to localStorage. */
+        function saveRecipes() { 
+            localStorage.setItem(RECIPES_STORAGE_KEY, JSON.stringify(allRecipes)); 
+        }
+        /** Saves the current `favoriteRecipeIds` array to localStorage. */
+        function saveFavorites() { 
+            localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteRecipeIds)); 
+        }
+        /** Saves the current `categoriesState` object to localStorage. */
+        function saveCategoryStates() { 
+            localStorage.setItem(CATEGORY_STATE_STORAGE_KEY, JSON.stringify(categoriesState)); 
+        }
 
+        /**
+         * Gets a sorted list of all unique category keys present in the recipes,
+         * plus special keys for Favorites and User Added Recipes if applicable.
+         * Favorites and User Added are prioritized at the top.
+         * @returns {string[]} Sorted array of category keys.
+         */
         function getAllCategories() {
             const categories = new Set();
-            if (favoriteRecipeIds.length > 0) categories.add(FAVORITES_CATEGORY_KEY);
-            allRecipes.forEach(recipe => categories.add(recipe.category || USER_RECIPE_CATEGORY));
-            if (allRecipes.some(r => r.category === USER_RECIPE_CATEGORY) && !categories.has(USER_RECIPE_CATEGORY)) {
-                categories.add(USER_RECIPE_CATEGORY);
+            // Add Favorites category if there are any favorited recipes
+            if (favoriteRecipeIds.length > 0) {
+                 categories.add(FAVORITES_CATEGORY_KEY);
             }
+            // Add categories from all recipes, defaulting undefined/empty categories to USER_RECIPE_CATEGORY
+            allRecipes.forEach(recipe => categories.add(recipe.category || USER_RECIPE_CATEGORY));
+            
+            // Ensure USER_RECIPE_CATEGORY exists if any recipe uses it or has no category
+             if (allRecipes.some(r => !r.category || r.category === USER_RECIPE_CATEGORY)) {
+                 categories.add(USER_RECIPE_CATEGORY);
+             }
+
+            // Sort: Favorites first, then User Added, then alphabetically
             return [...categories].sort((a, b) => {
-                if (a === FAVORITES_CATEGORY_KEY) return -1; if (b === FAVORITES_CATEGORY_KEY) return 1;
-                if (a === USER_RECIPE_CATEGORY) return -1; if (b === USER_RECIPE_CATEGORY) return 1;
-                return (a || '').localeCompare(b || '');
+                if (a === FAVORITES_CATEGORY_KEY) return -1; 
+                if (b === FAVORITES_CATEGORY_KEY) return 1;
+                if (a === USER_RECIPE_CATEGORY) return -1; 
+                if (b === USER_RECIPE_CATEGORY) return 1;
+                return (a || '').localeCompare(b || ''); // Alphabetical for the rest
             });
         }
 
+        /**
+         * Renders the entire list of recipes, grouped by category, into the UI.
+         */
         function renderRecipeList() {
-            recipeCategoriesListEl.innerHTML = '';
+            recipeCategoriesListEl.innerHTML = ''; // Clear existing list
             const categories = getAllCategories();
 
+            // Handle empty state
             if (allRecipes.length === 0 && favoriteRecipeIds.length === 0) {
-                recipeCategoriesListEl.innerHTML = '<p class="text-gray-500">No recipes found. Add one!</p>';
+                recipeCategoriesListEl.innerHTML = '<p class="text-gray-500 italic">No recipes found. Try adding one!</p>';
                 return;
             }
 
+            // Iterate through each category and render its section
             categories.forEach(categoryKey => {
                 let categoryRecipes = [];
                 let categoryDisplayName = categoryKey;
+                let isEmptyCategory = false; // Flag for categories that shouldn't render
 
+                // Handle Favorites Category
                 if (categoryKey === FAVORITES_CATEGORY_KEY) {
                     categoryDisplayName = "⭐ Favorites";
+                    // Ensure favorites list is clean (remove IDs for deleted recipes)
                     const currentRecipeIds = new Set(allRecipes.map(r => r.id));
-                    favoriteRecipeIds = favoriteRecipeIds.filter(favId => currentRecipeIds.has(favId));
-                    saveFavorites();
+                    const cleanedFavorites = favoriteRecipeIds.filter(favId => currentRecipeIds.has(favId));
+                    if (cleanedFavorites.length !== favoriteRecipeIds.length) {
+                        favoriteRecipeIds = cleanedFavorites;
+                        saveFavorites(); // Save the cleaned list if changes were made
+                    }
                     categoryRecipes = allRecipes.filter(r => favoriteRecipeIds.includes(r.id));
-                    if (categoryRecipes.length === 0) return;
-                } else {
-                    categoryDisplayName = categoryKey === USER_RECIPE_CATEGORY ? "👤 User Added Recipes" : categoryKey;
-                    categoryRecipes = allRecipes.filter(r => (r.category || USER_RECIPE_CATEGORY) === categoryKey);
-                     if (categoryRecipes.length === 0 && categoryKey === USER_RECIPE_CATEGORY && !allRecipes.some(r => r.category === USER_RECIPE_CATEGORY)) {
-                        const hasActualUserCategory = allRecipes.some(r => r.category === USER_RECIPE_CATEGORY);
-                        if (!hasActualUserCategory) return;
-                     }
+                    if (categoryRecipes.length === 0) isEmptyCategory = true; // Don't render if empty
+                
+                // Handle User Added Recipes Category
+                } else if (categoryKey === USER_RECIPE_CATEGORY) {
+                    categoryDisplayName = "👤 User Added Recipes";
+                    categoryRecipes = allRecipes.filter(r => !r.category || r.category === USER_RECIPE_CATEGORY);
+                     // Don't render if no recipes actually belong here
+                    if (categoryRecipes.length === 0) isEmptyCategory = true; 
+                
+                // Handle Regular Categories
+                } else { 
+                    categoryDisplayName = categoryKey; // Use the category name directly
+                    categoryRecipes = allRecipes.filter(r => r.category === categoryKey);
+                    // Should generally not be empty due to getAllCategories logic, but check just in case
+                    if (categoryRecipes.length === 0) isEmptyCategory = true; 
                 }
+
+                // Skip rendering this category if it's flagged as empty
+                if (isEmptyCategory) return; 
+
+                // Sort recipes within the category alphabetically by name
                 categoryRecipes.sort((a, b) => a.name.localeCompare(b.name));
 
+                // Create category container elements
                 const categoryContainer = document.createElement('div');
                 categoryContainer.classList.add('category-container', 'mb-4');
-                const isExpanded = categoriesState[categoryKey] === true;
 
+                // Determine initial expanded state (default to true unless explicitly set to false)
+                const isExpanded = categoriesState[categoryKey] !== false; 
+                // Persist the default state if it wasn't already set
+                if (categoriesState[categoryKey] === undefined) { 
+                    categoriesState[categoryKey] = isExpanded;
+                    saveCategoryStates();
+                }
+
+                // Create category header (clickable to toggle)
                 const header = document.createElement('div');
                 header.className = 'category-header';
                 header.innerHTML = `
@@ -448,46 +561,69 @@
                     <span class="lucide ${isExpanded ? 'icon-chevron-up' : 'icon-chevron-down'} text-gray-600"></span>
                 `;
 
+                // Create container for recipes within the category
                 const recipesContainer = document.createElement('div');
                 recipesContainer.className = 'category-recipes';
-                if (!isExpanded) recipesContainer.classList.add('hidden');
+                if (!isExpanded) recipesContainer.classList.add('hidden'); // Hide if collapsed
 
+                // Add recipe cards or 'empty' message
                 if (categoryRecipes.length > 0) {
                     categoryRecipes.forEach(recipe => recipesContainer.appendChild(createRecipeCard(recipe)));
                 } else {
-                     recipesContainer.innerHTML = `<p class="text-sm text-gray-500 italic p-2">No recipes in this category yet.</p>`;
+                    // This case should ideally not be reached due to isEmptyCategory check, but included for robustness
+                     recipesContainer.innerHTML = `<p class="text-sm text-gray-500 italic p-2">No recipes in this category.</p>`;
                 }
 
+                // Add click listener to header to toggle visibility
                 header.addEventListener('click', () => {
-                    categoriesState[categoryKey] = !categoriesState[categoryKey];
-                    saveCategoryStates();
-                    recipesContainer.classList.toggle('hidden');
+                    categoriesState[categoryKey] = !categoriesState[categoryKey]; // Toggle state
+                    saveCategoryStates(); // Save the new state
+                    recipesContainer.classList.toggle('hidden'); // Toggle visibility class
+                    // Update chevron icon
                     header.querySelector('.lucide').classList.toggle('icon-chevron-up', categoriesState[categoryKey]);
                     header.querySelector('.lucide').classList.toggle('icon-chevron-down', !categoriesState[categoryKey]);
                 });
+
+                // Append header and recipes container to the main category container
                 categoryContainer.appendChild(header);
                 categoryContainer.appendChild(recipesContainer);
+                // Append the category container to the main list element
                 recipeCategoriesListEl.appendChild(categoryContainer);
             });
         }
 
+        /**
+         * Creates an HTML element representing a single recipe card.
+         * @param {object} recipe - The recipe object.
+         * @returns {HTMLElement} The recipe card element.
+         */
         function createRecipeCard(recipe) {
             const card = document.createElement('div');
             card.className = 'recipe-card';
-            card.dataset.id = recipe.id;
+            card.dataset.id = recipe.id; // Store recipe ID for later reference
+
             const isFavorited = favoriteRecipeIds.includes(recipe.id);
+
+            // Prepare details strings (handle missing data gracefully)
             const originText = recipe.origin ? `<div><span class="detail-label">Origin:</span> ${recipe.origin}</div>` : '';
             const glasswareText = `<div><span class="detail-label">Glassware:</span> ${recipe.glassware || 'N/A'}</div>`;
-            const categoryText = `<div><span class="detail-label">Category:</span> ${recipe.category || USER_RECIPE_CATEGORY}</div>`;
-            const ingredientsList = recipe.ingredients && Array.isArray(recipe.ingredients)
-                ? recipe.ingredients.map(ing => `<li>${ing}</li>`).join('') : '<li>No ingredients listed</li>';
+            // Display 'User Added Recipes' if category is missing or explicitly set
+            const categoryDisplay = recipe.category && recipe.category !== USER_RECIPE_CATEGORY ? recipe.category : '👤 User Added Recipes';
+            const categoryText = `<div><span class="detail-label">Category:</span> ${categoryDisplay}</div>`;
+            // Format ingredients list
+            const ingredientsList = recipe.ingredients && Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0
+                ? recipe.ingredients.map(ing => `<li>${ing}</li>`).join('') 
+                : '<li>No ingredients listed</li>';
+            // Format instructions (replace newlines with <br>)
             const instructionsText = recipe.instructions ? recipe.instructions.replace(/\n/g, '<br>') : 'No instructions provided.';
             const garnishText = recipe.garnish ? `<div><span class="detail-label">Garnish:</span> ${recipe.garnish}</div>` : '';
 
+            // Choose star icon (emoji for favorite, Lucide icon otherwise)
             let starHTML = isFavorited 
-                ? `<span class="emoji-favorite">🍹</span>` 
-                : `<span class="lucide icon-star"></span>`; // Lucide star for non-favorite
+                ? `<span class="emoji-favorite" style="color: orange; filter: saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>` // Styled emoji
+                : `<span class="lucide icon-star"></span>`; // Lucide icon
 
+            // Construct card inner HTML
             card.innerHTML = `
                 <div class="recipe-header">
                     <span class="recipe-name">${recipe.name || 'Unnamed Recipe'}</span>
@@ -512,191 +648,390 @@
                     </button>
                 </div>
             `;
+
+            // Get references to interactive elements within the card
             const header = card.querySelector('.recipe-header');
             const details = card.querySelector('.recipe-details');
             const starIconPlaceholder = card.querySelector('.star-icon-placeholder');
+            const deleteBtn = card.querySelector('.delete-recipe-btn');
 
+            // Add event listener to header (excluding star) to toggle details visibility
             header.addEventListener('click', (e) => {
-                if (starIconPlaceholder.contains(e.target)) return;
-                details.classList.toggle('hidden');
+                if (!starIconPlaceholder.contains(e.target) && !deleteBtn.contains(e.target)) { // Don't toggle if clicking star or delete
+                    details.classList.toggle('hidden');
+                }
             });
+
+            // Add event listener to star icon to toggle favorite status
             starIconPlaceholder.addEventListener('click', (e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // Prevent header click event
                 toggleFavorite(recipe.id, starIconPlaceholder);
             });
-            card.querySelector('.delete-recipe-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
+
+            // Add event listener to delete button
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent header click event
                 if (confirm(`Are you sure you want to delete "${recipe.name}"? This cannot be undone.`)) {
                     deleteRecipe(recipe.id);
                 }
             });
+
             return card;
         }
 
+        /**
+         * Toggles the favorite status of a recipe.
+         * @param {string} recipeId - The ID of the recipe to toggle.
+         * @param {HTMLElement} starElementContainer - The container element for the star icon.
+         */
         function toggleFavorite(recipeId, starElementContainer) {
             const index = favoriteRecipeIds.indexOf(recipeId);
-            let isNowFavorited = false;
-            if (index > -1) {
-                favoriteRecipeIds.splice(index, 1);
+            let isNowFavorited;
+
+            if (index > -1) { // Recipe is currently favorited
+                favoriteRecipeIds.splice(index, 1); // Remove from favorites
                 isNowFavorited = false;
-            } else {
-                favoriteRecipeIds.push(recipeId);
+            } else { // Recipe is not currently favorited
+                favoriteRecipeIds.push(recipeId); // Add to favorites
                 isNowFavorited = true;
             }
-            saveFavorites();
+            saveFavorites(); // Save the updated favorites list
             
+            // Update the star icon visually in the specific card clicked
             if (starElementContainer) {
                 starElementContainer.innerHTML = isNowFavorited 
-                    ? `<span class="emoji-favorite">🍹</span>` 
-                    : `<span class="lucide icon-star"></span>`; // Ensure this line correctly adds the Lucide classes
+                    ? `<span class="emoji-favorite" style="color: orange; filter: saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
+                    : `<span class="lucide icon-star"></span>`;
                 starElementContainer.title = isNowFavorited ? 'Remove from Favorites' : 'Add to Favorites';
             }
+            
+            // Re-render the entire list to correctly update the Favorites category 
+            // (handles adding/removing the category itself and updating counts)
             renderRecipeList(); 
         }
 
+        /**
+         * Deletes a recipe from the `allRecipes` list and localStorage.
+         * Also removes it from favorites if it was favorited.
+         * @param {string} recipeId - The ID of the recipe to delete.
+         */
         function deleteRecipe(recipeId) {
-            allRecipes = allRecipes.filter(r => r.id !== recipeId);
-            favoriteRecipeIds = favoriteRecipeIds.filter(id => id !== recipeId);
+            allRecipes = allRecipes.filter(r => r.id !== recipeId); // Filter out the recipe
+            favoriteRecipeIds = favoriteRecipeIds.filter(id => id !== recipeId); // Remove from favorites too
             saveRecipes();
             saveFavorites();
-            renderRecipeList();
+            renderRecipeList(); // Update the UI
+            displayTemporaryMessage('Recipe deleted.', 'info'); // Inform user
         }
 
+        /**
+         * Handles the submission of the 'Add Recipe' form.
+         * @param {Event} event - The form submission event.
+         */
         function handleAddRecipe(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent default form submission
             const form = event.target;
+            
+            // Get values from form fields, trimming whitespace
             const name = form['recipe-name'].value.trim();
-            let category = form['recipe-category'].value.trim() || USER_RECIPE_CATEGORY;
+            let category = form['recipe-category'].value.trim() || USER_RECIPE_CATEGORY; // Default if empty
             const origin = form['recipe-origin'].value.trim();
             const glassware = form['recipe-glassware'].value.trim();
-            const ingredients = form['recipe-ingredients'].value.trim().split('\n').map(line => line.trim()).filter(line => line);
+            // Split ingredients by newline, trim lines, filter out empty lines
+            const ingredients = form['recipe-ingredients'].value.trim().split('\n')
+                                  .map(line => line.trim()).filter(line => line);
             const instructions = form['recipe-instructions'].value.trim();
             const garnish = form['recipe-garnish'].value.trim();
 
+            // Basic validation
             if (!name || !glassware || ingredients.length === 0 || !instructions) {
-                 alert('Please fill in at least Recipe Name, Glassware, Ingredients, and Instructions.');
+                 displayTemporaryMessage('Please fill in Recipe Name, Glassware, Ingredients, and Instructions.', 'error');
                 return;
             }
+
+            // Create new recipe object with a unique ID
             const newRecipe = {
-                id: `user-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now()}`,
-                name, category, origin: origin || '', glassware, ingredients, instructions, garnish: garnish || ''
+                id: `user-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`, // More robust unique ID
+                name, 
+                category, 
+                origin: origin || null, // Store as null if empty
+                glassware, 
+                ingredients, 
+                instructions, 
+                garnish: garnish || null // Store as null if empty
             };
-            allRecipes.push(newRecipe);
-            saveRecipes();
-            if (!(category in categoriesState)) {
-                 categoriesState[category] = true; 
-                 saveCategoryStates();
-            }
-            renderRecipeList();
-            form.reset();
-            showSection('recipes');
-            alert(`Recipe "${name}" added to category "${category}"!`);
+
+            allRecipes.push(newRecipe); // Add to the main list
+            saveRecipes(); // Save updated list
+
+            // Ensure the category (new or existing) is expanded after adding
+            categoriesState[category] = true; 
+            saveCategoryStates();
+
+            renderRecipeList(); // Update the UI
+            form.reset(); // Clear the form
+            showSection('recipes'); // Switch back to recipes view
+            displayTemporaryMessage(`Recipe "${name}" added successfully!`, 'success');
         }
 
+        /**
+         * Handles the click of the 'Backup Data' button.
+         * Creates a JSON file containing recipes, favorites, and category states,
+         * and triggers a download.
+         */
         function handleBackup() {
-            const backupData = { version: "tiki-app-v2", recipes: allRecipes, favorites: favoriteRecipeIds, categoryStates };
+            // Prepare data object for backup
+            const backupData = { 
+                version: "tiki-app-v2.0.4", // Add app version for potential future compatibility checks
+                recipes: allRecipes, 
+                favorites: favoriteRecipeIds, 
+                categoryStates: categoriesState // Use correct variable name
+            };
+            
             try {
-                const jsonString = JSON.stringify(backupData, null, 2);
+                // Convert data to a formatted JSON string
+                const jsonString = JSON.stringify(backupData, null, 2); // Pretty print JSON
+                // Create a Blob (binary large object) from the JSON string
                 const blob = new Blob([jsonString], { type: 'application/json' });
+                // Create a temporary URL for the Blob
                 const url = URL.createObjectURL(blob);
+                
+                // Create a temporary anchor element to trigger download
                 const a = document.createElement('a');
                 a.href = url;
+                // Generate filename with current date
                 const date = new Date();
                 const dateString = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
-                a.download = `tiki_app_backup_${dateString}.json`;
+                a.download = `tiki_app_backup_${dateString}.json`; 
+                
+                // Temporarily add anchor to DOM, click it, then remove it
                 document.body.appendChild(a);
-                a.click();
+                a.click(); 
                 document.body.removeChild(a);
+                
+                // Revoke the temporary URL to free up resources
                 URL.revokeObjectURL(url);
+                
+                // Display success message
                 restoreMessageEl.textContent = 'Backup file generated successfully!';
                 restoreMessageEl.className = 'text-sm mt-3 text-green-600';
+                displayTemporaryMessage('Backup successful!', 'success');
+
             } catch (e) {
-                console.error("Error creating backup:", e);
-                restoreMessageEl.textContent = 'Error creating backup file.';
+                // Log error and display message if backup fails
+                console.error("Error creating backup:", e); 
+                restoreMessageEl.textContent = 'Error creating backup file. Check console for details.';
                 restoreMessageEl.className = 'text-sm mt-3 text-red-600';
+                displayTemporaryMessage('Backup failed. Check console.', 'error');
             }
         }
 
+        /**
+         * Handles the file selection for the 'Restore Data' input.
+         * Reads the selected JSON file, validates it, confirms with the user,
+         * and replaces the current app data if confirmed.
+         * @param {Event} event - The file input change event.
+         */
         function handleRestore(event) {
             const file = event.target.files[0];
-            if (!file) return;
+            if (!file) return; // Exit if no file selected
+
+            // Display initial message
             restoreMessageEl.textContent = 'Reading file...';
             restoreMessageEl.className = 'text-sm mt-3 text-gray-600';
+
             const reader = new FileReader();
+
+            // Define what happens when the file is successfully read
             reader.onload = function(e) {
                 try {
-                    const backupData = JSON.parse(e.target.result);
-                    if (!backupData || backupData.version !== "tiki-app-v2" || !Array.isArray(backupData.recipes) || !Array.isArray(backupData.favorites)) {
+                    const backupData = JSON.parse(e.target.result); // Parse JSON content
+                    
+                    // **Validation:** Check if the file looks like a valid backup
+                    // Checks for version, and that recipes/favorites are arrays, and categoryStates is an object.
+                    if (!backupData || 
+                        typeof backupData.version !== 'string' || // Check version exists and is string
+                        !Array.isArray(backupData.recipes) || 
+                        !Array.isArray(backupData.favorites) || 
+                        typeof backupData.categoryStates !== 'object' ||
+                        backupData.categoryStates === null) { // Ensure categoryStates is a non-null object
                          throw new Error("Invalid or incompatible backup file format.");
                     }
-                    if (!confirm(`Restore data from "${file.name}"? This will OVERWRITE current data.`)) {
-                        restoreInput.value = ''; restoreMessageEl.textContent = 'Restore cancelled.'; return;
+
+                    // **Confirmation:** Ask user before overwriting data
+                    if (!confirm(`Restore data from "${file.name}"?\n\nTHIS WILL OVERWRITE:\n- All current recipes\n- Current favorites list\n- Category expanded/collapsed states\n\nThis action cannot be undone.`)) {
+                        restoreInput.value = ''; // Clear the file input
+                        restoreMessageEl.textContent = 'Restore cancelled.';
+                        restoreMessageEl.className = 'text-sm mt-3 text-gray-600';
+                        return; // Exit if user cancels
                     }
+
+                    // **Restore Data:** Replace current state with backup data
                     allRecipes = backupData.recipes;
                     favoriteRecipeIds = backupData.favorites;
-                    categoriesState = backupData.categoryStates || {};
-                    saveRecipes(); saveFavorites(); saveCategoryStates();
-                    renderRecipeList();
-                    restoreMessageEl.textContent = `Data restored from ${file.name}.`;
+                    // Use backed up states, or empty object if missing (for backward compatibility)
+                    categoriesState = backupData.categoryStates || {}; 
+                    
+                    // **Save & Update UI:** Persist restored data and refresh display
+                    saveRecipes(); 
+                    saveFavorites(); 
+                    saveCategoryStates();
+                    renderRecipeList(); 
+                    
+                    // Display success message
+                    restoreMessageEl.textContent = `Data restored successfully from ${file.name}.`;
                     restoreMessageEl.className = 'text-sm mt-3 text-green-600';
-                    alert('Data restored successfully!');
-                    showSection('recipes');
+                    displayTemporaryMessage('Data restored successfully!', 'success');
+                    showSection('recipes'); // Navigate back to recipes view
+
                 } catch (error) {
+                    // Handle errors during parsing or validation
                     console.error("Error restoring data:", error);
-                    restoreMessageEl.textContent = `Error: ${error.message}`;
+                    restoreMessageEl.textContent = `Restore failed: ${error.message}. Check console.`;
                     restoreMessageEl.className = 'text-sm mt-3 text-red-600';
+                    displayTemporaryMessage('Restore failed. Invalid file?', 'error');
                 } finally {
-                     restoreInput.value = '';
+                     // **Cleanup:** Clear the file input regardless of success/failure/cancellation
+                     restoreInput.value = ''; 
                 }
             };
+
+            // Define what happens if there's an error reading the file
             reader.onerror = () => {
-                 restoreMessageEl.textContent = 'Error reading file.';
+                 restoreMessageEl.textContent = 'Error reading the selected file.';
                  restoreMessageEl.className = 'text-sm mt-3 text-red-600';
-                 restoreInput.value = '';
+                 restoreInput.value = ''; // Clear the file input
+                 displayTemporaryMessage('Error reading file.', 'error');
             };
+
+            // Start reading the file as text
             reader.readAsText(file);
         }
+        
+        /**
+         * Displays a temporary notification message at the top of the screen.
+         * @param {string} message - The message text to display.
+         * @param {'info'|'success'|'error'} type - The type of message (controls background color).
+         */
+        function displayTemporaryMessage(message, type = 'info') {
+            const messageContainerId = 'app-message-container';
+            let container = document.getElementById(messageContainerId);
 
+            // Create container if it doesn't exist
+            if (!container) {
+                container = document.createElement('div');
+                container.id = messageContainerId;
+                // Styling for the message container (fixed position, centered, etc.)
+                Object.assign(container.style, {
+                    position: 'fixed',
+                    top: '20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    padding: '12px 24px', // Slightly more padding
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)', // Enhanced shadow
+                    zIndex: '1000',
+                    opacity: '0',
+                    transition: 'opacity 0.3s ease-in-out, top 0.3s ease-in-out', // Smooth transitions
+                    fontSize: '0.9rem', // Slightly smaller font
+                    fontWeight: '500',
+                    textAlign: 'center',
+                    maxWidth: '90%', // Prevent overflow on small screens
+                });
+                document.body.appendChild(container);
+            }
+
+            // Set background and text color based on type
+            if (type === 'success') {
+                container.style.backgroundColor = '#34D399'; // Tailwind green-400
+                container.style.color = '#065F46'; // Tailwind green-800
+            } else if (type === 'error') {
+                container.style.backgroundColor = '#F87171'; // Tailwind red-400
+                container.style.color = '#991B1B'; // Tailwind red-800
+            } else { // 'info' or default
+                container.style.backgroundColor = '#60A5FA'; // Tailwind blue-400
+                container.style.color = '#1E40AF'; // Tailwind blue-800
+            }
+
+            // Set message text and fade in
+            container.textContent = message;
+            container.style.top = '20px'; // Ensure it starts in position
+            container.style.opacity = '1';
+
+            // Clear any existing timeout to prevent premature fade-out if messages overlap
+            if (container.dataset.timeoutId) {
+                clearTimeout(container.dataset.timeoutId);
+            }
+
+            // Set timeout to fade out and move up
+            const timeoutId = setTimeout(() => {
+                container.style.opacity = '0';
+                container.style.top = '0px'; // Move up slightly on fade out
+                container.dataset.timeoutId = null; // Clear the stored timeout ID
+            }, 3500); // Message visible for 3.5 seconds
+            container.dataset.timeoutId = timeoutId; // Store the timeout ID
+        }
+
+        /**
+         * Shows the specified section and hides all others. Updates active nav button.
+         * @param {'recipes'|'addRecipe'|'settings'} sectionIdToShow - The key of the section to show.
+         */
         function showSection(sectionIdToShow) {
             Object.keys(sections).forEach(key => {
                 const sectionElement = sections[key];
-                const buttonElement = navButtons[key];
-                if (sectionElement) {
+                const buttonElement = navButtons[key]; 
+                if (sectionElement) { 
                     sectionElement.classList.toggle('hidden', key !== sectionIdToShow);
-                    buttonElement?.classList.toggle('active', key === sectionIdToShow);
+                    if (buttonElement) { 
+                       buttonElement.classList.toggle('active', key === sectionIdToShow);
+                    }
+                } else {
+                    console.warn(`Section element not found for key: ${key}`);
                 }
             });
-            window.scrollTo(0, 0);
+            window.scrollTo(0, 0); // Scroll to top when changing sections
         }
 
+        /** Sets up click event listeners for the main navigation buttons. */
         function setupNavigation() {
             Object.keys(navButtons).forEach(key => {
                 const button = navButtons[key];
-                if (button) {
+                if (button) { 
                     button.addEventListener('click', () => showSection(key));
+                } else {
+                     console.warn(`Navigation button not found for key: ${key}`);
                 }
             });
         }
 
+        /** Sets up event listeners for form submissions and settings buttons. */
         function setupFormsAndButtons() {
-             addRecipeForm?.addEventListener('submit', handleAddRecipe);
+             addRecipeForm?.addEventListener('submit', handleAddRecipe); 
              backupBtn?.addEventListener('click', handleBackup);
              restoreInput?.addEventListener('change', handleRestore);
          }
 
+        // --- Initialization ---
+        /** Runs when the DOM is fully loaded. */
         document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            renderRecipeList();
-            setupNavigation();
-            setupFormsAndButtons();
-            showSection('recipes'); // Default to recipes section, also sets initial active button
+            loadData();       // Load data first
+            renderRecipeList(); // Then render the initial list
+            setupNavigation();  // Set up nav clicks
+            setupFormsAndButtons(); // Set up form/button clicks
+            
+            // Show 'recipes' section by default if recipes exist, otherwise 'addRecipe'
+            const initialSection = allRecipes.length > 0 ? 'recipes' : 'addRecipe';
+            showSection(initialSection); 
 
+            // Service Worker Registration (for PWA offline functionality)
             if ('serviceWorker' in navigator) {
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                  .then(reg => console.log('[Main Script] ServiceWorker registration successful scope: ', reg.scope))
-                  .catch(err => console.log('[Main Script] ServiceWorker registration failed: ', err));
+              window.addEventListener('load', () => { // Register after page load
+                navigator.serviceWorker.register('sw.js') // Assumes sw.js is in the root directory
+                  .then(reg => console.log('[App] ServiceWorker registration successful scope: ', reg.scope))
+                  .catch(err => console.log('[App] ServiceWorker registration failed: ', err));
               });
+            } else {
+                console.log('[App] ServiceWorker not supported in this browser.');
             }
         });
     </script>
