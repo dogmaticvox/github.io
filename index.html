@@ -7,6 +7,10 @@
     <meta name="theme-color" content="#CC5A02">
     <link rel="manifest" href="manifest.json">
     
+    <!-- Apple-specific meta tags for PWAs -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+
     <title>Garry's Tiki Bar</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -83,6 +87,10 @@
         }
         .toggle-checkbox:checked + .toggle-label {
             @apply bg-teal-600;
+        }
+        /* Styles for Install and Update Banners */
+        .install-banner, .update-banner {
+            @apply hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-teal-800 text-white p-4 rounded-lg shadow-2xl flex justify-between items-center z-50;
         }
     </style>
     
@@ -186,6 +194,17 @@
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
         <p>Tiki App v3.0.0</p> 
     </footer>
+
+    <!-- Install and Update Banners -->
+    <div id="install-banner" class="install-banner">
+        <span>Install this app for easy access!</span>
+        <button id="install-btn" class="btn bg-amber-600 hover:bg-amber-700 text-sm py-1 px-3">Install</button>
+    </div>
+    <div id="update-banner" class="update-banner">
+        <span>A new version is available!</span>
+        <button id="update-btn" class="btn bg-amber-600 hover:bg-amber-700 text-sm py-1 px-3">Update</button>
+    </div>
+
 
     <script>
         // --- Constants (v3) ---
@@ -348,6 +367,8 @@
         let categoriesState = {};
         let userInventory = []; // Holds an array of ingredient IDs the user has
         let filterByInventory = false; // Tracks the state of the "Makeable" toggle
+        let deferredInstallPrompt = null; // To hold the install event
+        let newWorker; // To hold the new service worker
 
         // --- DOM Elements ---
         const recipeCategoriesListEl = document.getElementById('recipe-categories-list');
@@ -358,6 +379,11 @@
         const makeableToggle = document.getElementById('makeable-toggle');
         const inventoryListEl = document.getElementById('inventory-list');
         const inventorySearchEl = document.getElementById('inventory-search');
+        const installBanner = document.getElementById('install-banner');
+        const installBtn = document.getElementById('install-btn');
+        const updateBanner = document.getElementById('update-banner');
+        const updateBtn = document.getElementById('update-btn');
+
 
         const sections = {
             recipes: document.getElementById('recipes-section'),
@@ -376,11 +402,51 @@
 
         function loadData() {
             try {
-                const storedRecipes = localStorage.getItem(RECIPES_STORAGE_KEY);
-                allRecipes = storedRecipes ? JSON.parse(storedRecipes) : [...initialRecipesData];
-                
-                const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
-                favoriteRecipeIds = storedFavorites ? JSON.parse(storedFavorites) : [];
+                // V2 Storage Keys for migration
+                const V2_RECIPES_KEY = 'tikiRecipes_v2';
+                const V2_FAVORITES_KEY = 'tikiFavorites_v2';
+
+                const storedV3Recipes = localStorage.getItem(RECIPES_STORAGE_KEY);
+                const storedV2Recipes = localStorage.getItem(V2_RECIPES_KEY);
+
+                // Migration logic for v2 users
+                if(storedV2Recipes && !storedV3Recipes) {
+                    console.log("Found V2 data, migrating to V3...");
+                    allRecipes = JSON.parse(storedV2Recipes);
+                    favoriteRecipeIds = JSON.parse(localStorage.getItem(V2_FAVORITES_KEY) || '[]');
+                    
+                    // Stamp old recipes with new IDs
+                    allRecipes.forEach(recipe => {
+                        if (!recipe.ingredientIDs) {
+                            recipe.ingredientIDs = (recipe.ingredients || []).map(ing => {
+                                const normalized = ing.toLowerCase().replace(/\(.*\)/g, '').replace(/^[0-9\/\.\s]+(ounces?|oz|dash(es)?|drops?|barspoon|teaspoon|tsps?)\s*/, '').trim();
+                                const foundKey = Object.keys(ingredientMap).find(key => normalized.includes(key));
+                                return foundKey ? ingredientMap[foundKey] : null;
+                            }).filter(id => id !== null);
+                        }
+                    });
+
+                    // Save migrated data to new V3 keys
+                    saveRecipes();
+                    saveFavorites();
+                    // We don't migrate inventory or category state from v2 as they didn't exist
+                    userInventory = [];
+                    saveInventory();
+                    categoriesState = {};
+                    saveCategoryStates();
+
+                    // Clean up old V2 data
+                    localStorage.removeItem(V2_RECIPES_KEY);
+                    localStorage.removeItem(V2_FAVORITES_KEY);
+                    localStorage.removeItem('tikiCategoryState_v2'); // old category key
+
+                    alert("Welcome to the new version! Your recipes and favorites have been upgraded.");
+                } else {
+                    // Standard V3 data loading
+                    allRecipes = storedV3Recipes ? JSON.parse(storedV3Recipes) : [...initialRecipesData];
+                    const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
+                    favoriteRecipeIds = storedFavorites ? JSON.parse(storedFavorites) : [];
+                }
 
                 const storedCategoryStates = localStorage.getItem(CATEGORY_STATE_STORAGE_KEY);
                 categoriesState = storedCategoryStates ? JSON.parse(storedCategoryStates) : {};
@@ -388,13 +454,13 @@
                 const storedInventory = localStorage.getItem(USER_INVENTORY_KEY);
                 userInventory = storedInventory ? JSON.parse(storedInventory) : [];
 
-                if (!storedRecipes) saveRecipes();
-                if (!storedFavorites) saveFavorites();
+                if (!localStorage.getItem(RECIPES_STORAGE_KEY)) saveRecipes();
+                if (!localStorage.getItem(FAVORITES_STORAGE_KEY)) saveFavorites();
                 if (!storedCategoryStates) saveCategoryStates();
                 if (!storedInventory) saveInventory();
+
             } catch (e) {
                 console.error("Failed to load data from localStorage:", e);
-                // Fallback to defaults if storage is corrupted
                 allRecipes = [...initialRecipesData];
                 favoriteRecipeIds = [];
                 categoriesState = {};
@@ -496,12 +562,10 @@
             card.className = 'recipe-card';
             card.dataset.id = recipe.id;
             const isFavorited = favoriteRecipeIds.includes(recipe.id);
-            // FIX: Ensure ingredients is an array before calling map
             const ingredientsList = (recipe.ingredients || []).map(ing => `<li>${ing}</li>`).join('');
             const originText = recipe.origin ? `<div><span class="detail-label">Origin:</span> ${recipe.origin}</div>` : '';
             const glasswareText = `<div><span class="detail-label">Glassware:</span> ${recipe.glassware || 'N/A'}</div>`;
             const garnishText = recipe.garnish ? `<div><span class="detail-label">Garnish:</span> ${recipe.garnish}</div>` : '';
-            // FIX: Ensure instructions is a string before calling replace
             const instructionsText = recipe.instructions ? recipe.instructions.replace(/\n/g, '<br>') : 'No instructions provided.';
             const starHTML = isFavorited 
                 ? `<span class="emoji-favorite" style="color: orange; filter: saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
@@ -580,7 +644,6 @@
                     if (index > -1) userInventory.splice(index, 1);
                 }
                 saveInventory();
-                // If the filter is active, update the recipe list in real-time
                 if (filterByInventory) {
                     updateRecipeView();
                 }
@@ -642,22 +705,13 @@
                     allRecipes = data.recipes || [];
                     favoriteRecipeIds = data.favorites || [];
                     categoriesState = data.categoryStates || {};
-                    userInventory = data.inventory || []; // Restore inventory, defaults to empty array if not present
+                    userInventory = data.inventory || []; 
                     
-                    // --- Crucial Step: Stamp old data ---
-                    // If restoring a v2 backup, recipes won't have ingredientIDs. We need to add them.
                     let stampedCount = 0;
                     allRecipes.forEach(recipe => {
                         if (!recipe.ingredientIDs) {
-                            // This is a simplified version of the normalization logic.
-                            // A more robust solution would be needed for complex user-added ingredients.
                             recipe.ingredientIDs = (recipe.ingredients || []).map(ing => {
-                                const normalized = ing.toLowerCase()
-                                    .replace(/\(.*\)/g, '') // remove text in parentheses
-                                    .replace(/^[0-9\/\.\s]+(ounces?|oz|dash(es)?|drops?|barspoon|teaspoon|tsps?)\s*/, '')
-                                    .trim();
-                                
-                                // Find a matching key in the master map
+                                const normalized = ing.toLowerCase().replace(/\(.*\)/g, '').replace(/^[0-9\/\.\s]+(ounces?|oz|dash(es)?|drops?|barspoon|teaspoon|tsps?)\s*/, '').trim();
                                 const foundKey = Object.keys(ingredientMap).find(key => normalized.includes(key));
                                 return foundKey ? ingredientMap[foundKey] : null;
                             }).filter(id => id !== null);
@@ -698,7 +752,6 @@
         function setupEventListeners() {
             Object.keys(navButtons).forEach(key => navButtons[key]?.addEventListener('click', () => showSection(key)));
             
-            // This re-attaches the original form/button handlers from your v2 file
             const originalAddRecipeForm = document.querySelector('#add-recipe-section form');
             const originalBackupBtn = document.querySelector('#settings-section #backup-btn');
             const originalRestoreInput = document.querySelector('#settings-section #restore-input');
@@ -707,7 +760,6 @@
             originalBackupBtn?.addEventListener('click', handleBackup);
             originalRestoreInput?.addEventListener('change', handleRestore);
 
-            // New event listeners for v3 features
             makeableToggle?.addEventListener('change', (e) => {
                 filterByInventory = e.target.checked;
                 updateRecipeView();
@@ -716,9 +768,27 @@
             inventorySearchEl?.addEventListener('input', handleInventorySearch);
         }
 
+        // --- PWA Install and Update Logic ---
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            installBanner.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            installBanner.style.display = 'none';
+            deferredInstallPrompt.prompt();
+            const { outcome } = await deferredInstallPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            deferredInstallPrompt = null;
+        });
+
+        updateBtn.addEventListener('click', () => {
+            newWorker.postMessage({ action: 'skipWaiting' });
+        });
+
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Re-query elements from the v2 HTML structure to ensure they are found
             const mainContent = document.querySelector('main');
             mainContent.querySelector('#add-recipe-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
@@ -754,11 +824,27 @@
             showSection('recipes');
 
             if ('serviceWorker' in navigator) {
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                  .then(reg => console.log('[App] ServiceWorker registration successful scope: ', reg.scope))
-                  .catch(err => console.log('[App] ServiceWorker registration failed: ', err));
-              });
+                // FIX: Use an absolute path for the service worker registration
+                const swUrl = `${window.location.href.substring(0, window.location.href.lastIndexOf('/'))}/sw.js`;
+                navigator.serviceWorker.register(swUrl).then(reg => {
+                    console.log('[App] ServiceWorker registration successful scope: ', reg.scope);
+                    reg.addEventListener('updatefound', () => {
+                        newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New update available
+                                updateBanner.style.display = 'flex';
+                            }
+                        });
+                    });
+                }).catch(err => console.log('[App] ServiceWorker registration failed: ', err));
+
+                let refreshing;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshing) return;
+                    window.location.reload();
+                    refreshing = true;
+                });
             }
         });
     </script>
