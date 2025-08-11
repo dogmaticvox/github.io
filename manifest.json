@@ -1,8 +1,9 @@
 {
   "name": "Garry's Tiki Bar App",
-  "short_name": "TikiBar",
+  "short_name": "Tiki Bar",
   "description": "Your personal tiki cocktail recipe app.",
-  "start_url": "index.html",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#FFF8F0",
   "theme_color": "#CC5A02",
