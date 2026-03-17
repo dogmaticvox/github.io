@@ -36,6 +36,7 @@
         }
         .nav-btn.active {
             @apply bg-amber-800 ring-2 ring-amber-500 ring-offset-2;
+            border-bottom: 3px solid rgba(255,255,255,0.8);
         }
         .category-header {
              @apply flex justify-between items-center p-3 bg-amber-200/80 rounded-lg mb-2 cursor-pointer hover:bg-amber-300/80 shadow;
@@ -45,9 +46,21 @@
         }
         .category-recipes {
              @apply pl-4 border-l-4 border-amber-300 mb-4 space-y-3;
+             overflow: hidden;
+             max-height: 0;
+             transition: max-height 0.35s ease-out;
+        }
+        .category-recipes.open {
+             max-height: 9999px;
+             transition: max-height 0.5s ease-in;
         }
         .recipe-card {
              @apply bg-white rounded-lg shadow-lg p-4 border border-orange-100;
+             transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .recipe-card:hover {
+             transform: translateY(-2px);
+             @apply shadow-xl;
         }
         .recipe-header {
              @apply flex justify-between items-center cursor-pointer;
@@ -56,7 +69,17 @@
              @apply text-lg font-semibold text-amber-700 flex-grow mr-2;
         }
         .recipe-details {
-             @apply mt-3 pt-3 border-t border-orange-100 space-y-2 text-sm;
+             @apply border-t border-orange-100 space-y-2 text-sm;
+             overflow: hidden;
+             max-height: 0;
+             transition: max-height 0.3s ease-out, padding-top 0.3s ease, margin-top 0.3s ease;
+             padding-top: 0;
+             margin-top: 0;
+        }
+        .recipe-details.open {
+             max-height: 1000px;
+             transition: max-height 0.4s ease-in, padding-top 0.3s ease, margin-top 0.3s ease;
+             @apply mt-3 pt-3;
         }
         .detail-label {
              @apply font-semibold text-teal-700 block;
@@ -91,6 +114,26 @@
         /* Styles for Install and Update Banners */
         .install-banner, .update-banner {
             @apply hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-teal-800 text-white p-4 rounded-lg shadow-2xl flex justify-between items-center z-50;
+        }
+        /* === PHASE 1: ANIMATIONS & POLISH === */
+        .chevron-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            line-height: 1;
+        }
+        .chevron-icon.rotated {
+            transform: rotate(180deg);
+        }
+        .ing-available { @apply text-green-600; }
+        .ing-missing { @apply text-red-500; }
+        .ing-count-badge {
+            @apply text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium ml-2 whitespace-nowrap flex-shrink-0;
+        }
+        .almost-badge {
+            @apply text-xs px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 font-medium ml-2 whitespace-nowrap flex-shrink-0;
+        }
+        .section {
+            transition: opacity 0.15s ease-in;
         }
     </style>
     
@@ -147,18 +190,30 @@
 
     <main>
         <section id="recipes-section" class="section"> 
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
                  <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
-                <div class="flex items-center flex-shrink-0">
-                    <label for="makeable-toggle" class="mr-2 text-sm font-medium text-gray-700 whitespace-nowrap">Show Only Makeable</label>
-                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-                        <input type="checkbox" name="makeable-toggle" id="makeable-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                        <label for="makeable-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                    <div class="flex items-center flex-shrink-0">
+                        <label for="makeable-toggle" class="mr-2 text-sm font-medium text-gray-700 whitespace-nowrap">Makeable Only</label>
+                        <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="makeable-toggle" id="makeable-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="makeable-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                    <div class="flex items-center flex-shrink-0" id="almost-toggle-container" style="display:none!important">
+                        <label for="almost-toggle" class="mr-2 text-sm font-medium text-yellow-700 whitespace-nowrap">+Almost (≤2 missing)</label>
+                        <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="almost-toggle" id="almost-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="almost-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div id="recipe-categories-list">
-                <p class="text-gray-500">Loading recipes...</p> 
+                <div class="text-center py-8 text-gray-400">
+                    <div class="text-3xl mb-2">🌴</div>
+                    <p class="text-sm">Loading recipes...</p>
+                </div>
             </div>
         </section>
 
@@ -367,6 +422,7 @@
         let categoriesState = {};
         let userInventory = []; // Holds an array of ingredient IDs the user has
         let filterByInventory = false; // Tracks the state of the "Makeable" toggle
+        let showAlmostMakeable = false; // Show recipes missing ≤2 ingredients
         let deferredInstallPrompt = null; // To hold the install event
         let newWorker; // To hold the new service worker
 
@@ -377,6 +433,8 @@
         const restoreInput = document.getElementById('restore-input');
         const restoreMessageEl = document.getElementById('restore-message');
         const makeableToggle = document.getElementById('makeable-toggle');
+        const almostToggle = document.getElementById('almost-toggle');
+        const almostToggleContainer = document.getElementById('almost-toggle-container');
         const inventoryListEl = document.getElementById('inventory-list');
         const inventorySearchEl = document.getElementById('inventory-search');
         const installBanner = document.getElementById('install-banner');
@@ -478,11 +536,15 @@
             if (filterByInventory) {
                 const inventorySet = new Set(userInventory);
                 if (inventorySet.size > 0) {
-                    recipesToShow = allRecipes.filter(recipe => 
-                        recipe.ingredientIDs && recipe.ingredientIDs.length > 0 && recipe.ingredientIDs.every(id => inventorySet.has(id))
-                    );
+                    recipesToShow = allRecipes.filter(recipe => {
+                        if (!recipe.ingredientIDs || recipe.ingredientIDs.length === 0) return false;
+                        const missingCount = recipe.ingredientIDs.filter(id => !inventorySet.has(id)).length;
+                        if (missingCount === 0) return true;
+                        if (showAlmostMakeable && missingCount <= 2) return true;
+                        return false;
+                    });
                 } else {
-                    recipesToShow = []; // If inventory is empty, nothing is makeable
+                    recipesToShow = [];
                 }
             }
             renderRecipeList(recipesToShow);
@@ -507,10 +569,20 @@
             const categories = getAllCategories(recipesToDisplay);
 
             if (recipesToDisplay.length === 0) {
-                const message = filterByInventory 
-                    ? 'No makeable recipes with your current inventory. Check more items in "My Bar"!'
-                    : 'No recipes found. Try adding one!';
-                recipeCategoriesListEl.innerHTML = `<p class="text-gray-500 italic p-4 text-center">${message}</p>`;
+                if (filterByInventory) {
+                    recipeCategoriesListEl.innerHTML = `
+                        <div class="text-center py-10">
+                            <div class="text-4xl mb-3">🍹</div>
+                            <p class="text-gray-700 font-medium mb-1">No makeable recipes yet.</p>
+                            <p class="text-gray-500 text-sm mb-4">Add more ingredients in <button class="text-teal-600 underline font-medium" onclick="showSection('inventory')">My Bar</button> to unlock drinks!</p>
+                        </div>`;
+                } else {
+                    recipeCategoriesListEl.innerHTML = `
+                        <div class="text-center py-10">
+                            <div class="text-4xl mb-3">🌴</div>
+                            <p class="text-gray-500">No recipes found. Try adding one!</p>
+                        </div>`;
+                }
                 return;
             }
 
@@ -535,21 +607,25 @@
                 
                 const header = document.createElement('div');
                 header.className = 'category-header';
-                header.innerHTML = `<span class="category-title">${categoryDisplayName} (${categoryRecipes.length})</span><span class="lucide ${isExpanded ? 'icon-chevron-up' : 'icon-chevron-down'}"></span>`;
-                
+                header.setAttribute('role', 'button');
+                header.setAttribute('tabindex', '0');
+                header.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+                header.innerHTML = `<span class="category-title">${categoryDisplayName} (${categoryRecipes.length})</span><span class="lucide icon-chevron-down chevron-icon${isExpanded ? ' rotated' : ''}"></span>`;
+
                 const recipesContainer = document.createElement('div');
-                recipesContainer.className = 'category-recipes';
-                if (!isExpanded) recipesContainer.classList.add('hidden');
-                
+                recipesContainer.className = 'category-recipes' + (isExpanded ? ' open' : '');
+
                 categoryRecipes.forEach(recipe => recipesContainer.appendChild(createRecipeCard(recipe)));
-                
-                header.addEventListener('click', () => {
-                    categoriesState[categoryKey] = !isExpanded;
+
+                const toggleCategory = () => {
+                    const nowExpanded = recipesContainer.classList.toggle('open');
+                    categoriesState[categoryKey] = nowExpanded;
                     saveCategoryStates();
-                    recipesContainer.classList.toggle('hidden');
-                    header.querySelector('.lucide').classList.toggle('icon-chevron-up', !isExpanded);
-                    header.querySelector('.lucide').classList.toggle('icon-chevron-down', isExpanded);
-                });
+                    header.querySelector('.chevron-icon').classList.toggle('rotated', nowExpanded);
+                    header.setAttribute('aria-expanded', nowExpanded ? 'true' : 'false');
+                };
+                header.addEventListener('click', toggleCategory);
+                header.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCategory(); } });
                 
                 categoryContainer.appendChild(header);
                 categoryContainer.appendChild(recipesContainer);
@@ -557,26 +633,72 @@
             });
         }
 
+        function normalizeIngredientKey(ingText) {
+            return ingText.toLowerCase()
+                .replace(/\(.*?\)/g, '')
+                .replace(/^[\d\/\.\s]+(ounces?|oz|dashes?|drops?|barspoon|teaspoons?|tsps?|cups?|tablespoons?|tbsp)\s*/i, '')
+                .trim();
+        }
+
+        function getIngredientId(ingText) {
+            const normalized = normalizeIngredientKey(ingText);
+            const foundKey = Object.keys(ingredientMap).find(key => normalized.includes(key));
+            return foundKey ? ingredientMap[foundKey] : null;
+        }
+
         function createRecipeCard(recipe) {
             const card = document.createElement('div');
             card.className = 'recipe-card';
             card.dataset.id = recipe.id;
             const isFavorited = favoriteRecipeIds.includes(recipe.id);
-            const ingredientsList = (recipe.ingredients || []).map(ing => `<li>${ing}</li>`).join('');
+            const inventorySet = new Set(userInventory);
+
+            // Build colored ingredient list
+            const ingredients = recipe.ingredients || [];
+            const totalCount = ingredients.length;
+            // Always derive per-ingredient IDs from text for display (ingredientIDs may not be parallel)
+            const ingIds = ingredients.map(ing => getIngredientId(ing));
+            const haveCount = userInventory.length > 0
+                ? ingIds.filter(id => id !== null && inventorySet.has(id)).length
+                : null;
+
+            const ingredientsList = ingredients.map((ing, i) => {
+                const id = ingIds[i];
+                let cls = '';
+                if (userInventory.length > 0 && id !== null) {
+                    cls = inventorySet.has(id) ? 'ing-available' : 'ing-missing';
+                }
+                return `<li class="${cls}">${ing}</li>`;
+            }).join('');
+
+            // Badge: show ingredient count if inventory is set
+            let badgeHTML = '';
+            if (haveCount !== null && totalCount > 0) {
+                const missingCount = totalCount - haveCount;
+                if (missingCount === 0) {
+                    badgeHTML = `<span class="ing-count-badge bg-green-100 text-green-700">${totalCount}/${totalCount}</span>`;
+                } else if (filterByInventory && missingCount <= 2) {
+                    badgeHTML = `<span class="almost-badge">Missing ${missingCount}</span>`;
+                } else {
+                    badgeHTML = `<span class="ing-count-badge">${haveCount}/${totalCount}</span>`;
+                }
+            }
+
             const originText = recipe.origin ? `<div><span class="detail-label">Origin:</span> ${recipe.origin}</div>` : '';
             const glasswareText = `<div><span class="detail-label">Glassware:</span> ${recipe.glassware || 'N/A'}</div>`;
             const garnishText = recipe.garnish ? `<div><span class="detail-label">Garnish:</span> ${recipe.garnish}</div>` : '';
             const instructionsText = recipe.instructions ? recipe.instructions.replace(/\n/g, '<br>') : 'No instructions provided.';
-            const starHTML = isFavorited 
+            const starHTML = isFavorited
                 ? `<span class="emoji-favorite" style="color: orange; filter: saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
                 : `<span class="lucide icon-star"></span>`;
 
             card.innerHTML = `
                 <div class="recipe-header">
                     <span class="recipe-name">${recipe.name || 'Unnamed Recipe'}</span>
+                    ${badgeHTML}
                     <span class="star-icon-placeholder" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">${starHTML}</span>
                 </div>
-                <div class="recipe-details hidden">
+                <div class="recipe-details">
                     ${originText}
                     ${glasswareText}
                     <div><span class="detail-label">Ingredients:</span><ul class="list-disc list-inside ml-4">${ingredientsList}</ul></div>
@@ -588,7 +710,7 @@
             const header = card.querySelector('.recipe-header');
             header.addEventListener('click', (e) => {
                 if (!e.target.closest('.star-icon-placeholder') && !e.target.closest('.delete-recipe-btn')) {
-                    header.nextElementSibling.classList.toggle('hidden');
+                    header.nextElementSibling.classList.toggle('open');
                 }
             });
             card.querySelector('.star-icon-placeholder').addEventListener('click', (e) => {
@@ -743,9 +865,15 @@
 
         function showSection(sectionIdToShow) {
             Object.keys(sections).forEach(key => {
-                sections[key]?.classList.toggle('hidden', key !== sectionIdToShow);
+                if (key !== sectionIdToShow) sections[key]?.classList.add('hidden');
                 navButtons[key]?.classList.toggle('active', key === sectionIdToShow);
             });
+            const target = sections[sectionIdToShow];
+            if (target) {
+                target.classList.remove('hidden');
+                target.style.opacity = '0';
+                requestAnimationFrame(() => { target.style.opacity = '1'; });
+            }
             window.scrollTo(0, 0);
         }
 
@@ -762,6 +890,12 @@
 
             makeableToggle?.addEventListener('change', (e) => {
                 filterByInventory = e.target.checked;
+                if (almostToggleContainer) almostToggleContainer.style.cssText = filterByInventory ? 'display:flex!important' : 'display:none!important';
+                if (!filterByInventory) { showAlmostMakeable = false; if (almostToggle) almostToggle.checked = false; }
+                updateRecipeView();
+            });
+            almostToggle?.addEventListener('change', (e) => {
+                showAlmostMakeable = e.target.checked;
                 updateRecipeView();
             });
             inventoryListEl?.addEventListener('change', handleInventoryChange);
