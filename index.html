@@ -135,6 +135,27 @@
         .section {
             transition: opacity 0.15s ease-in;
         }
+        /* === PHASE 2: HIGH-VALUE FEATURES === */
+        .surprise-btn {
+            @apply inline-flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white font-medium rounded-md shadow-sm hover:bg-purple-700 transition-all duration-150 ease-in-out text-sm flex-shrink-0;
+        }
+        .surprise-btn.shaking { animation: shake 0.4s ease; }
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            50% { transform: rotate(15deg) scale(1.1); }
+            75% { transform: rotate(-8deg); }
+        }
+        .star-r { display: inline-flex; gap: 1px; align-items: center; line-height: 1; }
+        .star-r .s { cursor: pointer; font-size: 1rem; color: #d1d5db; transition: color 0.1s; user-select: none; }
+        .star-r .s.on { color: #f59e0b; }
+        .made-it-btn {
+            @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 transition-colors cursor-pointer;
+        }
+        .last-made-label { @apply text-xs text-gray-400 italic ml-1 flex-shrink-0; }
+        .shopping-list-item { @apply flex items-center gap-3 p-2 rounded-md hover:bg-orange-50 transition-colors; }
+        .shopping-section-container { @apply mt-2 p-4 bg-white/90 rounded-lg shadow; }
+        .confirm-panel { @apply mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg; }
     </style>
     
     <style>
@@ -168,6 +189,8 @@
       .icon-download::before { content: "\e0b6"; }
       .icon-settings::before { content: "\e157"; }
       .icon-martini::before { content: "\e102"; }
+      .icon-share::before { content: "\e15f"; }
+      .icon-clipboard::before { content: "\e07b"; }
     </style>
 </head>
 <body class="p-4 max-w-2xl mx-auto">
@@ -181,18 +204,23 @@
         </div>
     </header>
 
-    <nav class="mb-6 flex justify-center space-x-2 sm:space-x-3">
-        <button id="nav-recipes" class="nav-btn active"> <span class="mr-2">📓</span>Recipes</button>
+    <nav class="mb-6 flex flex-wrap justify-center gap-2">
+        <button id="nav-recipes" class="nav-btn active"><span class="mr-1">📓</span>Recipes</button>
         <button id="nav-inventory" class="nav-btn"><span class="lucide icon-martini"></span>My Bar</button>
-        <button id="nav-add-recipe" class="nav-btn"><span class="mr-2">📝</span>Add Recipe</button>
+        <button id="nav-add-recipe" class="nav-btn"><span class="mr-1">📝</span>Add Recipe</button>
+        <button id="nav-shopping" class="nav-btn"><span class="mr-1">🛒</span>Shopping</button>
         <button id="nav-settings" class="nav-btn"><span class="lucide icon-settings"></span>Settings</button>
     </nav>
 
     <main>
-        <section id="recipes-section" class="section"> 
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
-                 <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+        <section id="recipes-section" class="section">
+            <div class="mb-4 space-y-3">
+                <div class="flex items-center gap-2">
+                    <h2 class="text-2xl font-semibold text-teal-800 flex-grow">Cocktail Recipes</h2>
+                    <button id="surprise-btn" class="surprise-btn" title="Surprise Me!">🎲 Surprise Me</button>
+                </div>
+                <input type="search" id="recipe-search" placeholder="🔍 Search by name, ingredient, or category…" class="w-full rounded-lg border border-gray-300 shadow-sm text-sm px-3 py-2 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <div class="flex items-center flex-shrink-0">
                         <label for="makeable-toggle" class="mr-2 text-sm font-medium text-gray-700 whitespace-nowrap">Makeable Only</label>
                         <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
@@ -206,6 +234,13 @@
                             <input type="checkbox" name="almost-toggle" id="almost-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
                             <label for="almost-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
                         </div>
+                    </div>
+                    <div class="ml-auto flex items-center gap-1 flex-shrink-0">
+                        <label for="sort-select" class="text-xs text-gray-500 whitespace-nowrap">Sort:</label>
+                        <select id="sort-select" class="text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-teal-400 bg-white">
+                            <option value="alpha">A–Z</option>
+                            <option value="rating">⭐ Rating</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -238,7 +273,14 @@
             </form>
         </section>
 
-         <section id="settings-section" class="section hidden"> 
+        <section id="shopping-section" class="section hidden">
+            <h2 class="text-2xl font-semibold text-teal-800 mb-4">🛒 Shopping List</h2>
+            <div class="shopping-section-container">
+                <!-- content injected by JS -->
+            </div>
+        </section>
+
+         <section id="settings-section" class="section hidden">
              <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
             <div class="settings-section-container">
                 <!-- Settings content is the same as v2 -->
@@ -266,7 +308,11 @@
         const RECIPES_STORAGE_KEY = 'tikiRecipes_v3';
         const FAVORITES_STORAGE_KEY = 'tikiFavorites_v3';
         const CATEGORY_STATE_STORAGE_KEY = 'tikiCategoryState_v3';
-        const USER_INVENTORY_KEY = 'tikiUserInventory_v3'; // New key for inventory
+        const USER_INVENTORY_KEY = 'tikiUserInventory_v3';
+        const NOTES_KEY = 'tikiNotes_v3';
+        const HISTORY_KEY = 'tikiHistory_v3';
+        const CUSTOM_INGREDIENTS_KEY = 'tikiCustomIngredients_v3';
+        const SHOPPING_LIST_KEY = 'tikiShoppingList_v3';
         const USER_RECIPE_CATEGORY = 'User Added Recipes';
         const FAVORITES_CATEGORY_KEY = '__FAVORITES__';
 
@@ -279,10 +325,16 @@
         let favoriteRecipeIds = [];
         let categoriesState = {};
         let userInventory = []; // Holds an array of ingredient IDs the user has
-        let filterByInventory = false; // Tracks the state of the "Makeable" toggle
-        let showAlmostMakeable = false; // Show recipes missing ≤2 ingredients
-        let deferredInstallPrompt = null; // To hold the install event
-        let newWorker; // To hold the new service worker
+        let filterByInventory = false;
+        let showAlmostMakeable = false;
+        let recipeSearchQuery = '';
+        let recipeSortOrder = 'alpha';
+        let recipeNotes = {};      // { recipeId: { rating, notes } }
+        let drinkHistory = [];     // [{ recipeId, date }]
+        let customIngredients = {}; // { name: id }
+        let shoppingListManual = []; // [string]
+        let deferredInstallPrompt = null;
+        let newWorker;
 
         // --- DOM Elements ---
         const recipeCategoriesListEl = document.getElementById('recipe-categories-list');
@@ -305,12 +357,14 @@
             recipes: document.getElementById('recipes-section'),
             inventory: document.getElementById('inventory-section'),
             addRecipe: document.getElementById('add-recipe-section'),
+            shopping: document.getElementById('shopping-section'),
             settings: document.getElementById('settings-section')
         };
         const navButtons = {
             recipes: document.getElementById('nav-recipes'),
             inventory: document.getElementById('nav-inventory'),
             addRecipe: document.getElementById('nav-add-recipe'),
+            shopping: document.getElementById('nav-shopping'),
             settings: document.getElementById('nav-settings')
         };
 
@@ -371,6 +425,13 @@
                 const storedInventory = localStorage.getItem(USER_INVENTORY_KEY);
                 userInventory = storedInventory ? JSON.parse(storedInventory) : [];
 
+                recipeNotes = JSON.parse(localStorage.getItem(NOTES_KEY) || '{}');
+                drinkHistory = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+                customIngredients = JSON.parse(localStorage.getItem(CUSTOM_INGREDIENTS_KEY) || '{}');
+                shoppingListManual = JSON.parse(localStorage.getItem(SHOPPING_LIST_KEY) || '[]');
+                // Merge custom ingredients into the live map
+                Object.assign(ingredientMap, customIngredients);
+
                 if (!localStorage.getItem(RECIPES_STORAGE_KEY)) saveRecipes();
                 if (!localStorage.getItem(FAVORITES_STORAGE_KEY)) saveFavorites();
                 if (!storedCategoryStates) saveCategoryStates();
@@ -389,22 +450,44 @@
         function saveFavorites() { localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteRecipeIds)); }
         function saveCategoryStates() { localStorage.setItem(CATEGORY_STATE_STORAGE_KEY, JSON.stringify(categoriesState)); }
         function saveInventory() { localStorage.setItem(USER_INVENTORY_KEY, JSON.stringify(userInventory)); }
+        function saveNotes() { localStorage.setItem(NOTES_KEY, JSON.stringify(recipeNotes)); }
+        function saveHistory() { localStorage.setItem(HISTORY_KEY, JSON.stringify(drinkHistory)); }
+        function saveCustomIngredients() { localStorage.setItem(CUSTOM_INGREDIENTS_KEY, JSON.stringify(customIngredients)); }
+        function saveShoppingList() { localStorage.setItem(SHOPPING_LIST_KEY, JSON.stringify(shoppingListManual)); }
         
-        function updateRecipeView() {
-            let recipesToShow = allRecipes;
+        function getFilteredRecipes() {
+            let list = [...allRecipes];
             if (filterByInventory) {
                 const inventorySet = new Set(userInventory);
                 if (inventorySet.size > 0) {
-                    recipesToShow = allRecipes.filter(recipe => {
+                    list = list.filter(recipe => {
                         if (!recipe.ingredientIDs || recipe.ingredientIDs.length === 0) return false;
-                        const missingCount = recipe.ingredientIDs.filter(id => !inventorySet.has(id)).length;
-                        if (missingCount === 0) return true;
-                        if (showAlmostMakeable && missingCount <= 2) return true;
-                        return false;
+                        const missing = recipe.ingredientIDs.filter(id => !inventorySet.has(id)).length;
+                        return missing === 0 || (showAlmostMakeable && missing <= 2);
                     });
                 } else {
-                    recipesToShow = [];
+                    list = [];
                 }
+            }
+            if (recipeSearchQuery) {
+                const q = recipeSearchQuery.toLowerCase();
+                list = list.filter(r =>
+                    r.name?.toLowerCase().includes(q) ||
+                    r.category?.toLowerCase().includes(q) ||
+                    r.ingredients?.some(ing => ing.toLowerCase().includes(q))
+                );
+            }
+            return list;
+        }
+
+        function updateRecipeView() {
+            let recipesToShow = getFilteredRecipes();
+            if (recipeSortOrder === 'rating') {
+                recipesToShow = [...recipesToShow].sort((a, b) => {
+                    const rA = recipeNotes[a.id]?.rating || 0;
+                    const rB = recipeNotes[b.id]?.rating || 0;
+                    return rB - rA || a.name.localeCompare(b.name);
+                });
             }
             renderRecipeList(recipesToShow);
         }
@@ -512,76 +595,119 @@
             const isFavorited = favoriteRecipeIds.includes(recipe.id);
             const inventorySet = new Set(userInventory);
 
-            // Build colored ingredient list
+            // Ingredient coloring & badge
             const ingredients = recipe.ingredients || [];
             const totalCount = ingredients.length;
-            // Always derive per-ingredient IDs from text for display (ingredientIDs may not be parallel)
             const ingIds = ingredients.map(ing => getIngredientId(ing));
             const haveCount = userInventory.length > 0
-                ? ingIds.filter(id => id !== null && inventorySet.has(id)).length
-                : null;
-
+                ? ingIds.filter(id => id !== null && inventorySet.has(id)).length : null;
             const ingredientsList = ingredients.map((ing, i) => {
                 const id = ingIds[i];
                 let cls = '';
-                if (userInventory.length > 0 && id !== null) {
+                if (userInventory.length > 0 && id !== null)
                     cls = inventorySet.has(id) ? 'ing-available' : 'ing-missing';
-                }
                 return `<li class="${cls}">${ing}</li>`;
             }).join('');
-
-            // Badge: show ingredient count if inventory is set
             let badgeHTML = '';
             if (haveCount !== null && totalCount > 0) {
-                const missingCount = totalCount - haveCount;
-                if (missingCount === 0) {
+                const missing = totalCount - haveCount;
+                if (missing === 0)
                     badgeHTML = `<span class="ing-count-badge bg-green-100 text-green-700">${totalCount}/${totalCount}</span>`;
-                } else if (filterByInventory && missingCount <= 2) {
-                    badgeHTML = `<span class="almost-badge">Missing ${missingCount}</span>`;
-                } else {
+                else if (filterByInventory && missing <= 2)
+                    badgeHTML = `<span class="almost-badge">Missing ${missing}</span>`;
+                else
                     badgeHTML = `<span class="ing-count-badge">${haveCount}/${totalCount}</span>`;
-                }
             }
+
+            // Rating (header compact display)
+            const currentRating = recipeNotes[recipe.id]?.rating || 0;
+            const ratingHeaderHTML = currentRating > 0
+                ? `<span class="header-rating text-xs text-amber-500 flex-shrink-0 ml-1">${'★'.repeat(currentRating)}</span>`
+                : `<span class="header-rating text-xs text-amber-500 flex-shrink-0 ml-1"></span>`;
+
+            // Last made
+            const lastMadeDate = getLastMadeDate(recipe.id);
+            const lastMadeHTML = lastMadeDate ? `<span class="last-made-label">made ${lastMadeDate}</span>` : '';
+
+            // Favorite star
+            const starHTML = isFavorited
+                ? `<span class="emoji-favorite" style="color:orange;filter:saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
+                : `<span class="lucide icon-star"></span>`;
 
             const originText = recipe.origin ? `<div><span class="detail-label">Origin:</span> ${recipe.origin}</div>` : '';
             const glasswareText = `<div><span class="detail-label">Glassware:</span> ${recipe.glassware || 'N/A'}</div>`;
             const garnishText = recipe.garnish ? `<div><span class="detail-label">Garnish:</span> ${recipe.garnish}</div>` : '';
             const instructionsText = recipe.instructions ? recipe.instructions.replace(/\n/g, '<br>') : 'No instructions provided.';
-            const starHTML = isFavorited
-                ? `<span class="emoji-favorite" style="color: orange; filter: saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
-                : `<span class="lucide icon-star"></span>`;
+            const starsHTML = n => `<span class="s${currentRating >= n ? ' on' : ''}" data-star="${n}">★</span>`;
 
             card.innerHTML = `
                 <div class="recipe-header">
                     <span class="recipe-name">${recipe.name || 'Unnamed Recipe'}</span>
-                    ${badgeHTML}
+                    ${badgeHTML}${ratingHeaderHTML}${lastMadeHTML}
                     <span class="star-icon-placeholder" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">${starHTML}</span>
                 </div>
                 <div class="recipe-details">
-                    ${originText}
-                    ${glasswareText}
+                    ${originText}${glasswareText}
                     <div><span class="detail-label">Ingredients:</span><ul class="list-disc list-inside ml-4">${ingredientsList}</ul></div>
                     <div><span class="detail-label">Instructions:</span> ${instructionsText}</div>
                     ${garnishText}
-                    <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn mt-2"><span class="lucide icon-trash"></span> Delete Recipe</button>
+                    <div class="flex items-center flex-wrap gap-3 mt-3 pt-2 border-t border-orange-100">
+                        <div class="flex items-center gap-1">
+                            <span class="text-xs font-medium text-gray-600">Rate:</span>
+                            <div class="star-r interactive-stars">${[1,2,3,4,5].map(starsHTML).join('')}</div>
+                        </div>
+                        <button class="made-it-btn">🍸 Made It!</button>
+                        <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn ml-auto"><span class="lucide icon-trash"></span> Delete</button>
+                    </div>
+                    <div class="mt-2">
+                        <label class="text-xs font-medium text-gray-600 block mb-1">Tasting Notes:</label>
+                        <textarea class="notes-textarea w-full text-sm border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-teal-400 resize-none" rows="2" placeholder="How did it taste? What would you change?">${recipeNotes[recipe.id]?.notes || ''}</textarea>
+                    </div>
                 </div>`;
 
             const header = card.querySelector('.recipe-header');
             header.addEventListener('click', (e) => {
-                if (!e.target.closest('.star-icon-placeholder') && !e.target.closest('.delete-recipe-btn')) {
+                if (!e.target.closest('.star-icon-placeholder') && !e.target.closest('.delete-recipe-btn'))
                     header.nextElementSibling.classList.toggle('open');
-                }
             });
             card.querySelector('.star-icon-placeholder').addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleFavorite(recipe.id);
+                e.stopPropagation(); toggleFavorite(recipe.id);
             });
             card.querySelector('.delete-recipe-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (confirm(`Are you sure you want to delete "${recipe.name}"?`)) {
-                    deleteRecipe(recipe.id);
-                }
+                if (confirm(`Delete "${recipe.name}"?`)) deleteRecipe(recipe.id);
             });
+
+            // Interactive star rating
+            card.querySelector('.interactive-stars').addEventListener('click', (e) => {
+                const star = e.target.closest('.s');
+                if (!star) return;
+                const n = parseInt(star.dataset.star);
+                const prev = recipeNotes[recipe.id]?.rating || 0;
+                const newRating = prev === n ? 0 : n; // click same star to clear
+                recipeNotes[recipe.id] = { ...recipeNotes[recipe.id], rating: newRating };
+                saveNotes();
+                card.querySelectorAll('.interactive-stars .s').forEach((s, i) => s.classList.toggle('on', i < newRating));
+                card.querySelector('.header-rating').textContent = newRating > 0 ? '★'.repeat(newRating) : '';
+                if (recipeSortOrder === 'rating') updateRecipeView();
+            });
+
+            // Made It
+            card.querySelector('.made-it-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                logDrink(recipe.id);
+                const btn = e.currentTarget;
+                btn.textContent = '✓ Logged!';
+                btn.disabled = true;
+                setTimeout(() => { btn.innerHTML = '🍸 Made It!'; btn.disabled = false; }, 2000);
+            });
+
+            // Notes autosave on blur
+            card.querySelector('.notes-textarea').addEventListener('blur', (e) => {
+                recipeNotes[recipe.id] = { ...recipeNotes[recipe.id], notes: e.target.value };
+                saveNotes();
+            });
+
             return card;
         }
         
@@ -602,6 +728,149 @@
             saveRecipes();
             saveFavorites();
             updateRecipeView();
+        }
+
+        // === DRINK HISTORY ===
+        function logDrink(recipeId) {
+            drinkHistory.unshift({ recipeId, date: new Date().toISOString() });
+            if (drinkHistory.length > 500) drinkHistory = drinkHistory.slice(0, 500);
+            saveHistory();
+        }
+
+        function getLastMadeDate(recipeId) {
+            const entry = drinkHistory.find(h => h.recipeId === recipeId);
+            if (!entry) return null;
+            return new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        // === SURPRISE ME ===
+        function handleSurpriseMe() {
+            const btn = document.getElementById('surprise-btn');
+            btn.classList.add('shaking');
+            setTimeout(() => btn.classList.remove('shaking'), 400);
+            const pool = getFilteredRecipes();
+            if (pool.length === 0) return;
+            const recipe = pool[Math.floor(Math.random() * pool.length)];
+            // Ensure the recipe's category is expanded
+            if (categoriesState[recipe.category] === false) {
+                categoriesState[recipe.category] = true;
+                saveCategoryStates();
+                updateRecipeView();
+            }
+            setTimeout(() => {
+                const card = document.querySelector(`[data-id="${recipe.id}"]`);
+                if (!card) return;
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const details = card.querySelector('.recipe-details');
+                if (details && !details.classList.contains('open')) details.classList.add('open');
+            }, 150);
+        }
+
+        // === SHOPPING LIST ===
+        function renderShoppingList() {
+            const container = document.querySelector('#shopping-section .shopping-section-container');
+            if (!container) return;
+            const inventorySet = new Set(userInventory);
+            const idToName = Object.fromEntries(Object.entries(ingredientMap).map(([n, id]) => [id, n]));
+            const missing = new Map();
+            favoriteRecipeIds.forEach(rid => {
+                const r = allRecipes.find(x => x.id === rid);
+                if (!r?.ingredientIDs) return;
+                r.ingredientIDs.forEach(id => { if (!inventorySet.has(id) && idToName[id]) missing.set(id, idToName[id]); });
+            });
+            const sortedMissing = [...missing.entries()].sort((a, b) => a[1].localeCompare(b[1]));
+
+            let favHTML;
+            if (favoriteRecipeIds.length === 0)
+                favHTML = '<p class="text-gray-400 text-sm italic">No favorites yet. ⭐ Star some recipes to see what you need!</p>';
+            else if (sortedMissing.length === 0)
+                favHTML = '<p class="text-green-600 text-sm font-medium">🎉 You have everything for your favorited recipes!</p>';
+            else
+                favHTML = sortedMissing.map(([id, name]) =>
+                    `<label class="shopping-list-item cursor-pointer">
+                        <input type="checkbox" class="shopping-fav-check h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500" data-id="${id}">
+                        <span class="text-sm capitalize flex-grow">${name}</span>
+                    </label>`).join('');
+
+            const manualHTML = shoppingListManual.length === 0
+                ? '<p class="text-gray-400 text-sm italic">No manual items added.</p>'
+                : shoppingListManual.map((item, i) =>
+                    `<div class="shopping-list-item">
+                        <input type="checkbox" class="shopping-manual-check h-4 w-4 rounded border-gray-300 text-teal-600" data-index="${i}">
+                        <span class="text-sm flex-grow">${item}</span>
+                        <button class="shopping-remove text-red-400 hover:text-red-600 text-xs font-bold" data-index="${i}">✕</button>
+                    </div>`).join('');
+
+            container.innerHTML = `
+                <div class="mb-4">
+                    <h3 class="settings-title">Missing from ⭐ Favorites (${sortedMissing.length})</h3>
+                    <p class="text-sm text-gray-500 mb-3">Check items to add them to My Bar.</p>
+                    <div id="shopping-fav-list">${favHTML}</div>
+                </div>
+                <div class="border-t border-gray-200 pt-4 mt-2">
+                    <h3 class="settings-title">Add Item Manually</h3>
+                    <div class="flex gap-2 mb-3">
+                        <input type="text" id="shopping-manual-input" placeholder="e.g., Angostura bitters" class="flex-grow text-sm rounded-md border-gray-300">
+                        <button id="shopping-add-btn" class="btn text-sm py-1.5 px-3 flex-shrink-0">Add</button>
+                    </div>
+                    <div id="shopping-manual-list">${manualHTML}</div>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-200">
+                    <button id="shopping-copy-btn" class="btn bg-gray-600 hover:bg-gray-700 text-sm py-1.5 px-3">📋 Copy All</button>
+                    <button id="shopping-clear-btn" class="btn bg-red-600 hover:bg-red-700 text-sm py-1.5 px-3">🗑 Clear Manual</button>
+                </div>`;
+
+            // Wire up events inside shopping list
+            container.querySelector('#shopping-fav-list').addEventListener('change', (e) => {
+                const cb = e.target.closest('.shopping-fav-check');
+                if (!cb) return;
+                const id = parseInt(cb.dataset.id);
+                if (cb.checked && !userInventory.includes(id)) {
+                    userInventory.push(id);
+                    saveInventory();
+                    renderShoppingList();
+                    if (filterByInventory) updateRecipeView();
+                }
+            });
+            container.querySelector('#shopping-manual-list').addEventListener('change', (e) => {
+                const cb = e.target.closest('.shopping-manual-check');
+                if (!cb || !cb.checked) return;
+                const idx = parseInt(cb.dataset.index);
+                shoppingListManual.splice(idx, 1);
+                saveShoppingList();
+                renderShoppingList();
+            });
+            container.querySelector('#shopping-manual-list').addEventListener('click', (e) => {
+                const btn = e.target.closest('.shopping-remove');
+                if (!btn) return;
+                shoppingListManual.splice(parseInt(btn.dataset.index), 1);
+                saveShoppingList();
+                renderShoppingList();
+            });
+            container.querySelector('#shopping-add-btn').addEventListener('click', () => {
+                const input = container.querySelector('#shopping-manual-input');
+                const val = input.value.trim();
+                if (!val) return;
+                shoppingListManual.push(val);
+                saveShoppingList();
+                input.value = '';
+                renderShoppingList();
+            });
+            container.querySelector('#shopping-manual-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); container.querySelector('#shopping-add-btn').click(); }
+            });
+            container.querySelector('#shopping-copy-btn').addEventListener('click', () => {
+                const lines = [...sortedMissing.map(([,n]) => `- ${n}`), ...shoppingListManual.map(i => `- ${i}`)];
+                navigator.clipboard.writeText(lines.join('\n')).then(() => {
+                    const btn = container.querySelector('#shopping-copy-btn');
+                    btn.textContent = '✓ Copied!';
+                    setTimeout(() => { btn.innerHTML = '📋 Copy All'; }, 2000);
+                });
+            });
+            container.querySelector('#shopping-clear-btn').addEventListener('click', () => {
+                if (!shoppingListManual.length) return;
+                if (confirm('Clear all manually added items?')) { shoppingListManual = []; saveShoppingList(); renderShoppingList(); }
+            });
         }
         
         function renderInventoryList() {
@@ -642,16 +911,86 @@
 
         function handleAddRecipe(event) {
             event.preventDefault();
-            alert("Adding new recipes is temporarily disabled. This feature requires an update to automatically assign ingredient IDs. For now, please manage recipes via the backup/restore feature.");
+            const form = event.target;
+            const name = form.querySelector('#recipe-name').value.trim();
+            const category = form.querySelector('#recipe-category').value.trim() || USER_RECIPE_CATEGORY;
+            const origin = form.querySelector('#recipe-origin').value.trim();
+            const glassware = form.querySelector('#recipe-glassware').value.trim();
+            const ingredientsRaw = form.querySelector('#recipe-ingredients').value.trim()
+                .split('\n').map(l => l.trim()).filter(Boolean);
+            const instructions = form.querySelector('#recipe-instructions').value.trim();
+            const garnish = form.querySelector('#recipe-garnish').value.trim();
+
+            // Auto-match ingredients
+            const allKnown = { ...ingredientMap };
+            let nextId = Math.max(200, ...Object.values(allKnown)) + 1;
+            const matchResults = ingredientsRaw.map(ing => {
+                const normalized = normalizeIngredientKey(ing);
+                const key = Object.keys(allKnown).find(k => normalized.includes(k));
+                if (key) return { text: ing, matched: true, key, id: allKnown[key] };
+                // New ingredient — assign an ID
+                const newKey = normalized.replace(/\s+/g, ' ').trim() || ing.trim().toLowerCase();
+                const id = nextId++;
+                allKnown[newKey] = id; // prevent duplicate IDs within this batch
+                return { text: ing, matched: false, key: newKey, id };
+            });
+
+            const matched = matchResults.filter(r => r.matched);
+            const unmatched = matchResults.filter(r => !r.matched);
+
+            // Show confirmation panel
+            const confirmDiv = document.getElementById('add-recipe-confirm');
+            confirmDiv.innerHTML = `
+                <div class="confirm-panel">
+                    <h3 class="font-semibold text-gray-700 mb-2">Ingredient Matching Review</h3>
+                    ${matched.length ? `<p class="text-sm text-green-700 font-medium mb-1">✓ Matched (${matched.length}):</p>
+                        <ul class="text-sm text-green-600 ml-4 mb-2 list-disc">${matched.map(r => `<li>${r.text}</li>`).join('')}</ul>` : ''}
+                    ${unmatched.length ? `<p class="text-sm text-yellow-700 font-medium mb-1">⚠ New ingredients — will be saved to your ingredient list (${unmatched.length}):</p>
+                        <ul class="text-sm text-yellow-600 ml-4 mb-2 list-disc">${unmatched.map(r => `<li>${r.text} → <em>${r.key}</em></li>`).join('')}</ul>` : ''}
+                    <div class="flex gap-3 mt-3">
+                        <button id="confirm-save-btn" class="btn text-sm py-1.5">✓ Save Recipe</button>
+                        <button id="cancel-confirm-btn" class="btn bg-gray-500 hover:bg-gray-600 text-sm py-1.5">← Back to Edit</button>
+                    </div>
+                </div>`;
+            confirmDiv.classList.remove('hidden');
+            confirmDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            document.getElementById('confirm-save-btn').addEventListener('click', () => {
+                // Persist new custom ingredients
+                unmatched.forEach(r => { customIngredients[r.key] = r.id; ingredientMap[r.key] = r.id; });
+                if (unmatched.length) saveCustomIngredients();
+
+                allRecipes.push({
+                    id: `user_${Date.now()}`,
+                    name, category, origin, glassware,
+                    ingredients: ingredientsRaw,
+                    ingredientIDs: matchResults.map(r => r.id),
+                    instructions, garnish
+                });
+                saveRecipes();
+                updateRecipeView();
+                form.reset();
+                confirmDiv.classList.add('hidden');
+                confirmDiv.innerHTML = '';
+                showSection('recipes');
+            });
+            document.getElementById('cancel-confirm-btn').addEventListener('click', () => {
+                confirmDiv.classList.add('hidden');
+                confirmDiv.innerHTML = '';
+            });
         }
         
         function handleBackup() {
-            const backupData = { 
-                version: "tiki-app-v3.0.0", 
-                recipes: allRecipes, 
-                favorites: favoriteRecipeIds, 
-                categoryStates: categoriesState, 
-                inventory: userInventory 
+            const backupData = {
+                version: "tiki-app-v3.1.0",
+                recipes: allRecipes,
+                favorites: favoriteRecipeIds,
+                categoryStates: categoriesState,
+                inventory: userInventory,
+                notes: recipeNotes,
+                history: drinkHistory,
+                customIngredients,
+                shoppingList: shoppingListManual
             };
             const jsonString = JSON.stringify(backupData, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json' });
@@ -686,7 +1025,12 @@
                     allRecipes = data.recipes || [];
                     favoriteRecipeIds = data.favorites || [];
                     categoriesState = data.categoryStates || {};
-                    userInventory = data.inventory || []; 
+                    userInventory = data.inventory || [];
+                    recipeNotes = data.notes || {};
+                    drinkHistory = data.history || [];
+                    customIngredients = data.customIngredients || {};
+                    shoppingListManual = data.shoppingList || [];
+                    Object.assign(ingredientMap, customIngredients);
                     
                     let stampedCount = 0;
                     allRecipes.forEach(recipe => {
@@ -704,10 +1048,8 @@
                         alert(`Restored an older backup and attempted to upgrade ${stampedCount} recipes for inventory filtering. Accuracy may vary.`);
                     }
                     
-                    saveRecipes(); 
-                    saveFavorites(); 
-                    saveCategoryStates(); 
-                    saveInventory();
+                    saveRecipes(); saveFavorites(); saveCategoryStates(); saveInventory();
+                    saveNotes(); saveHistory(); saveCustomIngredients(); saveShoppingList();
                     
                     renderInventoryList();
                     updateRecipeView();
@@ -737,15 +1079,14 @@
         }
 
         function setupEventListeners() {
-            Object.keys(navButtons).forEach(key => navButtons[key]?.addEventListener('click', () => showSection(key)));
-            
-            const originalAddRecipeForm = document.querySelector('#add-recipe-section form');
-            const originalBackupBtn = document.querySelector('#settings-section #backup-btn');
-            const originalRestoreInput = document.querySelector('#settings-section #restore-input');
-            
-            originalAddRecipeForm?.addEventListener('submit', handleAddRecipe);
-            originalBackupBtn?.addEventListener('click', handleBackup);
-            originalRestoreInput?.addEventListener('change', handleRestore);
+            Object.keys(navButtons).forEach(key => navButtons[key]?.addEventListener('click', () => {
+                showSection(key);
+                if (key === 'shopping') renderShoppingList();
+            }));
+
+            document.querySelector('#add-recipe-section form')?.addEventListener('submit', handleAddRecipe);
+            document.querySelector('#settings-section #backup-btn')?.addEventListener('click', handleBackup);
+            document.querySelector('#settings-section #restore-input')?.addEventListener('change', handleRestore);
 
             makeableToggle?.addEventListener('change', (e) => {
                 filterByInventory = e.target.checked;
@@ -753,10 +1094,18 @@
                 if (!filterByInventory) { showAlmostMakeable = false; if (almostToggle) almostToggle.checked = false; }
                 updateRecipeView();
             });
-            almostToggle?.addEventListener('change', (e) => {
-                showAlmostMakeable = e.target.checked;
+            almostToggle?.addEventListener('change', (e) => { showAlmostMakeable = e.target.checked; updateRecipeView(); });
+
+            document.getElementById('recipe-search')?.addEventListener('input', (e) => {
+                recipeSearchQuery = e.target.value.trim();
                 updateRecipeView();
             });
+            document.getElementById('sort-select')?.addEventListener('change', (e) => {
+                recipeSortOrder = e.target.value;
+                updateRecipeView();
+            });
+            document.getElementById('surprise-btn')?.addEventListener('click', handleSurpriseMe);
+
             inventoryListEl?.addEventListener('change', handleInventoryChange);
             inventorySearchEl?.addEventListener('input', handleInventorySearch);
         }
@@ -786,15 +1135,16 @@
             mainContent.querySelector('#add-recipe-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
                 <form id="add-recipe-form" class="space-y-4 bg-white/95 p-6 rounded-lg shadow">
-                    <div><label for="recipe-name">Recipe Name:</label><input type="text" id="recipe-name" required class="border"></div>
-                    <div><label for="recipe-category">Category:</label><input type="text" id="recipe-category" placeholder="e.g., Rum Classics, My Creations" class="border"><p class="text-xs text-gray-500 mt-1">Leave blank to add to 'User Added Recipes'.</p></div>
-                    <div><label for="recipe-origin">Origin (Optional):</label><input type="text" id="recipe-origin" class="border"></div>
-                    <div><label for="recipe-glassware">Glassware:</label><input type="text" id="recipe-glassware" required class="border"></div>
-                    <div><label for="recipe-ingredients">Ingredients (one per line, e.g., "2 oz Rum"):</label><textarea id="recipe-ingredients" rows="5" required class="border"></textarea></div>
-                    <div><label for="recipe-instructions">Instructions:</label><textarea id="recipe-instructions" rows="5" required class="border"></textarea></div>
-                    <div><label for="recipe-garnish">Garnish (Optional):</label><input type="text" id="recipe-garnish" class="border"></div>
-                    <button type="submit" class="btn"><span class="lucide icon-save"></span>Save Recipe</button>
-                </form>`;
+                    <div><label for="recipe-name">Recipe Name:</label><input type="text" id="recipe-name" required></div>
+                    <div><label for="recipe-category">Category:</label><input type="text" id="recipe-category" placeholder="e.g., Rum Classics, My Creations"><p class="text-xs text-gray-500 mt-1">Leave blank to add to 'User Added Recipes'.</p></div>
+                    <div><label for="recipe-origin">Origin (Optional):</label><input type="text" id="recipe-origin"></div>
+                    <div><label for="recipe-glassware">Glassware:</label><input type="text" id="recipe-glassware" required></div>
+                    <div><label for="recipe-ingredients">Ingredients (one per line, e.g., "2 oz blended aged rum"):</label><textarea id="recipe-ingredients" rows="6" required placeholder="1.5 oz blended aged rum&#10;0.75 oz fresh lime juice&#10;0.5 oz SC Orgeat"></textarea><p class="text-xs text-gray-500 mt-1">Ingredients will be auto-matched to the 136-item ingredient library for inventory filtering.</p></div>
+                    <div><label for="recipe-instructions">Instructions:</label><textarea id="recipe-instructions" rows="4" required></textarea></div>
+                    <div><label for="recipe-garnish">Garnish (Optional):</label><input type="text" id="recipe-garnish"></div>
+                    <button type="submit" class="btn"><span class="lucide icon-save"></span>Preview & Save</button>
+                </form>
+                <div id="add-recipe-confirm" class="hidden"></div>`;
             mainContent.querySelector('#settings-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
                 <div class="settings-section-container">
