@@ -1,6 +1,6 @@
-// sw.js — Tiki App v3.2.0
+// sw.js — Tiki App v3.3.0
 
-const CACHE_NAME = 'tiki-app-v3.2.0';
+const CACHE_NAME = 'tiki-app-v3.3.0';
 
 // App-shell files: cache-first (pre-cached at install time)
 const APP_SHELL = [
