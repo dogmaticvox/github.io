@@ -156,6 +156,118 @@
         .shopping-list-item { @apply flex items-center gap-3 p-2 rounded-md hover:bg-orange-50 transition-colors; }
         .shopping-section-container { @apply mt-2 p-4 bg-white/90 rounded-lg shadow; }
         .confirm-panel { @apply mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg; }
+        .share-btn {
+            @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors cursor-pointer;
+        }
+        /* === DARK MODE === */
+        [data-theme="dark"] body {
+            background-color: #0f1420 !important;
+            background-image: none;
+            color: #e2e8f0;
+        }
+        [data-theme="dark"] header > div {
+            background-color: rgba(20, 27, 45, 0.95) !important;
+        }
+        [data-theme="dark"] h1 { color: #fbbf24 !important; }
+        [data-theme="dark"] main {
+            background-color: rgba(22, 28, 46, 0.97) !important;
+        }
+        [data-theme="dark"] h2, [data-theme="dark"] .text-teal-800 { color: #5eead4 !important; }
+        [data-theme="dark"] .text-teal-700, [data-theme="dark"] .text-teal-600 { color: #2dd4bf !important; }
+        [data-theme="dark"] .category-header {
+            background-color: rgba(80, 50, 10, 0.55) !important;
+        }
+        [data-theme="dark"] .category-header:hover {
+            background-color: rgba(100, 65, 15, 0.65) !important;
+        }
+        [data-theme="dark"] .category-title { color: #fcd34d !important; }
+        [data-theme="dark"] .category-recipes { border-color: #92400e; }
+        [data-theme="dark"] .recipe-card {
+            background-color: #1e2535 !important;
+            border-color: #374151 !important;
+            color: #e2e8f0 !important;
+        }
+        [data-theme="dark"] .recipe-name { color: #fbbf24 !important; }
+        [data-theme="dark"] .detail-label { color: #5eead4 !important; }
+        [data-theme="dark"] .ing-available { color: #4ade80 !important; }
+        [data-theme="dark"] .ing-missing { color: #f87171 !important; }
+        [data-theme="dark"] .recipe-details { border-color: #374151 !important; }
+        [data-theme="dark"] .recipe-details .border-t { border-color: #374151 !important; }
+        [data-theme="dark"] .notes-textarea {
+            background-color: #151c2e !important;
+            color: #cbd5e1 !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] .made-it-btn {
+            background-color: #0f3347 !important;
+            color: #5eead4 !important;
+            border-color: #0d4f6e !important;
+        }
+        [data-theme="dark"] .made-it-btn:hover { background-color: #14405a !important; }
+        [data-theme="dark"] .share-btn {
+            background-color: #0f2747 !important;
+            color: #93c5fd !important;
+            border-color: #1e3a5f !important;
+        }
+        [data-theme="dark"] .text-gray-800 { color: #e2e8f0 !important; }
+        [data-theme="dark"] .text-gray-700 { color: #cbd5e1 !important; }
+        [data-theme="dark"] .text-gray-600 { color: #94a3b8 !important; }
+        [data-theme="dark"] .text-gray-500 { color: #64748b !important; }
+        [data-theme="dark"] .text-gray-400 { color: #475569 !important; }
+        [data-theme="dark"] .text-red-600 { color: #f87171 !important; }
+        [data-theme="dark"] .text-red-600:hover { color: #fca5a5 !important; }
+        [data-theme="dark"] label { color: #cbd5e1 !important; }
+        [data-theme="dark"] input[type="text"],
+        [data-theme="dark"] input[type="search"],
+        [data-theme="dark"] textarea,
+        [data-theme="dark"] select {
+            background-color: #151c2e !important;
+            color: #e2e8f0 !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] .settings-section-container,
+        [data-theme="dark"] .inventory-section-container,
+        [data-theme="dark"] .shopping-section-container {
+            background-color: rgba(21, 28, 46, 0.97) !important;
+        }
+        [data-theme="dark"] #inventory-list {
+            background-color: #151c2e !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] #inventory-list label:hover,
+        [data-theme="dark"] .hover\:bg-orange-100:hover {
+            background-color: #1e2d45 !important;
+        }
+        [data-theme="dark"] .shopping-list-item:hover { background-color: #1e2d45 !important; }
+        [data-theme="dark"] .confirm-panel {
+            background-color: #151c2e !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] .ing-count-badge {
+            background-color: #1e2d45 !important;
+            color: #94a3b8 !important;
+        }
+        [data-theme="dark"] .bg-white\/95, [data-theme="dark"] .bg-white\/90 {
+            background-color: rgba(21, 28, 46, 0.97) !important;
+        }
+        [data-theme="dark"] .install-banner,
+        [data-theme="dark"] .update-banner {
+            background-color: #1a3a5c !important;
+        }
+        /* Skip-to-content */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #CC5A02;
+            color: white;
+            padding: 8px 16px;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+            font-weight: 600;
+            transition: top 0.15s;
+        }
+        .skip-link:focus { top: 0; }
     </style>
     
     <style>
@@ -191,9 +303,13 @@
       .icon-martini::before { content: "\e102"; }
       .icon-share::before { content: "\e15f"; }
       .icon-clipboard::before { content: "\e07b"; }
+      .icon-sun::before { content: "\e17d"; }
+      .icon-moon::before { content: "\e10c"; }
     </style>
 </head>
 <body class="p-4 max-w-2xl mx-auto">
+
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <header class="mb-6 text-center">
         <div class="inline-block bg-orange-50/90 p-3 rounded-lg shadow-md">
@@ -212,7 +328,8 @@
         <button id="nav-settings" class="nav-btn"><span class="lucide icon-settings"></span>Settings</button>
     </nav>
 
-    <main>
+    <main id="main-content">
+        <div id="recipe-results-status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
         <section id="recipes-section" class="section">
             <div class="mb-4 space-y-3">
                 <div class="flex items-center gap-2">
@@ -289,7 +406,7 @@
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v3.1.0</p> 
+        <p>Tiki App v3.2.0</p>
     </footer>
 
     <!-- Install and Update Banners -->
@@ -304,7 +421,7 @@
 
 
     <script>
-        // --- Constants (v3) ---
+        // === CONSTANTS ===
         const RECIPES_STORAGE_KEY = 'tikiRecipes_v3';
         const FAVORITES_STORAGE_KEY = 'tikiFavorites_v3';
         const CATEGORY_STATE_STORAGE_KEY = 'tikiCategoryState_v3';
@@ -313,14 +430,15 @@
         const HISTORY_KEY = 'tikiHistory_v3';
         const CUSTOM_INGREDIENTS_KEY = 'tikiCustomIngredients_v3';
         const SHOPPING_LIST_KEY = 'tikiShoppingList_v3';
+        const THEME_KEY = 'tikiTheme_v3';
         const USER_RECIPE_CATEGORY = 'User Added Recipes';
         const FAVORITES_CATEGORY_KEY = '__FAVORITES__';
 
-        // --- Static data: loaded async from recipes.json ---
+        // === STATE ===
+        // Static data: loaded async from recipes.json
         let ingredientMap = {};
         let initialRecipesData = [];
 
-        // --- State ---
         let allRecipes = [];
         let favoriteRecipeIds = [];
         let categoriesState = {};
@@ -333,10 +451,11 @@
         let drinkHistory = [];     // [{ recipeId, date }]
         let customIngredients = {}; // { name: id }
         let shoppingListManual = []; // [string]
+        let currentTheme = 'light';
         let deferredInstallPrompt = null;
         let newWorker;
 
-        // --- DOM Elements ---
+        // === DOM ELEMENTS ===
         const recipeCategoriesListEl = document.getElementById('recipe-categories-list');
         const addRecipeForm = document.getElementById('add-recipe-form');
         const backupBtn = document.getElementById('backup-btn');
@@ -368,7 +487,7 @@
             settings: document.getElementById('nav-settings')
         };
 
-        // --- Core Functions ---
+        // === DATA LOADING & PERSISTENCE ===
 
         async function loadData() {
             // --- Fetch static data from recipes.json (served/cached by SW) ---
@@ -454,7 +573,49 @@
         function saveHistory() { localStorage.setItem(HISTORY_KEY, JSON.stringify(drinkHistory)); }
         function saveCustomIngredients() { localStorage.setItem(CUSTOM_INGREDIENTS_KEY, JSON.stringify(customIngredients)); }
         function saveShoppingList() { localStorage.setItem(SHOPPING_LIST_KEY, JSON.stringify(shoppingListManual)); }
-        
+
+        // === THEME ===
+        function applyTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
+            const btn = document.getElementById('theme-toggle-btn');
+            if (btn) {
+                btn.innerHTML = theme === 'dark'
+                    ? '<span class="lucide icon-sun"></span> Light Mode'
+                    : '<span class="lucide icon-moon"></span> Dark Mode';
+            }
+        }
+
+        // === RECIPE SHARING ===
+        function shareRecipe(recipe) {
+            const text = [
+                `🍹 ${recipe.name}`,
+                recipe.origin ? `Origin: ${recipe.origin}` : '',
+                `Glassware: ${recipe.glassware || 'N/A'}`,
+                '',
+                'Ingredients:',
+                ...(recipe.ingredients || []).map(i => `  • ${i}`),
+                '',
+                'Instructions:',
+                recipe.instructions || 'No instructions provided.',
+                recipe.garnish ? `\nGarnish: ${recipe.garnish}` : '',
+            ].filter(l => l !== undefined).join('\n').trim();
+
+            if (navigator.share) {
+                navigator.share({ title: recipe.name, text }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    const btn = document.querySelector(`[data-id="${recipe.id}"] .share-btn`);
+                    if (!btn) return;
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '<span class="lucide icon-clipboard"></span> Copied!';
+                    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+                });
+            }
+        }
+
+        // === FILTERING & SORTING ===
         function getFilteredRecipes() {
             let list = [...allRecipes];
             if (filterByInventory) {
@@ -492,6 +653,7 @@
             renderRecipeList(recipesToShow);
         }
         
+        // === RENDERING ===
         function getAllCategories(recipeSource) {
             const categories = new Set();
             if (favoriteRecipeIds.length > 0) categories.add(FAVORITES_CATEGORY_KEY);
@@ -508,6 +670,8 @@
         
         function renderRecipeList(recipesToDisplay) {
             recipeCategoriesListEl.innerHTML = '';
+            const statusEl = document.getElementById('recipe-results-status');
+            if (statusEl) statusEl.textContent = `Showing ${recipesToDisplay.length} recipe${recipesToDisplay.length !== 1 ? 's' : ''}`;
             const categories = getAllCategories(recipesToDisplay);
 
             if (recipesToDisplay.length === 0) {
@@ -644,9 +808,9 @@
                 <div class="recipe-header">
                     <span class="recipe-name">${recipe.name || 'Unnamed Recipe'}</span>
                     ${badgeHTML}${ratingHeaderHTML}${lastMadeHTML}
-                    <span class="star-icon-placeholder" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">${starHTML}</span>
+                    <span class="star-icon-placeholder" role="button" tabindex="0" aria-pressed="${isFavorited ? 'true' : 'false'}" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">${starHTML}</span>
                 </div>
-                <div class="recipe-details">
+                <div class="recipe-details" aria-expanded="false">
                     ${originText}${glasswareText}
                     <div><span class="detail-label">Ingredients:</span><ul class="list-disc list-inside ml-4">${ingredientsList}</ul></div>
                     <div><span class="detail-label">Instructions:</span> ${instructionsText}</div>
@@ -654,9 +818,10 @@
                     <div class="flex items-center flex-wrap gap-3 mt-3 pt-2 border-t border-orange-100">
                         <div class="flex items-center gap-1">
                             <span class="text-xs font-medium text-gray-600">Rate:</span>
-                            <div class="star-r interactive-stars">${[1,2,3,4,5].map(starsHTML).join('')}</div>
+                            <div class="star-r interactive-stars" role="radiogroup" aria-label="Rate this recipe">${[1,2,3,4,5].map(starsHTML).join('')}</div>
                         </div>
                         <button class="made-it-btn">🍸 Made It!</button>
+                        <button class="share-btn"><span class="lucide icon-share"></span> Share</button>
                         <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn ml-auto"><span class="lucide icon-trash"></span> Delete</button>
                     </div>
                     <div class="mt-2">
@@ -667,11 +832,17 @@
 
             const header = card.querySelector('.recipe-header');
             header.addEventListener('click', (e) => {
-                if (!e.target.closest('.star-icon-placeholder') && !e.target.closest('.delete-recipe-btn'))
-                    header.nextElementSibling.classList.toggle('open');
+                if (!e.target.closest('.star-icon-placeholder') && !e.target.closest('.delete-recipe-btn')) {
+                    const details = header.nextElementSibling;
+                    const isOpen = details.classList.toggle('open');
+                    details.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
             });
             card.querySelector('.star-icon-placeholder').addEventListener('click', (e) => {
                 e.stopPropagation(); toggleFavorite(recipe.id);
+            });
+            card.querySelector('.star-icon-placeholder').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); toggleFavorite(recipe.id); }
             });
             card.querySelector('.delete-recipe-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -702,6 +873,12 @@
                 setTimeout(() => { btn.innerHTML = '🍸 Made It!'; btn.disabled = false; }, 2000);
             });
 
+            // Share
+            card.querySelector('.share-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                shareRecipe(recipe);
+            });
+
             // Notes autosave on blur
             card.querySelector('.notes-textarea').addEventListener('blur', (e) => {
                 recipeNotes[recipe.id] = { ...recipeNotes[recipe.id], notes: e.target.value };
@@ -711,6 +888,7 @@
             return card;
         }
         
+        // === RECIPE ACTIONS ===
         function toggleFavorite(recipeId) {
             const index = favoriteRecipeIds.indexOf(recipeId);
             if (index > -1) {
@@ -873,6 +1051,7 @@
             });
         }
         
+        // === INVENTORY ===
         function renderInventoryList() {
             const sortedIngredients = Object.entries(ingredientMap).sort((a, b) => a[0].localeCompare(b[0]));
             const inventorySet = new Set(userInventory);
@@ -909,6 +1088,7 @@
             }
         }
 
+        // === ADD RECIPE ===
         function handleAddRecipe(event) {
             event.preventDefault();
             const form = event.target;
@@ -980,6 +1160,7 @@
             });
         }
         
+        // === BACKUP & RESTORE ===
         function handleBackup() {
             const backupData = {
                 version: "tiki-app-v3.1.0",
@@ -1064,6 +1245,7 @@
             reader.readAsText(file);
         }
 
+        // === NAVIGATION ===
         function showSection(sectionIdToShow) {
             Object.keys(sections).forEach(key => {
                 if (key !== sectionIdToShow) sections[key]?.classList.add('hidden');
@@ -1078,6 +1260,7 @@
             window.scrollTo(0, 0);
         }
 
+        // === EVENT LISTENERS ===
         function setupEventListeners() {
             Object.keys(navButtons).forEach(key => navButtons[key]?.addEventListener('click', () => {
                 showSection(key);
@@ -1105,12 +1288,15 @@
                 updateRecipeView();
             });
             document.getElementById('surprise-btn')?.addEventListener('click', handleSurpriseMe);
+            document.getElementById('theme-toggle-btn')?.addEventListener('click', () => {
+                applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
 
             inventoryListEl?.addEventListener('change', handleInventoryChange);
             inventorySearchEl?.addEventListener('input', handleInventorySearch);
         }
 
-        // --- PWA Install and Update Logic ---
+        // === PWA INSTALL & UPDATE ===
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredInstallPrompt = e;
@@ -1129,7 +1315,7 @@
             newWorker.postMessage({ action: 'skipWaiting' });
         });
 
-        // --- Initialization ---
+        // === INITIALIZATION ===
         document.addEventListener('DOMContentLoaded', async () => {
             const mainContent = document.querySelector('main');
             mainContent.querySelector('#add-recipe-section').innerHTML = `
@@ -1148,6 +1334,13 @@
             mainContent.querySelector('#settings-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
                 <div class="settings-section-container">
+                    <h3 class="settings-title">Appearance</h3>
+                    <div class="flex items-center gap-3 mb-4">
+                        <button id="theme-toggle-btn" class="btn bg-gray-700 hover:bg-gray-800 text-sm py-1.5 px-4"><span class="lucide icon-moon"></span> Dark Mode</button>
+                        <span class="text-sm text-gray-500">Toggle light/dark theme</span>
+                    </div>
+                </div>
+                <div class="settings-section-container mt-4">
                     <h3 class="settings-title">Backup & Restore</h3>
                     <p class="text-sm text-gray-600 mb-3">Save your added recipes and favorites to a file, or restore from a previous backup.</p>
                     <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
@@ -1160,11 +1353,20 @@
                     <p id="restore-message" class="text-sm mt-3 text-gray-600"></p>
                 </div>`;
             
+            // Initialize theme before rendering
+            const savedTheme = localStorage.getItem(THEME_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
             await loadData();
             renderInventoryList();
             updateRecipeView();
             setupEventListeners();
-            showSection('recipes');
+            // Handle PWA shortcut URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('section') === 'bar') showSection('inventory');
+            else if (urlParams.get('action') === 'surprise') { showSection('recipes'); handleSurpriseMe(); }
+            else showSection('recipes');
 
             if ('serviceWorker' in navigator) {
                 // FIX: Use an absolute path for the service worker registration
