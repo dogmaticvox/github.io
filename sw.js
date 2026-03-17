@@ -2,18 +2,19 @@
 
 // Define a unique cache name for this version of the app.
 // IMPORTANT: Change this name every time you update your app files.
-const CACHE_NAME = 'tiki-app-v3.0.0';
+const CACHE_NAME = 'tiki-app-v3.1.0';
 
 // List of files to cache for offline use.
 const urlsToCache = [
-  './', // This caches the index.html file at the root
+  './',
   './index.html',
+  './recipes.json',
   './manifest.json',
-  './images/tiki-background.png', // Make sure this path is correct
+  './images/tiki-background.png',
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
-  'https://cdn.tailwindcss.com', // Cache the Tailwind CSS file
-  'https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf' // Cache the icon font
+  'https://cdn.tailwindcss.com',
+  'https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf'
 ];
 
 // --- Service Worker Installation ---

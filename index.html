@@ -247,7 +247,7 @@
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v3.0.0</p> 
+        <p>Tiki App v3.1.0</p> 
     </footer>
 
     <!-- Install and Update Banners -->
@@ -270,151 +270,9 @@
         const USER_RECIPE_CATEGORY = 'User Added Recipes';
         const FAVORITES_CATEGORY_KEY = '__FAVORITES__';
 
-        // --- NEW: Master Ingredient Map (Generated from all 111 recipes) ---
-        const ingredientMap = {
-          "2:1 simple syrup": 1, "absinthe blanc": 2, "amaro averna": 3, "amaro di angostura": 4, "angostura bitters": 5, "apple brandy": 6, "aquavit": 7,
-          "batavia arrack": 8, "benedictine": 9, "bittermens 'elemakule tiki bitters": 10, "bittermens burlesque bitters": 11, "bittermens new orleans coffee liqueur": 12,
-          "bittermens xocolati (chocolate) mole bitters": 13, "black blended overproof rum": 14, "black blended rum": 15, "black pot still rum": 16,
-          "blandy's 5 year verdelho madeira": 17, "blended aged rum": 18, "blended aged rum (barbados)": 19, "blended aged rum (guyana)": 20,
-          "blended aged rum (jamaica)": 21, "blended lightly aged rum": 22, "blue curaçao": 23, "boiling water": 24, "bourbon": 25, "brandy": 26,
-          "brer rabbit mild molasses": 27, "broker's gin": 28, "bundaberg guava soda": 29, "campari": 30, "cane aoc martinique rhum agricole blanc": 31,
-          "cane aoc martinique rhum agricole vieux": 32, "cane coffey still aged rum": 33, "carbonated chai tea": 34, "champagne": 35, "cherry heering": 36,
-          "cherry heering liqueur": 37, "coconut milk": 38, "column still aged rum": 39, "column still lightly aged rum": 40, "drambuie": 41, "drambuie liqueur": 42,
-          "dry vermouth": 43, "egg white": 44, "fentimans victorian lemonade": 45, "fresh coconut water": 46, "fresh grapefruit juice": 47,
-          "fresh grapefruit juice (white or pink)": 48, "fresh lemon juice": 49, "fresh lime juice": 50, "fresh mint leaves": 51, "fresh orange juice": 52,
-          "fresh yellow or white peach": 53, "giffard banane du brésil banana liqueur": 54, "gin": 55, "ginger beer": 56, "ginger liqueur": 57,
-          "grade a maple syrup": 58, "green chartreuse": 59, "heavy whipping cream": 60, "herbsaint": 61, "herbstura": 62, "hot water": 63,
-          "john d. taylor's velvet falernum": 64, "lemon juice": 65, "leopold brothers rocky mountain blackberry liqueur": 66, "li hing mui syrup": 67,
-          "licor 43": 68, "licor 43 spiced liqueur": 69, "lime juice": 70, "london dry gin": 71, "luxardo maraschino liqueur": 72,
-          "maraschino liqueur": 73, "martinique sugarcane syrup": 74, "medium egg": 75, "mint leaves": 76, "napa wine syrup": 77, "natural apricot liqueur": 78,
-          "natural crème de cassis": 79, "natural peach liqueur": 80, "natural pear liqueur": 81, "oloroso sherry": 82, "orange bitters": 83,
-          "passion fruit puree": 84, "peruvian pisco": 85, "peychaud's bitters": 86, "pierre ferrand dry curaçao": 87, "pineapple chunks": 88,
-          "pineapple juice": 89, "pot still aged cachaça": 90, "pot still lightly aged rum": 91, "pot still lightly aged rum (new england)": 92,
-          "pot still lightly aged rum (overproof)": 93, "pot still unaged rum": 94, "punt e mes": 95, "r. l. seale 10 year rum": 96,
-          "real ginger ale": 97, "rum": 98, "rye": 99, "salted butter": 100, "sc cinnamon syrup": 101, "sc coconut cream": 102,
-          "sc demerara simple syrup": 103, "sc demerara syrup": 104, "sc grenadine": 105, "sc hibiscus liqueur": 106, "sc honey syrup": 107,
-          "sc hot buttered rum batter": 108, "sc jerk syrup": 109, "sc mai tai rich simple syrup": 110, "sc molasses syrup": 111, "sc orgeat": 112,
-          "sc orgeat syrup": 113, "sc passion fruit honey": 114, "sc passion fruit syrup": 115, "sc vanilla brandy": 116, "sc vanilla syrup": 117,
-          "seltzer": 118, "sloe gin": 119, "small hand foods raspberry gum syrup": 120, "sparkling wine": 121, "spruce beer soda extract": 122,
-          "st. elizabeth allspice dram": 123, "st. george raspberry liqueur": 124, "stiegl-radler grapefruit beer": 125, "sweet cream": 126,
-          "sweetened condensed milk": 127, "tawny port": 128, "tequila blanco": 129, "ting grapefruit soda": 130, "vanilla extract": 131,
-          "vodka": 132, "whole milk": 133, "wray & nephew white overproof rum": 134, "yellow chartreuse": 135, "zirbenz stone pine liqueur": 136
-        };
-
-        // --- Initial Recipe Data (Stamped with ingredientIDs) ---
-        const initialRecipesData = [
-          {"id":"001","name":"Arrack Punch","category":"RUM THROUGH THE AGES","ingredients":["2 ounces fresh lemon juice","2 ounces fresh lime juice","3 ounces SC Demerara Syrup (page 324)","6 ounces Batavia arrack","2 ounces pot still lightly aged rum (overproof)","6 ounces Carbonated Chai Tea (see Note, following)"],"ingredientIDs":[49,50,104,8,93,34]},
-          {"id":"002","name":"El Draque","category":"RUM THROUGH THE AGES","ingredients":["5 fresh mint leaves","3/4 ounce SC Demerara Syrup (page 324)","3/4 ounce fresh lime juice","2 ounces pot still aged cachaça"],"ingredientIDs":[51,104,50,90]},
-          {"id":"003","name":"Grog","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","2 ounces rum (see Note, following)"],"ingredientIDs":[50,104,98]},
-          {"id":"004","name":"Rum Flip","category":"RUM THROUGH THE AGES","ingredients":["1 medium egg","1/4 ounce SC Demerara Syrup (page 324)","2 ounces blended aged rum"],"ingredientIDs":[75,104,18]},
-          {"id":"005","name":"Bombo","category":"RUM THROUGH THE AGES","ingredients":["1/4 ounce SC Demerara Syrup (page 324)","2 ounces blended aged rum"],"ingredientIDs":[104,18]},
-          {"id":"006","name":"Calibogus","category":"RUM THROUGH THE AGES","ingredients":["3 ounces seltzer","1/4 ounce fresh lime juice","3/4 ounce SC Molasses Syrup (page 327)","1 drop spruce beer soda extract (see Resources, page 335)","3/4 ounce Zirbenz Stone Pine liqueur","1 1/4 ounce blended aged rum"],"ingredientIDs":[118,50,111,122,136,18]},
-          {"id":"007","name":"Mary Pickford","category":"RUM THROUGH THE AGES","ingredients":["1 1/2 ounces pineapple juice","1 barspoon SC Grenadine (page 328)","6 drops Luxardo Maraschino liqueur","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[89,105,72,22]},
-          {"id":"008","name":"Daiquiri No. 1","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lime juice","1/2 ounce SC Demerara syrup (page 324)","2 ounces blended lightly aged rum"],"ingredientIDs":[50,104,22]},
-          {"id":"009","name":"Hotel Nacional Special","category":"RUM THROUGH THE AGES","ingredients":["3 or 4 (1-inch-square) pineapple chunks","3/4 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[88,50,104,78,22]},
-          {"id":"010","name":"Daisy de Santiago","category":"RUM THROUGH THE AGES","ingredients":["1 ounce fresh lime juice","1 1/2 teaspoons SC Demerara Syrup (page 324)","1 ounce seltzer","1/2 ounce Yellow Chartreuse","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[50,104,118,135,22]},
-          {"id":"011","name":"El Presidente","category":"RUM THROUGH THE AGES","ingredients":["1/4 teaspoon SC Grenadine (page 328)","3/4 ounce dry vermouth","1/2 ounce Pierre Ferrand Dry Curaçao","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[105,43,87,22]},
-          {"id":"012","name":"Twelve Mile Limit","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce SC Grenadine (page 328)","1 ounce blended lightly aged rum","1/2 ounce rye","1/2 ounce brandy"],"ingredientIDs":[49,105,22,99,26]},
-          {"id":"013","name":"Parisian Blonde","category":"RUM THROUGH THE AGES","ingredients":["1 ounce Pierre Ferrand Dry Curaçao","1 ounce blended aged rum","1 ounce sweet cream (see Note, following)"],"ingredientIDs":[87,18,126]},
-          {"id":"014","name":"Cora Middleton","category":"RUM THROUGH THE AGES","ingredients":["2 teaspoons egg white","2 ounces blended aged rum","3/4 ounce fresh lime juice","1/4 ounce SC Demerara Syrup (page 324)","1/2 ounce Small Hand Foods Raspberry Gum Syrup"],"ingredientIDs":[44,18,50,104,120]},
-          {"id":"015","name":"Millionaire Cocktail (No. 1)","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lime juice","1 dash SC Grenadine (page 328)","3/4 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","3/4 ounce black pot still rum (see page 198) or blended aged rum","3/4 ounce sloe gin"],"ingredientIDs":[50,105,78,16,119]},
-          {"id":"016","name":"Batida de Maracujá e Coco","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce passion fruit puree","2 ounces coconut milk","1 ounce pot still aged cachaça (see page 199)","1 ounce sweetened condensed milk"],"ingredientIDs":[84,38,90,127]},
-          {"id":"017","name":"Wray & Ting","category":"RUM THROUGH THE AGES","ingredients":["1 1/2 ounces Wray & Nephew White Overproof Rum","4 ounces Ting grapefruit soda"],"ingredientIDs":[134,130]},
-          {"id":"018","name":"Hibiscus Rum Punch","category":"RUM THROUGH THE AGES","ingredients":["2 ounces seltzer","1/2 ounce fresh lime juice","1 ounce SC Hibiscus Liqueur (see page 331)","1 1/2 ounces blended aged rum (Jamaica)","1/3 ounce SC Demerara Syrup (page 324)"],"ingredientIDs":[118,50,106,21,104]},
-          {"id":"019","name":"TI' PUNCH / TI' PUNCH VIEUX","category":"RUM THROUGH THE AGES","ingredients":["1 teaspoon Martinique sugarcane syrup","2 ounces cane AOC Martinique rhum agricole blanc (substitute an élevé sous bois, or rhum vieux for a Ti' Punch Vieux)","1 small rounded chunk of fresh lime (cut from the side of the lime, approximately the size of a quarter, with some pulp attached)"],"ingredientIDs":[74,31,50]},
-          {"id":"020","name":"Barbados Rum Punch","category":"RUM THROUGH THE AGES","ingredients":["1 ounce fresh lime juice","1 ounce SC Demerara Syrup (page 324)","2 ounces blended aged rum (Barbados)","1 dash Angostura bitters"],"ingredientIDs":[50,104,19,5]},
-          {"id":"021","name":"Jamaican Milk Punch","category":"RUM THROUGH THE AGES","ingredients":["1 ounce whole milk","1 ounce heavy whipping cream","3/4 ounce SC Demerara Syrup (page 324)","1 ounce black blended rum (Jamaica)","6 drops vanilla extract","1 dash Angostura bitters"],"ingredientIDs":[133,60,104,15,131,5]},
-          {"id":"022","name":"Corn and Oil","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce John D. Taylor's Velvet Falernum","2 ounces blended aged rum (Barbados)","2 to 4 dashes Angostura bitters"],"ingredientIDs":[64,19,5]},
-          {"id":"023","name":"Queen's Park Swizzle","category":"RUM THROUGH THE AGES","ingredients":["4 mint leaves","1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","2 ounces black blended rum","2 dashes Angostura bitters"],"ingredientIDs":[76,50,104,15,5]},
-          {"id":"024","name":"The Chadburn","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce tawny port","1/2 ounce natural pear liqueur (such as Mathilde Poire)","2 ounces blended aged rum","6 drops Bittermens Xocolati (Chocolate) Mole bitters"],"ingredientIDs":[128,81,18,13]},
-          {"id":"025","name":"A Wish for Grace","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce 2:1 Simple Syrup (page 324)","1/2 ounce Pierre Ferrand Dry Curaçao","1 1/2 ounces pot still lightly aged rum (New England)","1/4 ounce Blandy's 5 Year Verdelho Madeira","1 dash Angostura bitters"],"ingredientIDs":[49,1,87,92,17,5]},
-          {"id":"026","name":"Hot Buttered Rum","category":"RUM THROUGH THE AGES","ingredients":["3 barspoons SC Hot Buttered Rum Batter (recipe follows)","1 1/2 ounces blended aged rum","6 ounces hot water"],"ingredientIDs":[108,18,63]},
-          {"id":"027","name":"SC Hot Buttered Rum Batter","category":"RUM THROUGH THE AGES","ingredients":["1 teaspoon freshly ground cinnamon","1 teaspoon freshly ground nutmeg","1 teaspoon freshly ground black pepper","3/4 teaspoon ground cloves","1/2 teaspoon ground allspice","1/2 teaspoon ground anise seed","2 cups salted butter","4 cups packed golden brown sugar","2 tablespoons Brer Rabbit Mild Molasses","1 teaspoon vanilla extract"],"ingredientIDs":[100,27,131]},
-          {"id":"028","name":"Abricot Vieux","category":"RUM THROUGH THE AGES","ingredients":["1 1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","2 ounces cane AOC Martinique rhum agricole vieux","1 dash Angostura bitters","1 dash orange bitters"],"ingredientIDs":[78,32,5,83]},
-          {"id":"029","name":"Paniolo Old-Fashioned","category":"RUM THROUGH THE AGES","ingredients":["1 teaspoon Li Hing Mui Syrup (page 332)","2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[67,18,5]},
-          {"id":"030","name":"Port Royal","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lime juice","3/4 ounce SC Jerk Syrup (page 329)","1 1/2 ounces blended lightly aged rum","1/2 ounce Wray & Nephew white overproof rum","5 drops SC Hellfire Tincture (page 332)"],"ingredientIDs":[50,109,22,134]},
-          {"id":"031","name":"Kingston Palaka","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lemon juice","1/4 teaspoon li hing mui powder (see Resources, page 335)","1 ounce Drambuie","1 1/2 ounces blended aged rum (Jamaica)"],"ingredientIDs":[49,41,21]},
-          {"id":"032","name":"Donn Day Afternoon","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Cinnamon Syrup (page 327)","4 ounces chilled Stiegl-Radler Grapefruit Beer","2 ounces cane AOC Martinique rhum agricole blanc"],"ingredientIDs":[50,101,125,31]},
-          {"id":"033","name":"Baie du Galion","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce Green Chartreuse","1/4 ounce Drambuie","2 ounces cane AOC Martinique rhum agricole blanc"],"ingredientIDs":[59,41,31]},
-          {"id":"034","name":"Agricole Guava Cooler","category":"RUM THROUGH THE AGES","ingredients":["2 ounces Bundaberg guava soda","3/4 ounce fresh lime juice","3/4 ounce Licor 43 spiced liqueur","2 ounces cane AOC Martinique rhum agricole blanc","2 dashes Angostura bitters"],"ingredientIDs":[29,50,69,31,5]},
-          {"id":"035","name":"Richard Sealebach","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce Pierre Ferrand Dry Curaçao","1 ounce R. L. Seale 10 Year rum","7 dashes Angostura bitters","7 dashes Peychaud's bitters","4 ounces chilled champagne"],"ingredientIDs":[87,96,5,86,35]},
-          {"id":"036","name":"Cosa Nostra #2","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lemon juice","1 1/2 ounces Amaro Averna","1 ounce blended lightly aged rum","1 dash Angostura bitters","2 ounces real ginger ale"],"ingredientIDs":[49,3,22,5,97]},
-          {"id":"037","name":"Spontaneous Rumbustion","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce SC Honey Syrup (page 325)","1 1/2 ounces black blended overproof rum","1/2 ounce pot still lightly aged rum (overproof)","4 ounces boiling water"],"ingredientIDs":[49,107,14,93,24]},
-          {"id":"038","name":"AKU AKU","category":"THE BIRTH OF TIKI","ingredients":["5 (1-inch-square) chunks fresh pineapple","8 mint leaves","1 ounce fresh lime juice","Scant 1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce natural peach liqueur (such as Mathilde, Combier, or Giffard)","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[88,76,50,104,80,22]},
-          {"id":"039","name":"PUPULE","category":"THE BIRTH OF TIKI","ingredients":["Spiral-cut orange peel","3/4 ounce fresh lime juice","3/4 ounce fresh orange juice","1/4 ounce SC Cinnamon Syrup (page 327)","1/4 ounce SC Vanilla Syrup (page 326)","1/4 ounce St. Elizabeth Allspice Dram","2 ounces column still aged rum","1 dash Angostura bitters"],"ingredientIDs":[50,52,101,117,123,39,5]},
-          {"id":"040","name":"DON'S OWN GROG","category":"THE BIRTH OF TIKI","ingredients":["3/4 ounce fresh lime juice","1/4 ounce SC Demerara Syrup (page 324)","1 dash SC Grenadine (page 328)","1/2 ounce Leopold Brothers Rocky Mountain Blackberry Liqueur","1 ounce blended aged rum","1/2 ounce blended lightly aged rum","1/2 ounce black blended rum","1 dash Angostura bitters"],"ingredientIDs":[50,104,105,66,18,22,15,5]},
-          {"id":"041","name":"PORT AU PRINCE","category":"THE BIRTH OF TIKI","ingredients":["1/2 ounce fresh lime juice","1/2 ounce pineapple juice","1/4 ounce SC Demerara Syrup (page 324)","1 dash SC Grenadine (page 328)","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces cane coffey still aged rum (see page 199)","1 dash Angostura bitters"],"ingredientIDs":[50,89,104,105,64,33,5]},
-          {"id":"042","name":"Three Dots and a Dash","category":"THE BIRTH OF TIKI","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh orange juice","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce John D. Taylor's Velvet Falernum","1/4 ounce St. Elizabeth Allspice Dram","1 1/2 ounces cane AOC Martinique rhum agricole vieux","1/2 ounce blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[50,52,107,64,123,32,18,5]},
-          {"id":"043","name":"Mexican El Diablo","category":"THE BIRTH OF TIKI","ingredients":["1 lime wedge","1/2 ounce fresh lime juice","1/2 ounce natural crème de cassis","1 1/2 ounces blanco tequila","4 ounces real ginger ale"],"ingredientIDs":[50,79,129,97]},
-          {"id":"044","name":"Port Light","category":"THE BIRTH OF TIKI","ingredients":["1 ounce egg white","2 ounces bourbon","1 ounce fresh lemon juice","3/4 ounce SC Honey Syrup (page 325)","1/2 ounce SC Passion Fruit Syrup (page 325)"],"ingredientIDs":[44,25,49,107,115]},
-          {"id":"045","name":"Demerara Dry Float","category":"THE BIRTH OF TIKI","ingredients":["3/4 ounce black blended overproof rum","2 ounces fresh lime juice","1 teaspoon fresh lemon juice","1 1/2 ounces SC Passion Fruit Syrup (page 325)","1/4 ounce SC Demerara Syrup (page 324)","1/4 ounce Luxardo Maraschino liqueur","1 1/2 ounces blended aged rum"],"ingredientIDs":[14,50,49,115,104,72,18]},
-          {"id":"046","name":"Jet Pilot","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce John D. Taylor's Velvet Falernum","1 ounce black blended rum","3/4 ounce blended aged rum","3/4 ounce black blended overproof rum","1 dash Herbstura (page 228)"],"ingredientIDs":[50,47,101,64,15,18,14,62]},
-          {"id":"047","name":"Halekulani Cocktail","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce fresh orange juice","1/2 ounce pineapple juice","1/4 ounce SC Demerara Syrup (page 324)","1/2 teaspoon SC Grenadine (page 328)","1 1/2 ounces bourbon","1 dash Angostura bitters"],"ingredientIDs":[49,52,89,104,105,25,5]},
-          {"id":"048","name":"Sidewinder's Fang","category":"THE GOLDEN ERA","ingredients":["Sidewinder's Fang peel (see page 242)","1 1/2 ounces fresh lime juice","1 1/2 ounces fresh orange juice","1 1/2 ounces SC Passion Fruit Syrup (page 325)","3 ounces seltzer","1 ounce blended aged rum","1 ounce black blended rum"],"ingredientIDs":[50,52,115,118,18,15]},
-          {"id":"049","name":"Hawaiian Sunset","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh lemon juice","1/2 ounce SC Orgeat (page 330)","1 teaspoon SC Grenadine (page 328)","1 1/2 ounces vodka"],"ingredientIDs":[50,49,112,105,132]},
-          {"id":"050","name":"Captain's Grog","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/2 ounce grade A maple syrup","3 drops pure vanilla extract","3 drops pure almond extract","1 ounce seltzer","1/2 ounce John D. Taylor's Velvet Falernum","1/2 ounce Pierre Ferrand Dry Curaçao","3/4 ounce black blended rum","3/4 ounce blended lightly aged rum","3/4 ounce blended aged rum"],"ingredientIDs":[50,47,58,131,118,64,87,15,22,18]},
-          {"id":"051","name":"Suffering Bastard","category":"THE GOLDEN ERA","ingredients":["4 ounces ginger beer","1/2 ounce fresh lime juice","1/4 ounce SC Demerara Syrup (page 324)","1 ounce London dry gin","1 ounce brandy","2 dashes Angostura bitters"],"ingredientIDs":[56,50,104,71,26,5]},
-          {"id":"052","name":"Merciless Virgin","category":"THE GOLDEN ERA","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce seltzer","1/2 ounce Cherry Heering liqueur","1/2 ounce John D. Taylor's Velvet Falernum","1/4 ounce Pierre Ferrand Dry Curaçao","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[49,118,37,64,87,22]},
-          {"id":"053","name":"Saturn","category":"THE GOLDEN ERA","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/4 ounce SC Orgeat (page 330)","1/4 ounce John D. Taylor's Velvet Falernum","1 1/4 ounce London dry gin"],"ingredientIDs":[49,115,112,64,71]},
-          {"id":"054","name":"TIKI BOWL","category":"THE GOLDEN ERA","ingredients":["1 1/2 ounces fresh orange juice","3/4 ounce fresh lime juice","1 ounce SC Honey Syrup (page 325)","1 1/2 ounce black blended rum","1 ounce black blended overproof rum","1 ounce column still aged rum","2 dashes Herbstura (page 228)"],"ingredientIDs":[52,50,107,15,14,39,62]},
-          {"id":"055","name":"Hurricane","category":"THE GOLDEN ERA","ingredients":["2 ounces fresh lemon juice","2 ounces SC Passion Fruit Syrup (page 325)","4 ounces black blended rum"],"ingredientIDs":[49,115,15]},
-          {"id":"056","name":"Mundo Perdido","category":"THE TIKI REVIVAL","ingredients":["3/4 ounce fresh lemon juice","1/4 ounce SC Cinnamon Syrup (page 327)","1/4 ounce SC Demerara Syrup (page 324)","1/2 ounce apple brandy","1 1/2 ounces black blended rum"],"ingredientIDs":[49,101,104,6,15]},
-          {"id":"057","name":"Formidable Dragon","category":"THE TIKI REVIVAL","ingredients":["3/4 ounce fresh lemon juice","3/4 ounce fresh lime juice","1/2 ounce SC Honey Syrup (page 325)","3/4 ounce SC Molasses Syrup (page 327)","1/2 ounce Amaro Di Angostura","1 1/2 ounces blended aged rum","1 ounce black blended rum","1/4 ounce pot still lightly aged rum (overproof)","1 ounce seltzer"],"ingredientIDs":[49,50,107,111,4,18,15,93,118]},
-          {"id":"058","name":"LEI LANI VOLCANO 2.0 (Α.Κ.Α. LEI LANI NOUVEAU)","category":"THE TIKI REVIVAL","ingredients":["3 ounces Bundaberg Guava soda","1 1/2 ounces pineapple juice","3/4 ounce lime juice","1 ounce SC Coconut Cream (page 328)","1 1/2 ounces blended aged rum"],"ingredientIDs":[29,89,70,102,18]},
-          {"id":"059","name":"Tradewinds","category":"THE TIKI REVIVAL","ingredients":["1 ounce fresh lemon juice","1 1/2 ounces SC Coconut Cream (page 328)","1 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 ounce black blended rum","1 ounce blended lightly aged rum"],"ingredientIDs":[49,102,78,15,22]},
-          {"id":"060","name":"Peachtree Punch 2.0","category":"THE TIKI REVIVAL","ingredients":["1/2 fresh yellow or white peach, pitted, and coarsely chopped into chunks (with skin)","3 ounces fresh orange juice","1/2 ounce fresh lemon juice","1 ounce SC Coconut Cream (page 328)","1/4 ounce natural peach liqueur (such as Mathilde Peach or Combier Crème de Pêche de Vigne)","2 ounces blended lightly aged rum","1 ounce seltzer"],"ingredientIDs":[53,52,49,102,80,22,118]},
-          {"id":"061","name":"Jungle Bird","category":"THE TIKI REVIVAL","ingredients":["2 ounces pineapple juice","1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","3/4 ounce Campari","1 1/2 ounces black blended rum"],"ingredientIDs":[89,50,104,30,15]},
-          {"id":"062","name":"Golden Gun","category":"THE TIKI REVIVAL","ingredients":["3/4 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 ounce blended aged rum","1 ounce blended lightly aged rum","2 dashes Angostura bitters"],"ingredientIDs":[50,47,104,78,18,22,5]},
-          {"id":"063","name":"Hinky Dinks Fizzy","category":"THE TIKI REVIVAL","ingredients":["2 ounces sparkling wine","1 1/2 ounces pineapple juice","1/2 ounce fresh lime juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 ounce London dry gin","1 ounce blended lightly aged rum"],"ingredientIDs":[121,89,50,115,78,71,22]},
-          {"id":"064","name":"Pampanito","category":"CREATING THE SPACE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Molasses Syrup (page 327)","2 1/2 ounces seltzer","1/4 ounce St. Elizabeth Allspice Dram","1 1/2 ounces black blended rum","1 dash Angostura bitters"],"ingredientIDs":[49,111,118,123,15,5]},
-          {"id":"065","name":"Max's Mistake","category":"CREATING THE SPACE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce SC Honey Syrup (page 325)","2 ounces London dry gin","1 dash Angostura bitters","2 ounces Fentimans Victorian Lemonade (or any quality dry sparkling lemonade)"],"ingredientIDs":[49,115,107,71,5,45]},
-          {"id":"066","name":"La Guildive","category":"CREATING THE SPACE","ingredients":["1 ounce ginger beer","1/2 ounce fresh lime juice","1/2 ounce Licor 43","1/2 ounce natural peach liqueur (such as Mathilde Peach or Combier Crème de Pêche de Vigne)","2 ounces blended aged rum","Pinch of freshly grated cinnamon"],"ingredientIDs":[56,50,68,80,18]},
-          {"id":"067","name":"The Twenty Seventy Swizzle","category":"CREATING THE SPACE","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce St. Elizabeth Allspice Dram","1 ounce column still aged rum","1 ounce black blended overproof rum","1 dash Herbstura (page 228)","Pinch of freshly grated nutmeg"],"ingredientIDs":[50,104,107,123,39,14,62]},
-          {"id":"068","name":"Shudders in a Whisper","category":"CREATING THE SPACE","ingredients":["3/4 ounce fresh lime juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce natural pear liqueur (such as Mathilde Poire)","1/4 ounce Drambuie liqueur","2 ounces seltzer","2 ounces column still aged rum","2 dashes Peychaud's bitters","1 dash Angostura bitters"],"ingredientIDs":[50,115,81,42,118,39,86,5]},
-          {"id":"069","name":"Cuevas","category":"CREATING THE SPACE","ingredients":["1/4 ounce SC Cinnamon Syrup (page 327)","1/2 ounce Punt e Mes","1/4 ounce tawny port","2 ounces blended aged rum","6 drops Bittermens 'Elemakule Tiki bitters"],"ingredientIDs":[101,95,128,18,10]},
-          {"id":"070","name":"Norwegian Paralysis","category":"CREATING THE SPACE","ingredients":["1 1/2 ounces fresh orange juice","1 1/2 ounces pineapple juice","1/2 ounce fresh lemon juice","1/4 ounce SC Demerara Syrup (page 324)","1/4 ounce SC Orgeat (page 330)","1 1/2 ounces aquavit"],"ingredientIDs":[52,89,49,104,112,7]},
-          {"id":"071","name":"Juan Ho Royale","category":"CREATING THE SPACE","ingredients":["2 ounces champagne or sparkling wine","3/4 ounce fresh lime juice","1/2 ounce SC Orgeat (page 330)","1/2 ounce blue curaçao","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces tequila blanco"],"ingredientIDs":[35,50,112,23,64,129]},
-          {"id":"072","name":"Chartreuse Swizzle","category":"CREATING THE SPACE","ingredients":["1 ounce pineapple juice","3/4 ounce fresh lime juice","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces Green Chartreuse"],"ingredientIDs":[89,50,64,59]},
-          {"id":"073","name":"Roselita","category":"CREATING THE SPACE","ingredients":["1 1/2 ounces seltzer","1/2 ounce fresh lime juice","1/2 ounce SC Orgeat (page 330)","1/2 ounce SC Hibiscus Liqueur (page 331)","1/2 ounce natural pear liqueur (such as Mathilde Poire)","1 1/2 ounces column still aged rum","1 dash Peychaud's bitters"],"ingredientIDs":[118,50,112,106,81,39,86]},
-          {"id":"074","name":"Center of the Galaxy","category":"CREATING THE SPACE","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce SC Honey Syrup (page 325)","1/2 ounce St. George Raspberry Liqueur","2 ounces blended aged rum","Pinch of freshly ground cinnamon"],"ingredientIDs":[50,104,107,124,18]},
-          {"id":"075","name":"Callaloo Cooler","category":"CREATING THE SPACE","ingredients":["1 ounce seltzer","1/2 ounce fresh lime juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce Cherry Heering","2 ounces blended lightly aged rum","1 dash Angostura bitters"],"ingredientIDs":[118,50,101,36,22,5]},
-          {"id":"076","name":"Top Notch Volcano","category":"CURATING THE EXPERIENCE","ingredients":["4 ounces fresh lime juice","4 ounces pineapple juice","1 ounce passion fruit puree","3 ounces SC Demerara Syrup (page 324)","1 ounce Luxardo Maraschino liqueur","4 ounces blended lightly aged rum","4 ounces blended aged rum"],"ingredientIDs":[50,89,84,104,72,22,18]},
-          {"id":"077","name":"The Naked Ape","category":"CURATING THE EXPERIENCE","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce Giffard Banane du Brésil banana liqueur","1 1/2 ounces black blended rum","1/2 ounce pot still lightly aged rum (overproof)","1 dash Angostura bitters"],"ingredientIDs":[49,101,54,15,93,5]},
-          {"id":"078","name":"Swizzle Français","category":"CURATING THE EXPERIENCE","ingredients":["1 1/2 ounce fresh lime juice","1/2 ounce Martinique sugarcane syrup","1/4 ounce St. Elizabeth Allspice Dram","2 ounces cane AOC Martinique rhum agricole vieux","Pinch of fresh ground nutmeg"],"ingredientIDs":[50,74,123,32]},
-          {"id":"079","name":"Sparkling Mai Tai","category":"CURATING THE EXPERIENCE","ingredients":["1/4 ounce fresh lime juice","1/4 ounce SC Orgeat (page 330)","1/2 ounce Pierre Ferrand Dry Curaçao","1/4 ounce black blended overproof rum","1/2 ounce blended aged rum","4 ounces chilled sparkling wine"],"ingredientIDs":[50,112,87,14,18,121]},
-          {"id":"080","name":"The Ernesto","category":"CURATING THE EXPERIENCE","ingredients":["2 ounces Ting grapefruit soda","1 ounce fresh lime juice","1 ounce SC Honey Syrup (page 325)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","2 ounces tequila blanco","1 dash Herbstura (page 228)"],"ingredientIDs":[130,50,107,78,129,62]},
-          {"id":"081","name":"The Sexpert","category":"CURATING THE EXPERIENCE","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces Peruvian pisco","1/2 ounce gin","6 drops Bittermens Burlesque bitters"],"ingredientIDs":[49,115,64,85,55,11]},
-          {"id":"082","name":"Smuggler's Rum Barrel","category":"CURATING THE EXPERIENCE","ingredients":[],"ingredientIDs":[]},
-          {"id":"083","name":"Hana Reviver","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Passion Fruit Honey (page 325)","1/4 barspoon li hing mui powder (see Resources, page 335)","2 ounces seltzer","1 barspoon Maraschino liqueur","2 ounces pot still unaged rum (see page 197)"],"ingredientIDs":[49,114,118,73,94]},
-          {"id":"084","name":"Kaiteur Swizzle","category":"CURATING THE EXPERIENCE","ingredients":["3/4 ounce fresh lime juice","1/2 ounce Grade A maple syrup","1/2 ounce John D. Taylor's Velvet Falernum","2 ounces blended aged rum (Guyana)","2 dashes Angostura bitters"],"ingredientIDs":[50,58,64,20,5]},
-          {"id":"085","name":"The Expedition","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce fresh lime juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce SC Vanilla Syrup (page 326)","2 ounces seltzer","1/4 ounce Bittermens New Orleans Coffee Liqueur","2 ounces black blended rum","1 ounce bourbon"],"ingredientIDs":[50,101,107,117,118,12,15,25]},
-          {"id":"086","name":"The Undead Gentleman","category":"CURATING THE EXPERIENCE","ingredients":["1 dash absinthe blanc","1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice (white or pink)","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce John D. Taylor's Velvet Falernum","1 ounce black blended overproof rum","1 1/2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[2,50,48,101,64,14,18,5]},
-          {"id":"087","name":"The Dead Reckoning","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce seltzer","1 ounce fresh lemon juice","1 ounce pineapple juice","1/2 ounce Grade A maple syrup","1/2 ounce SC Vanilla Brandy (see Note, following)","1/2 ounce tawny port","2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[118,49,89,58,116,128,18,5]},
-          {"id":"088","name":"Falinum","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Coconut Cream (page 328)","1 ounce seltzer","1/2 ounce John D. Taylor's Velvet Falernum","2 ounces column still aged rum","1 dash orange bitters"],"ingredientIDs":[49,102,118,64,39,83]},
-          {"id":"089","name":"Humuhumunukunukuapua'a","category":"CURATING THE EXPERIENCE","ingredients":["3/4 ounce fresh lemon juice","3/4 ounce pineapple juice","1/2 ounce SC Orgeat (page 330)","2 ounces gin","2 dashes Peychaud's bitters"],"ingredientIDs":[49,89,112,55,86]},
-          {"id":"090","name":"Finkelgrog","category":"CURATING THE EXPERIENCE","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/4 ounce SC Orgeat (page 330)","1/2 ounce Napa Wine Syrup (see Note, following)","1/2 ounce Licor 43","1 ounce blended lightly aged rum","1 ounce black blended rum","1 ounce seltzer","Pinch of freshly ground cinnamon"],"ingredientIDs":[50,47,112,77,68,22,15,118]},
-          {"id":"091","name":"For Pete's Sake","category":"CURATING THE EXPERIENCE","ingredients":["3/4 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce SC Hibiscus Liqueur (page 331)","1/2 ounce Cherry Heering","1 1/2 ounces Peruvian pisco","1 dash Angostura bitters"],"ingredientIDs":[50,104,106,36,85,5]},
-          {"id":"092","name":"Boo Loo","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["6 (1-inch-square) chunks fresh pineapple","2 1/2 ounces pineapple juice","1 1/2 ounces fresh lime juice","1 1/4 ounces SC Honey Syrup (page 325)","1 1/2 ounces blended aged rum","1 1/2 ounces column still aged rum","3/4 ounce black blended rum","3/4 ounce black blended overproof rum","1 1/2 ounces seltzer"],"ingredientIDs":[88,89,50,107,18,39,15,14,118]},
-          {"id":"093","name":"Caribeño","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["4 ounces coconut water","1/4 ounce SC Demerara Syrup (page 324)","2 ounces column still lightly aged rum (see page 198) or London dry gin"],"ingredientIDs":[104,40]},
-          {"id":"094","name":"Monk's Respite","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["3 ounces fresh coconut water","1/2 ounce fresh lemon juice","1/4 ounce SC Honey Syrup (page 325)","1/4 ounce Yellow Chartreuse","1 1/2 ounces Broker's gin","1 ounce seltzer","1 dash orange bitters"],"ingredientIDs":[46,49,107,135,28,118,83]},
-          {"id":"095","name":"The Mastadon","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["3 ounces pineapple juice","1/2 ounce fresh lime juice","1 ounce passion fruit puree","1/2 ounce Licor 43","1/2 ounce Maraschino liqueur","1 1/2 ounces blended aged rum","1 1/2 ounces bourbon","2 dashes Peychaud's bitters"],"ingredientIDs":[89,50,84,68,73,18,25,86]},
-          {"id":"096","name":"Piñata","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["3 ounces pineapple juice","1 ounce fresh lemon juice","1/4 to 1/2 ounce SC Demerara Syrup (page 324)","1 ounce ginger liqueur","1/4 ounce St. Elizabeth Allspice Dram","1 ounce black blended rum","1 ounce blended lightly aged rum"],"ingredientIDs":[89,49,104,57,123,15,22]},
-          {"id":"097","name":"Bumboat","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["2 ounces pineapple juice","1 1/2 ounces fresh lemon juice","3/4 ounce SC Cinnamon Syrup (page 327)","1 ounce rye","1 ounce blended lightly aged rum","3 drops almond extract","6 drops Bittermens 'Elemakule Tiki bitters","3/4 ounce black blended overproof rum"],"ingredientIDs":[89,49,101,99,22,10,14]},
-          {"id":"098","name":"Planter's Punch","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["1 ounce fresh lime juice","3/4 ounce SC Demerara syrup (page 324)","1/4 ounce St. Elizabeth Allspice Dram","3 ounces blended aged rum (Jamaica)","2 dashes Angostura bitters"],"ingredientIDs":[50,104,123,21,5]},
-          {"id":"099","name":"Mai Tai","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["3/4 ounce fresh lime juice","1/4 ounce SC Mai Tai Rich Simple Syrup (page 326)","1/4 ounce SC orgeat syrup (page 330)","1/2 ounce Pierre Ferrand dry curaçao","2 ounces blended aged rum (see pages 262-64 for details)"],"ingredientIDs":[50,110,113,87,18]},
-          {"id":"100","name":"Doctor Funk","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["1/2 ounce fresh lemon juice","1/4 ounce SC Grenadine (page 328)","1/2 ounce fresh lime juice","1/2 ounce SC Demerara Simple Syrup (page 324)","1/4 ounce Herbsaint","2 1/4 ounce black pot still rum (see page 198)","1 ounce seltzer"],"ingredientIDs":[49,105,50,103,61,16,118]},
-          {"id":"101","name":"Zombie","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["3/4 ounce fresh lime juice","1/4 ounce fresh grapefruit juice","1/4 ounce SC Cinnamon Syrup (page 327)","1 teaspoon SC Grenadine (page 328)","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces blended aged rum","1 1/2 ounces column still aged rum","1 ounce black blended overproof rum","2 dashes Herbstura"],"ingredientIDs":[50,47,101,105,64,18,39,14,62]},
-          {"id":"102","name":"Navy Grog","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["3/4 ounce fresh lime juice","3/4 ounce fresh grapefruit juice","1/4 ounce SC Demerara syrup (page 324)","1/4 ounce St. Elizabeth Allspice Dram","1 ounce pot still lightly aged (overproof) rum","1 ounce blended lightly aged rum","1 ounce column still aged rum"],"ingredientIDs":[50,47,104,123,91,22,39]},
-          {"id":"103","name":"Scorpion","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["2 ounces fresh lime juice","4 ounces fresh orange juice","1 1/2 ounces SC Demerara syrup (page 324)","2 ounces SC Orgeat (page 330)","2 ounces brandy","4 ounces London Dry Gin","4 ounces blended lightly aged rum"],"ingredientIDs":[50,52,104,112,26,71,22]},
-          {"id":"104","name":"Fog Cutter","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["1 1/2 ounce fresh lemon juice","1 1/2 ounce fresh orange juice","1/2 ounce SC Orgeat (page 330)","1 ounce pisco","1/2 ounce gin","2 ounces blended lightly aged rum","1/2 ounce oloroso sherry"],"ingredientIDs":[49,52,112,85,55,22,82]},
-          {"id":"105","name":"Singapore Sling","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["2 ounces seltzer","3/4 ounce fresh lemon juice","1/4 ounce SC Demerara Syrup (page 324)","1/2 ounce Cherry Heering liqueur","1/4 ounce Benedictine","1 1/2 ounce London Dry Gin","1 dash Angostura bitters","1 dash orange bitters"],"ingredientIDs":[118,49,104,37,9,71,5,83]},
-          {"id":"106","name":"HONDO HATTIE'S JUNGLE PUNCH!","category":"THE TIKI PARTY","ingredients":["1 ounce fresh lemon juice","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce blue curaçao","1/4 ounce tawny port","1/2 ounce John D. Taylor's Velvet Falernum","1/4 ounce natural pear liqueur (such as Mathilde Poire)","2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[49,107,23,128,64,81,18,5]},
-          {"id":"107","name":"Kahiko Punch","category":"THE TIKI PARTY","ingredients":["1 ounce fresh lemon juice","1 1/2 ounces SC Passion Fruit Honey (page 325)","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce SC Hibiscus Liqueur (page 331)","2 ounces pot still unaged rum (see page 197)","6 drops Bittermans 'Elemakule Tiki bitters"],"ingredientIDs":[49,114,101,106,94,10]},
-          {"id":"108","name":"Triumvirate Punch","category":"THE TIKI PARTY","ingredients":["3/4 ounce fresh lime juice","1 ounce SC Passion Fruit Honey (page 325)","1/4 ounce St. Elizabeth Allspice Dram","1 1/2 ounces pot still unaged rum (see page 197)","2 dashes Angostura bitters","Pinch of freshly grated nutmeg"],"ingredientIDs":[50,114,123,94,5]},
-          {"id":"109","name":"Eureka Punch","category":"THE TIKI PARTY","ingredients":["1 1/2 ounces fresh lemon juice","1 ounce SC Honey Syrup (page 325)","1/2 ounce Yellow Chartreuse","1 1/2 ounces column still aged rum","1 dash Angostura bitters","2 ounces real ginger ale"],"ingredientIDs":[49,107,135,39,5,97]},
-          {"id":"110","name":"Yuletidal Wave","category":"THE TIKI PARTY","ingredients":["2 ounces pineapple juice","1 ounce fresh lemon juice","1/2 ounce natural pear liqueur (such as Mathilde Poire)","1/2 ounce Licor 43","1/4 ounce St. Elizabeth Allspice Dram","1/2 ounce brandy","1 ounce bourbon","1 ounce column still aged rum"],"ingredientIDs":[89,49,81,68,123,26,25,39]},
-          {"id":"111","name":"Rumbustion Punch","category":"THE TIKI PARTY","ingredients":["1 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/4 ounce SC Cinnamon Syrup (page 327)","1 ounce blended aged rum","1 ounce blended lightly aged rum","2 dashes Herbstura (page 228)"],"ingredientIDs":[50,104,101,18,22,62]}
-        ];
+        // --- Static data: loaded async from recipes.json ---
+        let ingredientMap = {};
+        let initialRecipesData = [];
 
         // --- State ---
         let allRecipes = [];
@@ -458,22 +316,32 @@
 
         // --- Core Functions ---
 
-        function loadData() {
+        async function loadData() {
+            // --- Fetch static data from recipes.json (served/cached by SW) ---
             try {
-                // V2 Storage Keys for migration
+                const resp = await fetch('./recipes.json');
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const staticData = await resp.json();
+                Object.assign(ingredientMap, staticData.ingredientMap || {});
+                initialRecipesData = staticData.recipes || [];
+            } catch (fetchErr) {
+                console.warn('[App] Could not fetch recipes.json:', fetchErr.message,
+                    '— will rely on localStorage.');
+            }
+
+            // --- Load / migrate persisted data ---
+            try {
                 const V2_RECIPES_KEY = 'tikiRecipes_v2';
                 const V2_FAVORITES_KEY = 'tikiFavorites_v2';
 
                 const storedV3Recipes = localStorage.getItem(RECIPES_STORAGE_KEY);
                 const storedV2Recipes = localStorage.getItem(V2_RECIPES_KEY);
 
-                // Migration logic for v2 users
-                if(storedV2Recipes && !storedV3Recipes) {
-                    console.log("Found V2 data, migrating to V3...");
+                if (storedV2Recipes && !storedV3Recipes) {
+                    console.log('[App] Found V2 data, migrating to V3...');
                     allRecipes = JSON.parse(storedV2Recipes);
                     favoriteRecipeIds = JSON.parse(localStorage.getItem(V2_FAVORITES_KEY) || '[]');
-                    
-                    // Stamp old recipes with new IDs
+
                     allRecipes.forEach(recipe => {
                         if (!recipe.ingredientIDs) {
                             recipe.ingredientIDs = (recipe.ingredients || []).map(ing => {
@@ -484,23 +352,14 @@
                         }
                     });
 
-                    // Save migrated data to new V3 keys
-                    saveRecipes();
-                    saveFavorites();
-                    // We don't migrate inventory or category state from v2 as they didn't exist
-                    userInventory = [];
-                    saveInventory();
-                    categoriesState = {};
-                    saveCategoryStates();
-
-                    // Clean up old V2 data
+                    saveRecipes(); saveFavorites();
+                    userInventory = []; saveInventory();
+                    categoriesState = {}; saveCategoryStates();
                     localStorage.removeItem(V2_RECIPES_KEY);
                     localStorage.removeItem(V2_FAVORITES_KEY);
-                    localStorage.removeItem('tikiCategoryState_v2'); // old category key
-
+                    localStorage.removeItem('tikiCategoryState_v2');
                     alert("Welcome to the new version! Your recipes and favorites have been upgraded.");
                 } else {
-                    // Standard V3 data loading
                     allRecipes = storedV3Recipes ? JSON.parse(storedV3Recipes) : [...initialRecipesData];
                     const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
                     favoriteRecipeIds = storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -508,7 +367,7 @@
 
                 const storedCategoryStates = localStorage.getItem(CATEGORY_STATE_STORAGE_KEY);
                 categoriesState = storedCategoryStates ? JSON.parse(storedCategoryStates) : {};
-                
+
                 const storedInventory = localStorage.getItem(USER_INVENTORY_KEY);
                 userInventory = storedInventory ? JSON.parse(storedInventory) : [];
 
@@ -518,7 +377,7 @@
                 if (!storedInventory) saveInventory();
 
             } catch (e) {
-                console.error("Failed to load data from localStorage:", e);
+                console.error('[App] Failed to load data:', e);
                 allRecipes = [...initialRecipesData];
                 favoriteRecipeIds = [];
                 categoriesState = {};
@@ -922,7 +781,7 @@
         });
 
         // --- Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const mainContent = document.querySelector('main');
             mainContent.querySelector('#add-recipe-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
@@ -951,7 +810,7 @@
                     <p id="restore-message" class="text-sm mt-3 text-gray-600"></p>
                 </div>`;
             
-            loadData();
+            await loadData();
             renderInventoryList();
             updateRecipeView();
             setupEventListeners();
