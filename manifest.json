@@ -8,18 +8,47 @@
   "background_color": "#FFF8F0",
   "theme_color": "#CC5A02",
   "orientation": "portrait-primary",
+  "categories": ["food", "lifestyle"],
   "icons": [
     {
       "src": "icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Surprise Me",
+      "short_name": "Random",
+      "description": "Get a random cocktail recipe",
+      "url": "./?action=surprise",
+      "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Bar",
+      "short_name": "My Bar",
+      "description": "Manage your ingredient inventory",
+      "url": "./?section=bar",
+      "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }

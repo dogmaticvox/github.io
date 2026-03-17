@@ -1,87 +1,105 @@
-// sw.js
+// sw.js — Tiki App v3.2.0
 
-// Define a unique cache name for this version of the app.
-// IMPORTANT: Change this name every time you update your app files.
-const CACHE_NAME = 'tiki-app-v3.0.0';
+const CACHE_NAME = 'tiki-app-v3.2.0';
 
-// List of files to cache for offline use.
-const urlsToCache = [
-  './', // This caches the index.html file at the root
+// App-shell files: cache-first (pre-cached at install time)
+const APP_SHELL = [
+  './',
   './index.html',
+  './recipes.json',
   './manifest.json',
-  './images/tiki-background.png', // Make sure this path is correct
+  './images/tiki-background.png',
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
-  'https://cdn.tailwindcss.com', // Cache the Tailwind CSS file
-  'https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf' // Cache the icon font
 ];
 
-// --- Service Worker Installation ---
-// This event fires when the service worker is first installed.
+// CDN resources: stale-while-revalidate (serve cached copy instantly,
+// refresh in the background so the next visit gets the latest version)
+const CDN_URLS = [
+  'https://cdn.tailwindcss.com',
+  'https://cdn.jsdelivr.net/npm/lucide-static@0.473.0/font/lucide.ttf',
+];
+
+// --- Install: pre-cache app shell ---
 self.addEventListener('install', event => {
-  console.log('[Service Worker] Install');
-  // waitUntil() ensures that the service worker will not install until the code inside has successfully completed.
+  console.log('[SW] Install');
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[Service Worker] Caching app shell');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('[SW] Pre-caching app shell');
+      // Cache CDN resources individually so one failure doesn't block install
+      const cdnPromises = CDN_URLS.map(url =>
+        cache.add(url).catch(err => console.warn('[SW] CDN cache miss (ok offline):', url, err))
+      );
+      return cache.addAll(APP_SHELL).then(() => Promise.all(cdnPromises));
+    })
   );
 });
 
-// --- Service Worker Activation ---
-// This event fires when the service worker is activated.
-// It's a good place to clean up old caches.
+// --- Activate: purge old caches ---
 self.addEventListener('activate', event => {
-  console.log('[Service Worker] Activate');
+  console.log('[SW] Activate');
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          // If a cache's name is not our current CACHE_NAME, we delete it.
-          if (cacheName !== CACHE_NAME) {
-            console.log('[Service Worker] Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => {
+        console.log('[SW] Deleting old cache:', k);
+        return caches.delete(k);
+      }))
+    )
   );
-  // This line ensures the new service worker takes control of the page immediately.
   return self.clients.claim();
 });
 
-// --- Fetching Content ---
-// This event fires for every network request made by the page.
+// --- Fetch ---
 self.addEventListener('fetch', event => {
-  // We only want to handle GET requests.
-  if (event.request.method !== 'GET') {
+  if (event.request.method !== 'GET') return;
+
+  const url = event.request.url;
+
+  // CDN resources: stale-while-revalidate
+  if (CDN_URLS.some(cdn => url.startsWith(cdn))) {
+    event.respondWith(staleWhileRevalidate(event.request));
     return;
   }
 
-  event.respondWith(
-    // First, try to find a matching response in the cache.
-    caches.match(event.request)
-      .then(response => {
-        // If a response is found in the cache, return it.
-        if (response) {
-          // console.log('[Service Worker] Returning from cache:', event.request.url);
-          return response;
-        }
-        // If the request is not in the cache, fetch it from the network.
-        // console.log('[Service Worker] Fetching from network:', event.request.url);
-        return fetch(event.request);
-      })
-  );
+  // App shell & everything else: cache-first, network fallback, offline page
+  event.respondWith(cacheFirstWithOfflineFallback(event.request));
 });
 
+function staleWhileRevalidate(request) {
+  return caches.open(CACHE_NAME).then(cache =>
+    cache.match(request).then(cached => {
+      const networkFetch = fetch(request).then(response => {
+        if (response && response.status === 200)
+          cache.put(request, response.clone());
+        return response;
+      }).catch(() => null);
+      // Return cached immediately; refresh in background
+      return cached || networkFetch;
+    })
+  );
+}
 
-// --- Handling Updates ---
-// This listens for the 'skipWaiting' message from the main page.
+function cacheFirstWithOfflineFallback(request) {
+  return caches.match(request).then(cached => {
+    if (cached) return cached;
+    return fetch(request).then(response => {
+      // Cache successful responses for future offline use
+      if (response && response.status === 200) {
+        caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
+      }
+      return response;
+    }).catch(() => {
+      // Offline fallback: return the cached index.html for navigation requests
+      if (request.mode === 'navigate') return caches.match('./index.html');
+      return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
+    });
+  });
+}
+
+// --- Handle skipWaiting message from app ---
 self.addEventListener('message', event => {
-  if (event.data && event.data.action === 'skipWaiting') {
-    console.log('[Service Worker] Skip waiting message received');
+  if (event.data?.action === 'skipWaiting') {
+    console.log('[SW] Skip waiting');
     self.skipWaiting();
   }
 });

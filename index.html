@@ -135,6 +135,139 @@
         .section {
             transition: opacity 0.15s ease-in;
         }
+        /* === PHASE 2: HIGH-VALUE FEATURES === */
+        .surprise-btn {
+            @apply inline-flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white font-medium rounded-md shadow-sm hover:bg-purple-700 transition-all duration-150 ease-in-out text-sm flex-shrink-0;
+        }
+        .surprise-btn.shaking { animation: shake 0.4s ease; }
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            50% { transform: rotate(15deg) scale(1.1); }
+            75% { transform: rotate(-8deg); }
+        }
+        .star-r { display: inline-flex; gap: 1px; align-items: center; line-height: 1; }
+        .star-r .s { cursor: pointer; font-size: 1rem; color: #d1d5db; transition: color 0.1s; user-select: none; }
+        .star-r .s.on { color: #f59e0b; }
+        .made-it-btn {
+            @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 transition-colors cursor-pointer;
+        }
+        .last-made-label { @apply text-xs text-gray-400 italic ml-1 flex-shrink-0; }
+        .shopping-list-item { @apply flex items-center gap-3 p-2 rounded-md hover:bg-orange-50 transition-colors; }
+        .shopping-section-container { @apply mt-2 p-4 bg-white/90 rounded-lg shadow; }
+        .confirm-panel { @apply mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg; }
+        .share-btn {
+            @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors cursor-pointer;
+        }
+        /* === DARK MODE === */
+        [data-theme="dark"] body {
+            background-color: #0f1420 !important;
+            background-image: none;
+            color: #e2e8f0;
+        }
+        [data-theme="dark"] header > div {
+            background-color: rgba(20, 27, 45, 0.95) !important;
+        }
+        [data-theme="dark"] h1 { color: #fbbf24 !important; }
+        [data-theme="dark"] main {
+            background-color: rgba(22, 28, 46, 0.97) !important;
+        }
+        [data-theme="dark"] h2, [data-theme="dark"] .text-teal-800 { color: #5eead4 !important; }
+        [data-theme="dark"] .text-teal-700, [data-theme="dark"] .text-teal-600 { color: #2dd4bf !important; }
+        [data-theme="dark"] .category-header {
+            background-color: rgba(80, 50, 10, 0.55) !important;
+        }
+        [data-theme="dark"] .category-header:hover {
+            background-color: rgba(100, 65, 15, 0.65) !important;
+        }
+        [data-theme="dark"] .category-title { color: #fcd34d !important; }
+        [data-theme="dark"] .category-recipes { border-color: #92400e; }
+        [data-theme="dark"] .recipe-card {
+            background-color: #1e2535 !important;
+            border-color: #374151 !important;
+            color: #e2e8f0 !important;
+        }
+        [data-theme="dark"] .recipe-name { color: #fbbf24 !important; }
+        [data-theme="dark"] .detail-label { color: #5eead4 !important; }
+        [data-theme="dark"] .ing-available { color: #4ade80 !important; }
+        [data-theme="dark"] .ing-missing { color: #f87171 !important; }
+        [data-theme="dark"] .recipe-details { border-color: #374151 !important; }
+        [data-theme="dark"] .recipe-details .border-t { border-color: #374151 !important; }
+        [data-theme="dark"] .notes-textarea {
+            background-color: #151c2e !important;
+            color: #cbd5e1 !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] .made-it-btn {
+            background-color: #0f3347 !important;
+            color: #5eead4 !important;
+            border-color: #0d4f6e !important;
+        }
+        [data-theme="dark"] .made-it-btn:hover { background-color: #14405a !important; }
+        [data-theme="dark"] .share-btn {
+            background-color: #0f2747 !important;
+            color: #93c5fd !important;
+            border-color: #1e3a5f !important;
+        }
+        [data-theme="dark"] .text-gray-800 { color: #e2e8f0 !important; }
+        [data-theme="dark"] .text-gray-700 { color: #cbd5e1 !important; }
+        [data-theme="dark"] .text-gray-600 { color: #94a3b8 !important; }
+        [data-theme="dark"] .text-gray-500 { color: #64748b !important; }
+        [data-theme="dark"] .text-gray-400 { color: #475569 !important; }
+        [data-theme="dark"] .text-red-600 { color: #f87171 !important; }
+        [data-theme="dark"] .text-red-600:hover { color: #fca5a5 !important; }
+        [data-theme="dark"] label { color: #cbd5e1 !important; }
+        [data-theme="dark"] input[type="text"],
+        [data-theme="dark"] input[type="search"],
+        [data-theme="dark"] textarea,
+        [data-theme="dark"] select {
+            background-color: #151c2e !important;
+            color: #e2e8f0 !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] .settings-section-container,
+        [data-theme="dark"] .inventory-section-container,
+        [data-theme="dark"] .shopping-section-container {
+            background-color: rgba(21, 28, 46, 0.97) !important;
+        }
+        [data-theme="dark"] #inventory-list {
+            background-color: #151c2e !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] #inventory-list label:hover,
+        [data-theme="dark"] .hover\:bg-orange-100:hover {
+            background-color: #1e2d45 !important;
+        }
+        [data-theme="dark"] .shopping-list-item:hover { background-color: #1e2d45 !important; }
+        [data-theme="dark"] .confirm-panel {
+            background-color: #151c2e !important;
+            border-color: #374151 !important;
+        }
+        [data-theme="dark"] .ing-count-badge {
+            background-color: #1e2d45 !important;
+            color: #94a3b8 !important;
+        }
+        [data-theme="dark"] .bg-white\/95, [data-theme="dark"] .bg-white\/90 {
+            background-color: rgba(21, 28, 46, 0.97) !important;
+        }
+        [data-theme="dark"] .install-banner,
+        [data-theme="dark"] .update-banner {
+            background-color: #1a3a5c !important;
+        }
+        /* Skip-to-content */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #CC5A02;
+            color: white;
+            padding: 8px 16px;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+            font-weight: 600;
+            transition: top 0.15s;
+        }
+        .skip-link:focus { top: 0; }
     </style>
     
     <style>
@@ -168,9 +301,15 @@
       .icon-download::before { content: "\e0b6"; }
       .icon-settings::before { content: "\e157"; }
       .icon-martini::before { content: "\e102"; }
+      .icon-share::before { content: "\e15f"; }
+      .icon-clipboard::before { content: "\e07b"; }
+      .icon-sun::before { content: "\e17d"; }
+      .icon-moon::before { content: "\e10c"; }
     </style>
 </head>
 <body class="p-4 max-w-2xl mx-auto">
+
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <header class="mb-6 text-center">
         <div class="inline-block bg-orange-50/90 p-3 rounded-lg shadow-md">
@@ -181,18 +320,24 @@
         </div>
     </header>
 
-    <nav class="mb-6 flex justify-center space-x-2 sm:space-x-3">
-        <button id="nav-recipes" class="nav-btn active"> <span class="mr-2">📓</span>Recipes</button>
+    <nav class="mb-6 flex flex-wrap justify-center gap-2">
+        <button id="nav-recipes" class="nav-btn active"><span class="mr-1">📓</span>Recipes</button>
         <button id="nav-inventory" class="nav-btn"><span class="lucide icon-martini"></span>My Bar</button>
-        <button id="nav-add-recipe" class="nav-btn"><span class="mr-2">📝</span>Add Recipe</button>
+        <button id="nav-add-recipe" class="nav-btn"><span class="mr-1">📝</span>Add Recipe</button>
+        <button id="nav-shopping" class="nav-btn"><span class="mr-1">🛒</span>Shopping</button>
         <button id="nav-settings" class="nav-btn"><span class="lucide icon-settings"></span>Settings</button>
     </nav>
 
-    <main>
-        <section id="recipes-section" class="section"> 
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
-                 <h2 class="text-2xl font-semibold text-teal-800">Cocktail Recipes</h2>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+    <main id="main-content">
+        <div id="recipe-results-status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+        <section id="recipes-section" class="section">
+            <div class="mb-4 space-y-3">
+                <div class="flex items-center gap-2">
+                    <h2 class="text-2xl font-semibold text-teal-800 flex-grow">Cocktail Recipes</h2>
+                    <button id="surprise-btn" class="surprise-btn" title="Surprise Me!">🎲 Surprise Me</button>
+                </div>
+                <input type="search" id="recipe-search" placeholder="🔍 Search by name, ingredient, or category…" class="w-full rounded-lg border border-gray-300 shadow-sm text-sm px-3 py-2 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <div class="flex items-center flex-shrink-0">
                         <label for="makeable-toggle" class="mr-2 text-sm font-medium text-gray-700 whitespace-nowrap">Makeable Only</label>
                         <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
@@ -206,6 +351,13 @@
                             <input type="checkbox" name="almost-toggle" id="almost-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
                             <label for="almost-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
                         </div>
+                    </div>
+                    <div class="ml-auto flex items-center gap-1 flex-shrink-0">
+                        <label for="sort-select" class="text-xs text-gray-500 whitespace-nowrap">Sort:</label>
+                        <select id="sort-select" class="text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-teal-400 bg-white">
+                            <option value="alpha">A–Z</option>
+                            <option value="rating">⭐ Rating</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -238,7 +390,14 @@
             </form>
         </section>
 
-         <section id="settings-section" class="section hidden"> 
+        <section id="shopping-section" class="section hidden">
+            <h2 class="text-2xl font-semibold text-teal-800 mb-4">🛒 Shopping List</h2>
+            <div class="shopping-section-container">
+                <!-- content injected by JS -->
+            </div>
+        </section>
+
+         <section id="settings-section" class="section hidden">
              <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
             <div class="settings-section-container">
                 <!-- Settings content is the same as v2 -->
@@ -247,7 +406,7 @@
     </main>
 
     <footer class="mt-8 text-center text-xs text-gray-500 drop-shadow-sm">
-        <p>Tiki App v3.0.0</p> 
+        <p>Tiki App v3.2.0</p>
     </footer>
 
     <!-- Install and Update Banners -->
@@ -262,171 +421,41 @@
 
 
     <script>
-        // --- Constants (v3) ---
+        // === CONSTANTS ===
         const RECIPES_STORAGE_KEY = 'tikiRecipes_v3';
         const FAVORITES_STORAGE_KEY = 'tikiFavorites_v3';
         const CATEGORY_STATE_STORAGE_KEY = 'tikiCategoryState_v3';
-        const USER_INVENTORY_KEY = 'tikiUserInventory_v3'; // New key for inventory
+        const USER_INVENTORY_KEY = 'tikiUserInventory_v3';
+        const NOTES_KEY = 'tikiNotes_v3';
+        const HISTORY_KEY = 'tikiHistory_v3';
+        const CUSTOM_INGREDIENTS_KEY = 'tikiCustomIngredients_v3';
+        const SHOPPING_LIST_KEY = 'tikiShoppingList_v3';
+        const THEME_KEY = 'tikiTheme_v3';
         const USER_RECIPE_CATEGORY = 'User Added Recipes';
         const FAVORITES_CATEGORY_KEY = '__FAVORITES__';
 
-        // --- NEW: Master Ingredient Map (Generated from all 111 recipes) ---
-        const ingredientMap = {
-          "2:1 simple syrup": 1, "absinthe blanc": 2, "amaro averna": 3, "amaro di angostura": 4, "angostura bitters": 5, "apple brandy": 6, "aquavit": 7,
-          "batavia arrack": 8, "benedictine": 9, "bittermens 'elemakule tiki bitters": 10, "bittermens burlesque bitters": 11, "bittermens new orleans coffee liqueur": 12,
-          "bittermens xocolati (chocolate) mole bitters": 13, "black blended overproof rum": 14, "black blended rum": 15, "black pot still rum": 16,
-          "blandy's 5 year verdelho madeira": 17, "blended aged rum": 18, "blended aged rum (barbados)": 19, "blended aged rum (guyana)": 20,
-          "blended aged rum (jamaica)": 21, "blended lightly aged rum": 22, "blue curaçao": 23, "boiling water": 24, "bourbon": 25, "brandy": 26,
-          "brer rabbit mild molasses": 27, "broker's gin": 28, "bundaberg guava soda": 29, "campari": 30, "cane aoc martinique rhum agricole blanc": 31,
-          "cane aoc martinique rhum agricole vieux": 32, "cane coffey still aged rum": 33, "carbonated chai tea": 34, "champagne": 35, "cherry heering": 36,
-          "cherry heering liqueur": 37, "coconut milk": 38, "column still aged rum": 39, "column still lightly aged rum": 40, "drambuie": 41, "drambuie liqueur": 42,
-          "dry vermouth": 43, "egg white": 44, "fentimans victorian lemonade": 45, "fresh coconut water": 46, "fresh grapefruit juice": 47,
-          "fresh grapefruit juice (white or pink)": 48, "fresh lemon juice": 49, "fresh lime juice": 50, "fresh mint leaves": 51, "fresh orange juice": 52,
-          "fresh yellow or white peach": 53, "giffard banane du brésil banana liqueur": 54, "gin": 55, "ginger beer": 56, "ginger liqueur": 57,
-          "grade a maple syrup": 58, "green chartreuse": 59, "heavy whipping cream": 60, "herbsaint": 61, "herbstura": 62, "hot water": 63,
-          "john d. taylor's velvet falernum": 64, "lemon juice": 65, "leopold brothers rocky mountain blackberry liqueur": 66, "li hing mui syrup": 67,
-          "licor 43": 68, "licor 43 spiced liqueur": 69, "lime juice": 70, "london dry gin": 71, "luxardo maraschino liqueur": 72,
-          "maraschino liqueur": 73, "martinique sugarcane syrup": 74, "medium egg": 75, "mint leaves": 76, "napa wine syrup": 77, "natural apricot liqueur": 78,
-          "natural crème de cassis": 79, "natural peach liqueur": 80, "natural pear liqueur": 81, "oloroso sherry": 82, "orange bitters": 83,
-          "passion fruit puree": 84, "peruvian pisco": 85, "peychaud's bitters": 86, "pierre ferrand dry curaçao": 87, "pineapple chunks": 88,
-          "pineapple juice": 89, "pot still aged cachaça": 90, "pot still lightly aged rum": 91, "pot still lightly aged rum (new england)": 92,
-          "pot still lightly aged rum (overproof)": 93, "pot still unaged rum": 94, "punt e mes": 95, "r. l. seale 10 year rum": 96,
-          "real ginger ale": 97, "rum": 98, "rye": 99, "salted butter": 100, "sc cinnamon syrup": 101, "sc coconut cream": 102,
-          "sc demerara simple syrup": 103, "sc demerara syrup": 104, "sc grenadine": 105, "sc hibiscus liqueur": 106, "sc honey syrup": 107,
-          "sc hot buttered rum batter": 108, "sc jerk syrup": 109, "sc mai tai rich simple syrup": 110, "sc molasses syrup": 111, "sc orgeat": 112,
-          "sc orgeat syrup": 113, "sc passion fruit honey": 114, "sc passion fruit syrup": 115, "sc vanilla brandy": 116, "sc vanilla syrup": 117,
-          "seltzer": 118, "sloe gin": 119, "small hand foods raspberry gum syrup": 120, "sparkling wine": 121, "spruce beer soda extract": 122,
-          "st. elizabeth allspice dram": 123, "st. george raspberry liqueur": 124, "stiegl-radler grapefruit beer": 125, "sweet cream": 126,
-          "sweetened condensed milk": 127, "tawny port": 128, "tequila blanco": 129, "ting grapefruit soda": 130, "vanilla extract": 131,
-          "vodka": 132, "whole milk": 133, "wray & nephew white overproof rum": 134, "yellow chartreuse": 135, "zirbenz stone pine liqueur": 136
-        };
+        // === STATE ===
+        // Static data: loaded async from recipes.json
+        let ingredientMap = {};
+        let initialRecipesData = [];
 
-        // --- Initial Recipe Data (Stamped with ingredientIDs) ---
-        const initialRecipesData = [
-          {"id":"001","name":"Arrack Punch","category":"RUM THROUGH THE AGES","ingredients":["2 ounces fresh lemon juice","2 ounces fresh lime juice","3 ounces SC Demerara Syrup (page 324)","6 ounces Batavia arrack","2 ounces pot still lightly aged rum (overproof)","6 ounces Carbonated Chai Tea (see Note, following)"],"ingredientIDs":[49,50,104,8,93,34]},
-          {"id":"002","name":"El Draque","category":"RUM THROUGH THE AGES","ingredients":["5 fresh mint leaves","3/4 ounce SC Demerara Syrup (page 324)","3/4 ounce fresh lime juice","2 ounces pot still aged cachaça"],"ingredientIDs":[51,104,50,90]},
-          {"id":"003","name":"Grog","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","2 ounces rum (see Note, following)"],"ingredientIDs":[50,104,98]},
-          {"id":"004","name":"Rum Flip","category":"RUM THROUGH THE AGES","ingredients":["1 medium egg","1/4 ounce SC Demerara Syrup (page 324)","2 ounces blended aged rum"],"ingredientIDs":[75,104,18]},
-          {"id":"005","name":"Bombo","category":"RUM THROUGH THE AGES","ingredients":["1/4 ounce SC Demerara Syrup (page 324)","2 ounces blended aged rum"],"ingredientIDs":[104,18]},
-          {"id":"006","name":"Calibogus","category":"RUM THROUGH THE AGES","ingredients":["3 ounces seltzer","1/4 ounce fresh lime juice","3/4 ounce SC Molasses Syrup (page 327)","1 drop spruce beer soda extract (see Resources, page 335)","3/4 ounce Zirbenz Stone Pine liqueur","1 1/4 ounce blended aged rum"],"ingredientIDs":[118,50,111,122,136,18]},
-          {"id":"007","name":"Mary Pickford","category":"RUM THROUGH THE AGES","ingredients":["1 1/2 ounces pineapple juice","1 barspoon SC Grenadine (page 328)","6 drops Luxardo Maraschino liqueur","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[89,105,72,22]},
-          {"id":"008","name":"Daiquiri No. 1","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lime juice","1/2 ounce SC Demerara syrup (page 324)","2 ounces blended lightly aged rum"],"ingredientIDs":[50,104,22]},
-          {"id":"009","name":"Hotel Nacional Special","category":"RUM THROUGH THE AGES","ingredients":["3 or 4 (1-inch-square) pineapple chunks","3/4 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[88,50,104,78,22]},
-          {"id":"010","name":"Daisy de Santiago","category":"RUM THROUGH THE AGES","ingredients":["1 ounce fresh lime juice","1 1/2 teaspoons SC Demerara Syrup (page 324)","1 ounce seltzer","1/2 ounce Yellow Chartreuse","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[50,104,118,135,22]},
-          {"id":"011","name":"El Presidente","category":"RUM THROUGH THE AGES","ingredients":["1/4 teaspoon SC Grenadine (page 328)","3/4 ounce dry vermouth","1/2 ounce Pierre Ferrand Dry Curaçao","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[105,43,87,22]},
-          {"id":"012","name":"Twelve Mile Limit","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce SC Grenadine (page 328)","1 ounce blended lightly aged rum","1/2 ounce rye","1/2 ounce brandy"],"ingredientIDs":[49,105,22,99,26]},
-          {"id":"013","name":"Parisian Blonde","category":"RUM THROUGH THE AGES","ingredients":["1 ounce Pierre Ferrand Dry Curaçao","1 ounce blended aged rum","1 ounce sweet cream (see Note, following)"],"ingredientIDs":[87,18,126]},
-          {"id":"014","name":"Cora Middleton","category":"RUM THROUGH THE AGES","ingredients":["2 teaspoons egg white","2 ounces blended aged rum","3/4 ounce fresh lime juice","1/4 ounce SC Demerara Syrup (page 324)","1/2 ounce Small Hand Foods Raspberry Gum Syrup"],"ingredientIDs":[44,18,50,104,120]},
-          {"id":"015","name":"Millionaire Cocktail (No. 1)","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lime juice","1 dash SC Grenadine (page 328)","3/4 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","3/4 ounce black pot still rum (see page 198) or blended aged rum","3/4 ounce sloe gin"],"ingredientIDs":[50,105,78,16,119]},
-          {"id":"016","name":"Batida de Maracujá e Coco","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce passion fruit puree","2 ounces coconut milk","1 ounce pot still aged cachaça (see page 199)","1 ounce sweetened condensed milk"],"ingredientIDs":[84,38,90,127]},
-          {"id":"017","name":"Wray & Ting","category":"RUM THROUGH THE AGES","ingredients":["1 1/2 ounces Wray & Nephew White Overproof Rum","4 ounces Ting grapefruit soda"],"ingredientIDs":[134,130]},
-          {"id":"018","name":"Hibiscus Rum Punch","category":"RUM THROUGH THE AGES","ingredients":["2 ounces seltzer","1/2 ounce fresh lime juice","1 ounce SC Hibiscus Liqueur (see page 331)","1 1/2 ounces blended aged rum (Jamaica)","1/3 ounce SC Demerara Syrup (page 324)"],"ingredientIDs":[118,50,106,21,104]},
-          {"id":"019","name":"TI' PUNCH / TI' PUNCH VIEUX","category":"RUM THROUGH THE AGES","ingredients":["1 teaspoon Martinique sugarcane syrup","2 ounces cane AOC Martinique rhum agricole blanc (substitute an élevé sous bois, or rhum vieux for a Ti' Punch Vieux)","1 small rounded chunk of fresh lime (cut from the side of the lime, approximately the size of a quarter, with some pulp attached)"],"ingredientIDs":[74,31,50]},
-          {"id":"020","name":"Barbados Rum Punch","category":"RUM THROUGH THE AGES","ingredients":["1 ounce fresh lime juice","1 ounce SC Demerara Syrup (page 324)","2 ounces blended aged rum (Barbados)","1 dash Angostura bitters"],"ingredientIDs":[50,104,19,5]},
-          {"id":"021","name":"Jamaican Milk Punch","category":"RUM THROUGH THE AGES","ingredients":["1 ounce whole milk","1 ounce heavy whipping cream","3/4 ounce SC Demerara Syrup (page 324)","1 ounce black blended rum (Jamaica)","6 drops vanilla extract","1 dash Angostura bitters"],"ingredientIDs":[133,60,104,15,131,5]},
-          {"id":"022","name":"Corn and Oil","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce John D. Taylor's Velvet Falernum","2 ounces blended aged rum (Barbados)","2 to 4 dashes Angostura bitters"],"ingredientIDs":[64,19,5]},
-          {"id":"023","name":"Queen's Park Swizzle","category":"RUM THROUGH THE AGES","ingredients":["4 mint leaves","1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","2 ounces black blended rum","2 dashes Angostura bitters"],"ingredientIDs":[76,50,104,15,5]},
-          {"id":"024","name":"The Chadburn","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce tawny port","1/2 ounce natural pear liqueur (such as Mathilde Poire)","2 ounces blended aged rum","6 drops Bittermens Xocolati (Chocolate) Mole bitters"],"ingredientIDs":[128,81,18,13]},
-          {"id":"025","name":"A Wish for Grace","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce 2:1 Simple Syrup (page 324)","1/2 ounce Pierre Ferrand Dry Curaçao","1 1/2 ounces pot still lightly aged rum (New England)","1/4 ounce Blandy's 5 Year Verdelho Madeira","1 dash Angostura bitters"],"ingredientIDs":[49,1,87,92,17,5]},
-          {"id":"026","name":"Hot Buttered Rum","category":"RUM THROUGH THE AGES","ingredients":["3 barspoons SC Hot Buttered Rum Batter (recipe follows)","1 1/2 ounces blended aged rum","6 ounces hot water"],"ingredientIDs":[108,18,63]},
-          {"id":"027","name":"SC Hot Buttered Rum Batter","category":"RUM THROUGH THE AGES","ingredients":["1 teaspoon freshly ground cinnamon","1 teaspoon freshly ground nutmeg","1 teaspoon freshly ground black pepper","3/4 teaspoon ground cloves","1/2 teaspoon ground allspice","1/2 teaspoon ground anise seed","2 cups salted butter","4 cups packed golden brown sugar","2 tablespoons Brer Rabbit Mild Molasses","1 teaspoon vanilla extract"],"ingredientIDs":[100,27,131]},
-          {"id":"028","name":"Abricot Vieux","category":"RUM THROUGH THE AGES","ingredients":["1 1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","2 ounces cane AOC Martinique rhum agricole vieux","1 dash Angostura bitters","1 dash orange bitters"],"ingredientIDs":[78,32,5,83]},
-          {"id":"029","name":"Paniolo Old-Fashioned","category":"RUM THROUGH THE AGES","ingredients":["1 teaspoon Li Hing Mui Syrup (page 332)","2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[67,18,5]},
-          {"id":"030","name":"Port Royal","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lime juice","3/4 ounce SC Jerk Syrup (page 329)","1 1/2 ounces blended lightly aged rum","1/2 ounce Wray & Nephew white overproof rum","5 drops SC Hellfire Tincture (page 332)"],"ingredientIDs":[50,109,22,134]},
-          {"id":"031","name":"Kingston Palaka","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lemon juice","1/4 teaspoon li hing mui powder (see Resources, page 335)","1 ounce Drambuie","1 1/2 ounces blended aged rum (Jamaica)"],"ingredientIDs":[49,41,21]},
-          {"id":"032","name":"Donn Day Afternoon","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Cinnamon Syrup (page 327)","4 ounces chilled Stiegl-Radler Grapefruit Beer","2 ounces cane AOC Martinique rhum agricole blanc"],"ingredientIDs":[50,101,125,31]},
-          {"id":"033","name":"Baie du Galion","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce Green Chartreuse","1/4 ounce Drambuie","2 ounces cane AOC Martinique rhum agricole blanc"],"ingredientIDs":[59,41,31]},
-          {"id":"034","name":"Agricole Guava Cooler","category":"RUM THROUGH THE AGES","ingredients":["2 ounces Bundaberg guava soda","3/4 ounce fresh lime juice","3/4 ounce Licor 43 spiced liqueur","2 ounces cane AOC Martinique rhum agricole blanc","2 dashes Angostura bitters"],"ingredientIDs":[29,50,69,31,5]},
-          {"id":"035","name":"Richard Sealebach","category":"RUM THROUGH THE AGES","ingredients":["1/2 ounce Pierre Ferrand Dry Curaçao","1 ounce R. L. Seale 10 Year rum","7 dashes Angostura bitters","7 dashes Peychaud's bitters","4 ounces chilled champagne"],"ingredientIDs":[87,96,5,86,35]},
-          {"id":"036","name":"Cosa Nostra #2","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lemon juice","1 1/2 ounces Amaro Averna","1 ounce blended lightly aged rum","1 dash Angostura bitters","2 ounces real ginger ale"],"ingredientIDs":[49,3,22,5,97]},
-          {"id":"037","name":"Spontaneous Rumbustion","category":"RUM THROUGH THE AGES","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce SC Honey Syrup (page 325)","1 1/2 ounces black blended overproof rum","1/2 ounce pot still lightly aged rum (overproof)","4 ounces boiling water"],"ingredientIDs":[49,107,14,93,24]},
-          {"id":"038","name":"AKU AKU","category":"THE BIRTH OF TIKI","ingredients":["5 (1-inch-square) chunks fresh pineapple","8 mint leaves","1 ounce fresh lime juice","Scant 1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce natural peach liqueur (such as Mathilde, Combier, or Giffard)","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[88,76,50,104,80,22]},
-          {"id":"039","name":"PUPULE","category":"THE BIRTH OF TIKI","ingredients":["Spiral-cut orange peel","3/4 ounce fresh lime juice","3/4 ounce fresh orange juice","1/4 ounce SC Cinnamon Syrup (page 327)","1/4 ounce SC Vanilla Syrup (page 326)","1/4 ounce St. Elizabeth Allspice Dram","2 ounces column still aged rum","1 dash Angostura bitters"],"ingredientIDs":[50,52,101,117,123,39,5]},
-          {"id":"040","name":"DON'S OWN GROG","category":"THE BIRTH OF TIKI","ingredients":["3/4 ounce fresh lime juice","1/4 ounce SC Demerara Syrup (page 324)","1 dash SC Grenadine (page 328)","1/2 ounce Leopold Brothers Rocky Mountain Blackberry Liqueur","1 ounce blended aged rum","1/2 ounce blended lightly aged rum","1/2 ounce black blended rum","1 dash Angostura bitters"],"ingredientIDs":[50,104,105,66,18,22,15,5]},
-          {"id":"041","name":"PORT AU PRINCE","category":"THE BIRTH OF TIKI","ingredients":["1/2 ounce fresh lime juice","1/2 ounce pineapple juice","1/4 ounce SC Demerara Syrup (page 324)","1 dash SC Grenadine (page 328)","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces cane coffey still aged rum (see page 199)","1 dash Angostura bitters"],"ingredientIDs":[50,89,104,105,64,33,5]},
-          {"id":"042","name":"Three Dots and a Dash","category":"THE BIRTH OF TIKI","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh orange juice","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce John D. Taylor's Velvet Falernum","1/4 ounce St. Elizabeth Allspice Dram","1 1/2 ounces cane AOC Martinique rhum agricole vieux","1/2 ounce blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[50,52,107,64,123,32,18,5]},
-          {"id":"043","name":"Mexican El Diablo","category":"THE BIRTH OF TIKI","ingredients":["1 lime wedge","1/2 ounce fresh lime juice","1/2 ounce natural crème de cassis","1 1/2 ounces blanco tequila","4 ounces real ginger ale"],"ingredientIDs":[50,79,129,97]},
-          {"id":"044","name":"Port Light","category":"THE BIRTH OF TIKI","ingredients":["1 ounce egg white","2 ounces bourbon","1 ounce fresh lemon juice","3/4 ounce SC Honey Syrup (page 325)","1/2 ounce SC Passion Fruit Syrup (page 325)"],"ingredientIDs":[44,25,49,107,115]},
-          {"id":"045","name":"Demerara Dry Float","category":"THE BIRTH OF TIKI","ingredients":["3/4 ounce black blended overproof rum","2 ounces fresh lime juice","1 teaspoon fresh lemon juice","1 1/2 ounces SC Passion Fruit Syrup (page 325)","1/4 ounce SC Demerara Syrup (page 324)","1/4 ounce Luxardo Maraschino liqueur","1 1/2 ounces blended aged rum"],"ingredientIDs":[14,50,49,115,104,72,18]},
-          {"id":"046","name":"Jet Pilot","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce John D. Taylor's Velvet Falernum","1 ounce black blended rum","3/4 ounce blended aged rum","3/4 ounce black blended overproof rum","1 dash Herbstura (page 228)"],"ingredientIDs":[50,47,101,64,15,18,14,62]},
-          {"id":"047","name":"Halekulani Cocktail","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce fresh orange juice","1/2 ounce pineapple juice","1/4 ounce SC Demerara Syrup (page 324)","1/2 teaspoon SC Grenadine (page 328)","1 1/2 ounces bourbon","1 dash Angostura bitters"],"ingredientIDs":[49,52,89,104,105,25,5]},
-          {"id":"048","name":"Sidewinder's Fang","category":"THE GOLDEN ERA","ingredients":["Sidewinder's Fang peel (see page 242)","1 1/2 ounces fresh lime juice","1 1/2 ounces fresh orange juice","1 1/2 ounces SC Passion Fruit Syrup (page 325)","3 ounces seltzer","1 ounce blended aged rum","1 ounce black blended rum"],"ingredientIDs":[50,52,115,118,18,15]},
-          {"id":"049","name":"Hawaiian Sunset","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh lemon juice","1/2 ounce SC Orgeat (page 330)","1 teaspoon SC Grenadine (page 328)","1 1/2 ounces vodka"],"ingredientIDs":[50,49,112,105,132]},
-          {"id":"050","name":"Captain's Grog","category":"THE GOLDEN ERA","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/2 ounce grade A maple syrup","3 drops pure vanilla extract","3 drops pure almond extract","1 ounce seltzer","1/2 ounce John D. Taylor's Velvet Falernum","1/2 ounce Pierre Ferrand Dry Curaçao","3/4 ounce black blended rum","3/4 ounce blended lightly aged rum","3/4 ounce blended aged rum"],"ingredientIDs":[50,47,58,131,118,64,87,15,22,18]},
-          {"id":"051","name":"Suffering Bastard","category":"THE GOLDEN ERA","ingredients":["4 ounces ginger beer","1/2 ounce fresh lime juice","1/4 ounce SC Demerara Syrup (page 324)","1 ounce London dry gin","1 ounce brandy","2 dashes Angostura bitters"],"ingredientIDs":[56,50,104,71,26,5]},
-          {"id":"052","name":"Merciless Virgin","category":"THE GOLDEN ERA","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce seltzer","1/2 ounce Cherry Heering liqueur","1/2 ounce John D. Taylor's Velvet Falernum","1/4 ounce Pierre Ferrand Dry Curaçao","1 1/2 ounces blended lightly aged rum"],"ingredientIDs":[49,118,37,64,87,22]},
-          {"id":"053","name":"Saturn","category":"THE GOLDEN ERA","ingredients":["3/4 ounce fresh lemon juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/4 ounce SC Orgeat (page 330)","1/4 ounce John D. Taylor's Velvet Falernum","1 1/4 ounce London dry gin"],"ingredientIDs":[49,115,112,64,71]},
-          {"id":"054","name":"TIKI BOWL","category":"THE GOLDEN ERA","ingredients":["1 1/2 ounces fresh orange juice","3/4 ounce fresh lime juice","1 ounce SC Honey Syrup (page 325)","1 1/2 ounce black blended rum","1 ounce black blended overproof rum","1 ounce column still aged rum","2 dashes Herbstura (page 228)"],"ingredientIDs":[52,50,107,15,14,39,62]},
-          {"id":"055","name":"Hurricane","category":"THE GOLDEN ERA","ingredients":["2 ounces fresh lemon juice","2 ounces SC Passion Fruit Syrup (page 325)","4 ounces black blended rum"],"ingredientIDs":[49,115,15]},
-          {"id":"056","name":"Mundo Perdido","category":"THE TIKI REVIVAL","ingredients":["3/4 ounce fresh lemon juice","1/4 ounce SC Cinnamon Syrup (page 327)","1/4 ounce SC Demerara Syrup (page 324)","1/2 ounce apple brandy","1 1/2 ounces black blended rum"],"ingredientIDs":[49,101,104,6,15]},
-          {"id":"057","name":"Formidable Dragon","category":"THE TIKI REVIVAL","ingredients":["3/4 ounce fresh lemon juice","3/4 ounce fresh lime juice","1/2 ounce SC Honey Syrup (page 325)","3/4 ounce SC Molasses Syrup (page 327)","1/2 ounce Amaro Di Angostura","1 1/2 ounces blended aged rum","1 ounce black blended rum","1/4 ounce pot still lightly aged rum (overproof)","1 ounce seltzer"],"ingredientIDs":[49,50,107,111,4,18,15,93,118]},
-          {"id":"058","name":"LEI LANI VOLCANO 2.0 (Α.Κ.Α. LEI LANI NOUVEAU)","category":"THE TIKI REVIVAL","ingredients":["3 ounces Bundaberg Guava soda","1 1/2 ounces pineapple juice","3/4 ounce lime juice","1 ounce SC Coconut Cream (page 328)","1 1/2 ounces blended aged rum"],"ingredientIDs":[29,89,70,102,18]},
-          {"id":"059","name":"Tradewinds","category":"THE TIKI REVIVAL","ingredients":["1 ounce fresh lemon juice","1 1/2 ounces SC Coconut Cream (page 328)","1 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 ounce black blended rum","1 ounce blended lightly aged rum"],"ingredientIDs":[49,102,78,15,22]},
-          {"id":"060","name":"Peachtree Punch 2.0","category":"THE TIKI REVIVAL","ingredients":["1/2 fresh yellow or white peach, pitted, and coarsely chopped into chunks (with skin)","3 ounces fresh orange juice","1/2 ounce fresh lemon juice","1 ounce SC Coconut Cream (page 328)","1/4 ounce natural peach liqueur (such as Mathilde Peach or Combier Crème de Pêche de Vigne)","2 ounces blended lightly aged rum","1 ounce seltzer"],"ingredientIDs":[53,52,49,102,80,22,118]},
-          {"id":"061","name":"Jungle Bird","category":"THE TIKI REVIVAL","ingredients":["2 ounces pineapple juice","1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","3/4 ounce Campari","1 1/2 ounces black blended rum"],"ingredientIDs":[89,50,104,30,15]},
-          {"id":"062","name":"Golden Gun","category":"THE TIKI REVIVAL","ingredients":["3/4 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 ounce blended aged rum","1 ounce blended lightly aged rum","2 dashes Angostura bitters"],"ingredientIDs":[50,47,104,78,18,22,5]},
-          {"id":"063","name":"Hinky Dinks Fizzy","category":"THE TIKI REVIVAL","ingredients":["2 ounces sparkling wine","1 1/2 ounces pineapple juice","1/2 ounce fresh lime juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","1 ounce London dry gin","1 ounce blended lightly aged rum"],"ingredientIDs":[121,89,50,115,78,71,22]},
-          {"id":"064","name":"Pampanito","category":"CREATING THE SPACE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Molasses Syrup (page 327)","2 1/2 ounces seltzer","1/4 ounce St. Elizabeth Allspice Dram","1 1/2 ounces black blended rum","1 dash Angostura bitters"],"ingredientIDs":[49,111,118,123,15,5]},
-          {"id":"065","name":"Max's Mistake","category":"CREATING THE SPACE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce SC Honey Syrup (page 325)","2 ounces London dry gin","1 dash Angostura bitters","2 ounces Fentimans Victorian Lemonade (or any quality dry sparkling lemonade)"],"ingredientIDs":[49,115,107,71,5,45]},
-          {"id":"066","name":"La Guildive","category":"CREATING THE SPACE","ingredients":["1 ounce ginger beer","1/2 ounce fresh lime juice","1/2 ounce Licor 43","1/2 ounce natural peach liqueur (such as Mathilde Peach or Combier Crème de Pêche de Vigne)","2 ounces blended aged rum","Pinch of freshly grated cinnamon"],"ingredientIDs":[56,50,68,80,18]},
-          {"id":"067","name":"The Twenty Seventy Swizzle","category":"CREATING THE SPACE","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce St. Elizabeth Allspice Dram","1 ounce column still aged rum","1 ounce black blended overproof rum","1 dash Herbstura (page 228)","Pinch of freshly grated nutmeg"],"ingredientIDs":[50,104,107,123,39,14,62]},
-          {"id":"068","name":"Shudders in a Whisper","category":"CREATING THE SPACE","ingredients":["3/4 ounce fresh lime juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce natural pear liqueur (such as Mathilde Poire)","1/4 ounce Drambuie liqueur","2 ounces seltzer","2 ounces column still aged rum","2 dashes Peychaud's bitters","1 dash Angostura bitters"],"ingredientIDs":[50,115,81,42,118,39,86,5]},
-          {"id":"069","name":"Cuevas","category":"CREATING THE SPACE","ingredients":["1/4 ounce SC Cinnamon Syrup (page 327)","1/2 ounce Punt e Mes","1/4 ounce tawny port","2 ounces blended aged rum","6 drops Bittermens 'Elemakule Tiki bitters"],"ingredientIDs":[101,95,128,18,10]},
-          {"id":"070","name":"Norwegian Paralysis","category":"CREATING THE SPACE","ingredients":["1 1/2 ounces fresh orange juice","1 1/2 ounces pineapple juice","1/2 ounce fresh lemon juice","1/4 ounce SC Demerara Syrup (page 324)","1/4 ounce SC Orgeat (page 330)","1 1/2 ounces aquavit"],"ingredientIDs":[52,89,49,104,112,7]},
-          {"id":"071","name":"Juan Ho Royale","category":"CREATING THE SPACE","ingredients":["2 ounces champagne or sparkling wine","3/4 ounce fresh lime juice","1/2 ounce SC Orgeat (page 330)","1/2 ounce blue curaçao","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces tequila blanco"],"ingredientIDs":[35,50,112,23,64,129]},
-          {"id":"072","name":"Chartreuse Swizzle","category":"CREATING THE SPACE","ingredients":["1 ounce pineapple juice","3/4 ounce fresh lime juice","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces Green Chartreuse"],"ingredientIDs":[89,50,64,59]},
-          {"id":"073","name":"Roselita","category":"CREATING THE SPACE","ingredients":["1 1/2 ounces seltzer","1/2 ounce fresh lime juice","1/2 ounce SC Orgeat (page 330)","1/2 ounce SC Hibiscus Liqueur (page 331)","1/2 ounce natural pear liqueur (such as Mathilde Poire)","1 1/2 ounces column still aged rum","1 dash Peychaud's bitters"],"ingredientIDs":[118,50,112,106,81,39,86]},
-          {"id":"074","name":"Center of the Galaxy","category":"CREATING THE SPACE","ingredients":["1/2 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce SC Honey Syrup (page 325)","1/2 ounce St. George Raspberry Liqueur","2 ounces blended aged rum","Pinch of freshly ground cinnamon"],"ingredientIDs":[50,104,107,124,18]},
-          {"id":"075","name":"Callaloo Cooler","category":"CREATING THE SPACE","ingredients":["1 ounce seltzer","1/2 ounce fresh lime juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce Cherry Heering","2 ounces blended lightly aged rum","1 dash Angostura bitters"],"ingredientIDs":[118,50,101,36,22,5]},
-          {"id":"076","name":"Top Notch Volcano","category":"CURATING THE EXPERIENCE","ingredients":["4 ounces fresh lime juice","4 ounces pineapple juice","1 ounce passion fruit puree","3 ounces SC Demerara Syrup (page 324)","1 ounce Luxardo Maraschino liqueur","4 ounces blended lightly aged rum","4 ounces blended aged rum"],"ingredientIDs":[50,89,84,104,72,22,18]},
-          {"id":"077","name":"The Naked Ape","category":"CURATING THE EXPERIENCE","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce Giffard Banane du Brésil banana liqueur","1 1/2 ounces black blended rum","1/2 ounce pot still lightly aged rum (overproof)","1 dash Angostura bitters"],"ingredientIDs":[49,101,54,15,93,5]},
-          {"id":"078","name":"Swizzle Français","category":"CURATING THE EXPERIENCE","ingredients":["1 1/2 ounce fresh lime juice","1/2 ounce Martinique sugarcane syrup","1/4 ounce St. Elizabeth Allspice Dram","2 ounces cane AOC Martinique rhum agricole vieux","Pinch of fresh ground nutmeg"],"ingredientIDs":[50,74,123,32]},
-          {"id":"079","name":"Sparkling Mai Tai","category":"CURATING THE EXPERIENCE","ingredients":["1/4 ounce fresh lime juice","1/4 ounce SC Orgeat (page 330)","1/2 ounce Pierre Ferrand Dry Curaçao","1/4 ounce black blended overproof rum","1/2 ounce blended aged rum","4 ounces chilled sparkling wine"],"ingredientIDs":[50,112,87,14,18,121]},
-          {"id":"080","name":"The Ernesto","category":"CURATING THE EXPERIENCE","ingredients":["2 ounces Ting grapefruit soda","1 ounce fresh lime juice","1 ounce SC Honey Syrup (page 325)","1/2 ounce natural apricot liqueur (such as Rothman & Winter Apricot Liqueur or Giffard Abricot du Roussillon)","2 ounces tequila blanco","1 dash Herbstura (page 228)"],"ingredientIDs":[130,50,107,78,129,62]},
-          {"id":"081","name":"The Sexpert","category":"CURATING THE EXPERIENCE","ingredients":["1/2 ounce fresh lemon juice","1/2 ounce SC Passion Fruit Syrup (page 325)","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces Peruvian pisco","1/2 ounce gin","6 drops Bittermens Burlesque bitters"],"ingredientIDs":[49,115,64,85,55,11]},
-          {"id":"082","name":"Smuggler's Rum Barrel","category":"CURATING THE EXPERIENCE","ingredients":[],"ingredientIDs":[]},
-          {"id":"083","name":"Hana Reviver","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Passion Fruit Honey (page 325)","1/4 barspoon li hing mui powder (see Resources, page 335)","2 ounces seltzer","1 barspoon Maraschino liqueur","2 ounces pot still unaged rum (see page 197)"],"ingredientIDs":[49,114,118,73,94]},
-          {"id":"084","name":"Kaiteur Swizzle","category":"CURATING THE EXPERIENCE","ingredients":["3/4 ounce fresh lime juice","1/2 ounce Grade A maple syrup","1/2 ounce John D. Taylor's Velvet Falernum","2 ounces blended aged rum (Guyana)","2 dashes Angostura bitters"],"ingredientIDs":[50,58,64,20,5]},
-          {"id":"085","name":"The Expedition","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce fresh lime juice","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce SC Vanilla Syrup (page 326)","2 ounces seltzer","1/4 ounce Bittermens New Orleans Coffee Liqueur","2 ounces black blended rum","1 ounce bourbon"],"ingredientIDs":[50,101,107,117,118,12,15,25]},
-          {"id":"086","name":"The Undead Gentleman","category":"CURATING THE EXPERIENCE","ingredients":["1 dash absinthe blanc","1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice (white or pink)","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce John D. Taylor's Velvet Falernum","1 ounce black blended overproof rum","1 1/2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[2,50,48,101,64,14,18,5]},
-          {"id":"087","name":"The Dead Reckoning","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce seltzer","1 ounce fresh lemon juice","1 ounce pineapple juice","1/2 ounce Grade A maple syrup","1/2 ounce SC Vanilla Brandy (see Note, following)","1/2 ounce tawny port","2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[118,49,89,58,116,128,18,5]},
-          {"id":"088","name":"Falinum","category":"CURATING THE EXPERIENCE","ingredients":["1 ounce fresh lemon juice","1 ounce SC Coconut Cream (page 328)","1 ounce seltzer","1/2 ounce John D. Taylor's Velvet Falernum","2 ounces column still aged rum","1 dash orange bitters"],"ingredientIDs":[49,102,118,64,39,83]},
-          {"id":"089","name":"Humuhumunukunukuapua'a","category":"CURATING THE EXPERIENCE","ingredients":["3/4 ounce fresh lemon juice","3/4 ounce pineapple juice","1/2 ounce SC Orgeat (page 330)","2 ounces gin","2 dashes Peychaud's bitters"],"ingredientIDs":[49,89,112,55,86]},
-          {"id":"090","name":"Finkelgrog","category":"CURATING THE EXPERIENCE","ingredients":["1/2 ounce fresh lime juice","1/2 ounce fresh grapefruit juice","1/4 ounce SC Orgeat (page 330)","1/2 ounce Napa Wine Syrup (see Note, following)","1/2 ounce Licor 43","1 ounce blended lightly aged rum","1 ounce black blended rum","1 ounce seltzer","Pinch of freshly ground cinnamon"],"ingredientIDs":[50,47,112,77,68,22,15,118]},
-          {"id":"091","name":"For Pete's Sake","category":"CURATING THE EXPERIENCE","ingredients":["3/4 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/2 ounce SC Hibiscus Liqueur (page 331)","1/2 ounce Cherry Heering","1 1/2 ounces Peruvian pisco","1 dash Angostura bitters"],"ingredientIDs":[50,104,106,36,85,5]},
-          {"id":"092","name":"Boo Loo","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["6 (1-inch-square) chunks fresh pineapple","2 1/2 ounces pineapple juice","1 1/2 ounces fresh lime juice","1 1/4 ounces SC Honey Syrup (page 325)","1 1/2 ounces blended aged rum","1 1/2 ounces column still aged rum","3/4 ounce black blended rum","3/4 ounce black blended overproof rum","1 1/2 ounces seltzer"],"ingredientIDs":[88,89,50,107,18,39,15,14,118]},
-          {"id":"093","name":"Caribeño","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["4 ounces coconut water","1/4 ounce SC Demerara Syrup (page 324)","2 ounces column still lightly aged rum (see page 198) or London dry gin"],"ingredientIDs":[104,40]},
-          {"id":"094","name":"Monk's Respite","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["3 ounces fresh coconut water","1/2 ounce fresh lemon juice","1/4 ounce SC Honey Syrup (page 325)","1/4 ounce Yellow Chartreuse","1 1/2 ounces Broker's gin","1 ounce seltzer","1 dash orange bitters"],"ingredientIDs":[46,49,107,135,28,118,83]},
-          {"id":"095","name":"The Mastadon","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["3 ounces pineapple juice","1/2 ounce fresh lime juice","1 ounce passion fruit puree","1/2 ounce Licor 43","1/2 ounce Maraschino liqueur","1 1/2 ounces blended aged rum","1 1/2 ounces bourbon","2 dashes Peychaud's bitters"],"ingredientIDs":[89,50,84,68,73,18,25,86]},
-          {"id":"096","name":"Piñata","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["3 ounces pineapple juice","1 ounce fresh lemon juice","1/4 to 1/2 ounce SC Demerara Syrup (page 324)","1 ounce ginger liqueur","1/4 ounce St. Elizabeth Allspice Dram","1 ounce black blended rum","1 ounce blended lightly aged rum"],"ingredientIDs":[89,49,104,57,123,15,22]},
-          {"id":"097","name":"Bumboat","category":"THE THEATER OF THE EXOTIC COCKTAIL","ingredients":["2 ounces pineapple juice","1 1/2 ounces fresh lemon juice","3/4 ounce SC Cinnamon Syrup (page 327)","1 ounce rye","1 ounce blended lightly aged rum","3 drops almond extract","6 drops Bittermens 'Elemakule Tiki bitters","3/4 ounce black blended overproof rum"],"ingredientIDs":[89,49,101,99,22,10,14]},
-          {"id":"098","name":"Planter's Punch","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["1 ounce fresh lime juice","3/4 ounce SC Demerara syrup (page 324)","1/4 ounce St. Elizabeth Allspice Dram","3 ounces blended aged rum (Jamaica)","2 dashes Angostura bitters"],"ingredientIDs":[50,104,123,21,5]},
-          {"id":"099","name":"Mai Tai","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["3/4 ounce fresh lime juice","1/4 ounce SC Mai Tai Rich Simple Syrup (page 326)","1/4 ounce SC orgeat syrup (page 330)","1/2 ounce Pierre Ferrand dry curaçao","2 ounces blended aged rum (see pages 262-64 for details)"],"ingredientIDs":[50,110,113,87,18]},
-          {"id":"100","name":"Doctor Funk","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["1/2 ounce fresh lemon juice","1/4 ounce SC Grenadine (page 328)","1/2 ounce fresh lime juice","1/2 ounce SC Demerara Simple Syrup (page 324)","1/4 ounce Herbsaint","2 1/4 ounce black pot still rum (see page 198)","1 ounce seltzer"],"ingredientIDs":[49,105,50,103,61,16,118]},
-          {"id":"101","name":"Zombie","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["3/4 ounce fresh lime juice","1/4 ounce fresh grapefruit juice","1/4 ounce SC Cinnamon Syrup (page 327)","1 teaspoon SC Grenadine (page 328)","1/2 ounce John D. Taylor's Velvet Falernum","1 1/2 ounces blended aged rum","1 1/2 ounces column still aged rum","1 ounce black blended overproof rum","2 dashes Herbstura"],"ingredientIDs":[50,47,101,105,64,18,39,14,62]},
-          {"id":"102","name":"Navy Grog","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["3/4 ounce fresh lime juice","3/4 ounce fresh grapefruit juice","1/4 ounce SC Demerara syrup (page 324)","1/4 ounce St. Elizabeth Allspice Dram","1 ounce pot still lightly aged (overproof) rum","1 ounce blended lightly aged rum","1 ounce column still aged rum"],"ingredientIDs":[50,47,104,123,91,22,39]},
-          {"id":"103","name":"Scorpion","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["2 ounces fresh lime juice","4 ounces fresh orange juice","1 1/2 ounces SC Demerara syrup (page 324)","2 ounces SC Orgeat (page 330)","2 ounces brandy","4 ounces London Dry Gin","4 ounces blended lightly aged rum"],"ingredientIDs":[50,52,104,112,26,71,22]},
-          {"id":"104","name":"Fog Cutter","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["1 1/2 ounce fresh lemon juice","1 1/2 ounce fresh orange juice","1/2 ounce SC Orgeat (page 330)","1 ounce pisco","1/2 ounce gin","2 ounces blended lightly aged rum","1/2 ounce oloroso sherry"],"ingredientIDs":[49,52,112,85,55,22,82]},
-          {"id":"105","name":"Singapore Sling","category":"EIGHT ESSENTIAL EXOTIC ELIXIRS","ingredients":["2 ounces seltzer","3/4 ounce fresh lemon juice","1/4 ounce SC Demerara Syrup (page 324)","1/2 ounce Cherry Heering liqueur","1/4 ounce Benedictine","1 1/2 ounce London Dry Gin","1 dash Angostura bitters","1 dash orange bitters"],"ingredientIDs":[118,49,104,37,9,71,5,83]},
-          {"id":"106","name":"HONDO HATTIE'S JUNGLE PUNCH!","category":"THE TIKI PARTY","ingredients":["1 ounce fresh lemon juice","1/2 ounce SC Honey Syrup (page 325)","1/4 ounce blue curaçao","1/4 ounce tawny port","1/2 ounce John D. Taylor's Velvet Falernum","1/4 ounce natural pear liqueur (such as Mathilde Poire)","2 ounces blended aged rum","1 dash Angostura bitters"],"ingredientIDs":[49,107,23,128,64,81,18,5]},
-          {"id":"107","name":"Kahiko Punch","category":"THE TIKI PARTY","ingredients":["1 ounce fresh lemon juice","1 1/2 ounces SC Passion Fruit Honey (page 325)","1/2 ounce SC Cinnamon Syrup (page 327)","1/2 ounce SC Hibiscus Liqueur (page 331)","2 ounces pot still unaged rum (see page 197)","6 drops Bittermans 'Elemakule Tiki bitters"],"ingredientIDs":[49,114,101,106,94,10]},
-          {"id":"108","name":"Triumvirate Punch","category":"THE TIKI PARTY","ingredients":["3/4 ounce fresh lime juice","1 ounce SC Passion Fruit Honey (page 325)","1/4 ounce St. Elizabeth Allspice Dram","1 1/2 ounces pot still unaged rum (see page 197)","2 dashes Angostura bitters","Pinch of freshly grated nutmeg"],"ingredientIDs":[50,114,123,94,5]},
-          {"id":"109","name":"Eureka Punch","category":"THE TIKI PARTY","ingredients":["1 1/2 ounces fresh lemon juice","1 ounce SC Honey Syrup (page 325)","1/2 ounce Yellow Chartreuse","1 1/2 ounces column still aged rum","1 dash Angostura bitters","2 ounces real ginger ale"],"ingredientIDs":[49,107,135,39,5,97]},
-          {"id":"110","name":"Yuletidal Wave","category":"THE TIKI PARTY","ingredients":["2 ounces pineapple juice","1 ounce fresh lemon juice","1/2 ounce natural pear liqueur (such as Mathilde Poire)","1/2 ounce Licor 43","1/4 ounce St. Elizabeth Allspice Dram","1/2 ounce brandy","1 ounce bourbon","1 ounce column still aged rum"],"ingredientIDs":[89,49,81,68,123,26,25,39]},
-          {"id":"111","name":"Rumbustion Punch","category":"THE TIKI PARTY","ingredients":["1 ounce fresh lime juice","1/2 ounce SC Demerara Syrup (page 324)","1/4 ounce SC Cinnamon Syrup (page 327)","1 ounce blended aged rum","1 ounce blended lightly aged rum","2 dashes Herbstura (page 228)"],"ingredientIDs":[50,104,101,18,22,62]}
-        ];
-
-        // --- State ---
         let allRecipes = [];
         let favoriteRecipeIds = [];
         let categoriesState = {};
         let userInventory = []; // Holds an array of ingredient IDs the user has
-        let filterByInventory = false; // Tracks the state of the "Makeable" toggle
-        let showAlmostMakeable = false; // Show recipes missing ≤2 ingredients
-        let deferredInstallPrompt = null; // To hold the install event
-        let newWorker; // To hold the new service worker
+        let filterByInventory = false;
+        let showAlmostMakeable = false;
+        let recipeSearchQuery = '';
+        let recipeSortOrder = 'alpha';
+        let recipeNotes = {};      // { recipeId: { rating, notes } }
+        let drinkHistory = [];     // [{ recipeId, date }]
+        let customIngredients = {}; // { name: id }
+        let shoppingListManual = []; // [string]
+        let currentTheme = 'light';
+        let deferredInstallPrompt = null;
+        let newWorker;
 
-        // --- DOM Elements ---
+        // === DOM ELEMENTS ===
         const recipeCategoriesListEl = document.getElementById('recipe-categories-list');
         const addRecipeForm = document.getElementById('add-recipe-form');
         const backupBtn = document.getElementById('backup-btn');
@@ -447,33 +476,45 @@
             recipes: document.getElementById('recipes-section'),
             inventory: document.getElementById('inventory-section'),
             addRecipe: document.getElementById('add-recipe-section'),
+            shopping: document.getElementById('shopping-section'),
             settings: document.getElementById('settings-section')
         };
         const navButtons = {
             recipes: document.getElementById('nav-recipes'),
             inventory: document.getElementById('nav-inventory'),
             addRecipe: document.getElementById('nav-add-recipe'),
+            shopping: document.getElementById('nav-shopping'),
             settings: document.getElementById('nav-settings')
         };
 
-        // --- Core Functions ---
+        // === DATA LOADING & PERSISTENCE ===
 
-        function loadData() {
+        async function loadData() {
+            // --- Fetch static data from recipes.json (served/cached by SW) ---
             try {
-                // V2 Storage Keys for migration
+                const resp = await fetch('./recipes.json');
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const staticData = await resp.json();
+                Object.assign(ingredientMap, staticData.ingredientMap || {});
+                initialRecipesData = staticData.recipes || [];
+            } catch (fetchErr) {
+                console.warn('[App] Could not fetch recipes.json:', fetchErr.message,
+                    '— will rely on localStorage.');
+            }
+
+            // --- Load / migrate persisted data ---
+            try {
                 const V2_RECIPES_KEY = 'tikiRecipes_v2';
                 const V2_FAVORITES_KEY = 'tikiFavorites_v2';
 
                 const storedV3Recipes = localStorage.getItem(RECIPES_STORAGE_KEY);
                 const storedV2Recipes = localStorage.getItem(V2_RECIPES_KEY);
 
-                // Migration logic for v2 users
-                if(storedV2Recipes && !storedV3Recipes) {
-                    console.log("Found V2 data, migrating to V3...");
+                if (storedV2Recipes && !storedV3Recipes) {
+                    console.log('[App] Found V2 data, migrating to V3...');
                     allRecipes = JSON.parse(storedV2Recipes);
                     favoriteRecipeIds = JSON.parse(localStorage.getItem(V2_FAVORITES_KEY) || '[]');
-                    
-                    // Stamp old recipes with new IDs
+
                     allRecipes.forEach(recipe => {
                         if (!recipe.ingredientIDs) {
                             recipe.ingredientIDs = (recipe.ingredients || []).map(ing => {
@@ -484,23 +525,14 @@
                         }
                     });
 
-                    // Save migrated data to new V3 keys
-                    saveRecipes();
-                    saveFavorites();
-                    // We don't migrate inventory or category state from v2 as they didn't exist
-                    userInventory = [];
-                    saveInventory();
-                    categoriesState = {};
-                    saveCategoryStates();
-
-                    // Clean up old V2 data
+                    saveRecipes(); saveFavorites();
+                    userInventory = []; saveInventory();
+                    categoriesState = {}; saveCategoryStates();
                     localStorage.removeItem(V2_RECIPES_KEY);
                     localStorage.removeItem(V2_FAVORITES_KEY);
-                    localStorage.removeItem('tikiCategoryState_v2'); // old category key
-
+                    localStorage.removeItem('tikiCategoryState_v2');
                     alert("Welcome to the new version! Your recipes and favorites have been upgraded.");
                 } else {
-                    // Standard V3 data loading
                     allRecipes = storedV3Recipes ? JSON.parse(storedV3Recipes) : [...initialRecipesData];
                     const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
                     favoriteRecipeIds = storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -508,9 +540,16 @@
 
                 const storedCategoryStates = localStorage.getItem(CATEGORY_STATE_STORAGE_KEY);
                 categoriesState = storedCategoryStates ? JSON.parse(storedCategoryStates) : {};
-                
+
                 const storedInventory = localStorage.getItem(USER_INVENTORY_KEY);
                 userInventory = storedInventory ? JSON.parse(storedInventory) : [];
+
+                recipeNotes = JSON.parse(localStorage.getItem(NOTES_KEY) || '{}');
+                drinkHistory = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+                customIngredients = JSON.parse(localStorage.getItem(CUSTOM_INGREDIENTS_KEY) || '{}');
+                shoppingListManual = JSON.parse(localStorage.getItem(SHOPPING_LIST_KEY) || '[]');
+                // Merge custom ingredients into the live map
+                Object.assign(ingredientMap, customIngredients);
 
                 if (!localStorage.getItem(RECIPES_STORAGE_KEY)) saveRecipes();
                 if (!localStorage.getItem(FAVORITES_STORAGE_KEY)) saveFavorites();
@@ -518,7 +557,7 @@
                 if (!storedInventory) saveInventory();
 
             } catch (e) {
-                console.error("Failed to load data from localStorage:", e);
+                console.error('[App] Failed to load data:', e);
                 allRecipes = [...initialRecipesData];
                 favoriteRecipeIds = [];
                 categoriesState = {};
@@ -530,26 +569,91 @@
         function saveFavorites() { localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteRecipeIds)); }
         function saveCategoryStates() { localStorage.setItem(CATEGORY_STATE_STORAGE_KEY, JSON.stringify(categoriesState)); }
         function saveInventory() { localStorage.setItem(USER_INVENTORY_KEY, JSON.stringify(userInventory)); }
-        
-        function updateRecipeView() {
-            let recipesToShow = allRecipes;
+        function saveNotes() { localStorage.setItem(NOTES_KEY, JSON.stringify(recipeNotes)); }
+        function saveHistory() { localStorage.setItem(HISTORY_KEY, JSON.stringify(drinkHistory)); }
+        function saveCustomIngredients() { localStorage.setItem(CUSTOM_INGREDIENTS_KEY, JSON.stringify(customIngredients)); }
+        function saveShoppingList() { localStorage.setItem(SHOPPING_LIST_KEY, JSON.stringify(shoppingListManual)); }
+
+        // === THEME ===
+        function applyTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
+            const btn = document.getElementById('theme-toggle-btn');
+            if (btn) {
+                btn.innerHTML = theme === 'dark'
+                    ? '<span class="lucide icon-sun"></span> Light Mode'
+                    : '<span class="lucide icon-moon"></span> Dark Mode';
+            }
+        }
+
+        // === RECIPE SHARING ===
+        function shareRecipe(recipe) {
+            const text = [
+                `🍹 ${recipe.name}`,
+                recipe.origin ? `Origin: ${recipe.origin}` : '',
+                `Glassware: ${recipe.glassware || 'N/A'}`,
+                '',
+                'Ingredients:',
+                ...(recipe.ingredients || []).map(i => `  • ${i}`),
+                '',
+                'Instructions:',
+                recipe.instructions || 'No instructions provided.',
+                recipe.garnish ? `\nGarnish: ${recipe.garnish}` : '',
+            ].filter(l => l !== undefined).join('\n').trim();
+
+            if (navigator.share) {
+                navigator.share({ title: recipe.name, text }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    const btn = document.querySelector(`[data-id="${recipe.id}"] .share-btn`);
+                    if (!btn) return;
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '<span class="lucide icon-clipboard"></span> Copied!';
+                    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+                });
+            }
+        }
+
+        // === FILTERING & SORTING ===
+        function getFilteredRecipes() {
+            let list = [...allRecipes];
             if (filterByInventory) {
                 const inventorySet = new Set(userInventory);
                 if (inventorySet.size > 0) {
-                    recipesToShow = allRecipes.filter(recipe => {
+                    list = list.filter(recipe => {
                         if (!recipe.ingredientIDs || recipe.ingredientIDs.length === 0) return false;
-                        const missingCount = recipe.ingredientIDs.filter(id => !inventorySet.has(id)).length;
-                        if (missingCount === 0) return true;
-                        if (showAlmostMakeable && missingCount <= 2) return true;
-                        return false;
+                        const missing = recipe.ingredientIDs.filter(id => !inventorySet.has(id)).length;
+                        return missing === 0 || (showAlmostMakeable && missing <= 2);
                     });
                 } else {
-                    recipesToShow = [];
+                    list = [];
                 }
+            }
+            if (recipeSearchQuery) {
+                const q = recipeSearchQuery.toLowerCase();
+                list = list.filter(r =>
+                    r.name?.toLowerCase().includes(q) ||
+                    r.category?.toLowerCase().includes(q) ||
+                    r.ingredients?.some(ing => ing.toLowerCase().includes(q))
+                );
+            }
+            return list;
+        }
+
+        function updateRecipeView() {
+            let recipesToShow = getFilteredRecipes();
+            if (recipeSortOrder === 'rating') {
+                recipesToShow = [...recipesToShow].sort((a, b) => {
+                    const rA = recipeNotes[a.id]?.rating || 0;
+                    const rB = recipeNotes[b.id]?.rating || 0;
+                    return rB - rA || a.name.localeCompare(b.name);
+                });
             }
             renderRecipeList(recipesToShow);
         }
         
+        // === RENDERING ===
         function getAllCategories(recipeSource) {
             const categories = new Set();
             if (favoriteRecipeIds.length > 0) categories.add(FAVORITES_CATEGORY_KEY);
@@ -566,6 +670,8 @@
         
         function renderRecipeList(recipesToDisplay) {
             recipeCategoriesListEl.innerHTML = '';
+            const statusEl = document.getElementById('recipe-results-status');
+            if (statusEl) statusEl.textContent = `Showing ${recipesToDisplay.length} recipe${recipesToDisplay.length !== 1 ? 's' : ''}`;
             const categories = getAllCategories(recipesToDisplay);
 
             if (recipesToDisplay.length === 0) {
@@ -653,79 +759,136 @@
             const isFavorited = favoriteRecipeIds.includes(recipe.id);
             const inventorySet = new Set(userInventory);
 
-            // Build colored ingredient list
+            // Ingredient coloring & badge
             const ingredients = recipe.ingredients || [];
             const totalCount = ingredients.length;
-            // Always derive per-ingredient IDs from text for display (ingredientIDs may not be parallel)
             const ingIds = ingredients.map(ing => getIngredientId(ing));
             const haveCount = userInventory.length > 0
-                ? ingIds.filter(id => id !== null && inventorySet.has(id)).length
-                : null;
-
+                ? ingIds.filter(id => id !== null && inventorySet.has(id)).length : null;
             const ingredientsList = ingredients.map((ing, i) => {
                 const id = ingIds[i];
                 let cls = '';
-                if (userInventory.length > 0 && id !== null) {
+                if (userInventory.length > 0 && id !== null)
                     cls = inventorySet.has(id) ? 'ing-available' : 'ing-missing';
-                }
                 return `<li class="${cls}">${ing}</li>`;
             }).join('');
-
-            // Badge: show ingredient count if inventory is set
             let badgeHTML = '';
             if (haveCount !== null && totalCount > 0) {
-                const missingCount = totalCount - haveCount;
-                if (missingCount === 0) {
+                const missing = totalCount - haveCount;
+                if (missing === 0)
                     badgeHTML = `<span class="ing-count-badge bg-green-100 text-green-700">${totalCount}/${totalCount}</span>`;
-                } else if (filterByInventory && missingCount <= 2) {
-                    badgeHTML = `<span class="almost-badge">Missing ${missingCount}</span>`;
-                } else {
+                else if (filterByInventory && missing <= 2)
+                    badgeHTML = `<span class="almost-badge">Missing ${missing}</span>`;
+                else
                     badgeHTML = `<span class="ing-count-badge">${haveCount}/${totalCount}</span>`;
-                }
             }
+
+            // Rating (header compact display)
+            const currentRating = recipeNotes[recipe.id]?.rating || 0;
+            const ratingHeaderHTML = currentRating > 0
+                ? `<span class="header-rating text-xs text-amber-500 flex-shrink-0 ml-1">${'★'.repeat(currentRating)}</span>`
+                : `<span class="header-rating text-xs text-amber-500 flex-shrink-0 ml-1"></span>`;
+
+            // Last made
+            const lastMadeDate = getLastMadeDate(recipe.id);
+            const lastMadeHTML = lastMadeDate ? `<span class="last-made-label">made ${lastMadeDate}</span>` : '';
+
+            // Favorite star
+            const starHTML = isFavorited
+                ? `<span class="emoji-favorite" style="color:orange;filter:saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
+                : `<span class="lucide icon-star"></span>`;
 
             const originText = recipe.origin ? `<div><span class="detail-label">Origin:</span> ${recipe.origin}</div>` : '';
             const glasswareText = `<div><span class="detail-label">Glassware:</span> ${recipe.glassware || 'N/A'}</div>`;
             const garnishText = recipe.garnish ? `<div><span class="detail-label">Garnish:</span> ${recipe.garnish}</div>` : '';
             const instructionsText = recipe.instructions ? recipe.instructions.replace(/\n/g, '<br>') : 'No instructions provided.';
-            const starHTML = isFavorited
-                ? `<span class="emoji-favorite" style="color: orange; filter: saturate(1.5) drop-shadow(0 0 2px gold);">🍹</span>`
-                : `<span class="lucide icon-star"></span>`;
+            const starsHTML = n => `<span class="s${currentRating >= n ? ' on' : ''}" data-star="${n}">★</span>`;
 
             card.innerHTML = `
                 <div class="recipe-header">
                     <span class="recipe-name">${recipe.name || 'Unnamed Recipe'}</span>
-                    ${badgeHTML}
-                    <span class="star-icon-placeholder" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">${starHTML}</span>
+                    ${badgeHTML}${ratingHeaderHTML}${lastMadeHTML}
+                    <span class="star-icon-placeholder" role="button" tabindex="0" aria-pressed="${isFavorited ? 'true' : 'false'}" title="${isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}">${starHTML}</span>
                 </div>
-                <div class="recipe-details">
-                    ${originText}
-                    ${glasswareText}
+                <div class="recipe-details" aria-expanded="false">
+                    ${originText}${glasswareText}
                     <div><span class="detail-label">Ingredients:</span><ul class="list-disc list-inside ml-4">${ingredientsList}</ul></div>
                     <div><span class="detail-label">Instructions:</span> ${instructionsText}</div>
                     ${garnishText}
-                    <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn mt-2"><span class="lucide icon-trash"></span> Delete Recipe</button>
+                    <div class="flex items-center flex-wrap gap-3 mt-3 pt-2 border-t border-orange-100">
+                        <div class="flex items-center gap-1">
+                            <span class="text-xs font-medium text-gray-600">Rate:</span>
+                            <div class="star-r interactive-stars" role="radiogroup" aria-label="Rate this recipe">${[1,2,3,4,5].map(starsHTML).join('')}</div>
+                        </div>
+                        <button class="made-it-btn">🍸 Made It!</button>
+                        <button class="share-btn"><span class="lucide icon-share"></span> Share</button>
+                        <button class="text-red-600 hover:text-red-800 text-xs delete-recipe-btn ml-auto"><span class="lucide icon-trash"></span> Delete</button>
+                    </div>
+                    <div class="mt-2">
+                        <label class="text-xs font-medium text-gray-600 block mb-1">Tasting Notes:</label>
+                        <textarea class="notes-textarea w-full text-sm border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-teal-400 resize-none" rows="2" placeholder="How did it taste? What would you change?">${recipeNotes[recipe.id]?.notes || ''}</textarea>
+                    </div>
                 </div>`;
 
             const header = card.querySelector('.recipe-header');
             header.addEventListener('click', (e) => {
                 if (!e.target.closest('.star-icon-placeholder') && !e.target.closest('.delete-recipe-btn')) {
-                    header.nextElementSibling.classList.toggle('open');
+                    const details = header.nextElementSibling;
+                    const isOpen = details.classList.toggle('open');
+                    details.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                 }
             });
             card.querySelector('.star-icon-placeholder').addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleFavorite(recipe.id);
+                e.stopPropagation(); toggleFavorite(recipe.id);
+            });
+            card.querySelector('.star-icon-placeholder').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); toggleFavorite(recipe.id); }
             });
             card.querySelector('.delete-recipe-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (confirm(`Are you sure you want to delete "${recipe.name}"?`)) {
-                    deleteRecipe(recipe.id);
-                }
+                if (confirm(`Delete "${recipe.name}"?`)) deleteRecipe(recipe.id);
             });
+
+            // Interactive star rating
+            card.querySelector('.interactive-stars').addEventListener('click', (e) => {
+                const star = e.target.closest('.s');
+                if (!star) return;
+                const n = parseInt(star.dataset.star);
+                const prev = recipeNotes[recipe.id]?.rating || 0;
+                const newRating = prev === n ? 0 : n; // click same star to clear
+                recipeNotes[recipe.id] = { ...recipeNotes[recipe.id], rating: newRating };
+                saveNotes();
+                card.querySelectorAll('.interactive-stars .s').forEach((s, i) => s.classList.toggle('on', i < newRating));
+                card.querySelector('.header-rating').textContent = newRating > 0 ? '★'.repeat(newRating) : '';
+                if (recipeSortOrder === 'rating') updateRecipeView();
+            });
+
+            // Made It
+            card.querySelector('.made-it-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                logDrink(recipe.id);
+                const btn = e.currentTarget;
+                btn.textContent = '✓ Logged!';
+                btn.disabled = true;
+                setTimeout(() => { btn.innerHTML = '🍸 Made It!'; btn.disabled = false; }, 2000);
+            });
+
+            // Share
+            card.querySelector('.share-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                shareRecipe(recipe);
+            });
+
+            // Notes autosave on blur
+            card.querySelector('.notes-textarea').addEventListener('blur', (e) => {
+                recipeNotes[recipe.id] = { ...recipeNotes[recipe.id], notes: e.target.value };
+                saveNotes();
+            });
+
             return card;
         }
         
+        // === RECIPE ACTIONS ===
         function toggleFavorite(recipeId) {
             const index = favoriteRecipeIds.indexOf(recipeId);
             if (index > -1) {
@@ -744,7 +907,151 @@
             saveFavorites();
             updateRecipeView();
         }
+
+        // === DRINK HISTORY ===
+        function logDrink(recipeId) {
+            drinkHistory.unshift({ recipeId, date: new Date().toISOString() });
+            if (drinkHistory.length > 500) drinkHistory = drinkHistory.slice(0, 500);
+            saveHistory();
+        }
+
+        function getLastMadeDate(recipeId) {
+            const entry = drinkHistory.find(h => h.recipeId === recipeId);
+            if (!entry) return null;
+            return new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        // === SURPRISE ME ===
+        function handleSurpriseMe() {
+            const btn = document.getElementById('surprise-btn');
+            btn.classList.add('shaking');
+            setTimeout(() => btn.classList.remove('shaking'), 400);
+            const pool = getFilteredRecipes();
+            if (pool.length === 0) return;
+            const recipe = pool[Math.floor(Math.random() * pool.length)];
+            // Ensure the recipe's category is expanded
+            if (categoriesState[recipe.category] === false) {
+                categoriesState[recipe.category] = true;
+                saveCategoryStates();
+                updateRecipeView();
+            }
+            setTimeout(() => {
+                const card = document.querySelector(`[data-id="${recipe.id}"]`);
+                if (!card) return;
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const details = card.querySelector('.recipe-details');
+                if (details && !details.classList.contains('open')) details.classList.add('open');
+            }, 150);
+        }
+
+        // === SHOPPING LIST ===
+        function renderShoppingList() {
+            const container = document.querySelector('#shopping-section .shopping-section-container');
+            if (!container) return;
+            const inventorySet = new Set(userInventory);
+            const idToName = Object.fromEntries(Object.entries(ingredientMap).map(([n, id]) => [id, n]));
+            const missing = new Map();
+            favoriteRecipeIds.forEach(rid => {
+                const r = allRecipes.find(x => x.id === rid);
+                if (!r?.ingredientIDs) return;
+                r.ingredientIDs.forEach(id => { if (!inventorySet.has(id) && idToName[id]) missing.set(id, idToName[id]); });
+            });
+            const sortedMissing = [...missing.entries()].sort((a, b) => a[1].localeCompare(b[1]));
+
+            let favHTML;
+            if (favoriteRecipeIds.length === 0)
+                favHTML = '<p class="text-gray-400 text-sm italic">No favorites yet. ⭐ Star some recipes to see what you need!</p>';
+            else if (sortedMissing.length === 0)
+                favHTML = '<p class="text-green-600 text-sm font-medium">🎉 You have everything for your favorited recipes!</p>';
+            else
+                favHTML = sortedMissing.map(([id, name]) =>
+                    `<label class="shopping-list-item cursor-pointer">
+                        <input type="checkbox" class="shopping-fav-check h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500" data-id="${id}">
+                        <span class="text-sm capitalize flex-grow">${name}</span>
+                    </label>`).join('');
+
+            const manualHTML = shoppingListManual.length === 0
+                ? '<p class="text-gray-400 text-sm italic">No manual items added.</p>'
+                : shoppingListManual.map((item, i) =>
+                    `<div class="shopping-list-item">
+                        <input type="checkbox" class="shopping-manual-check h-4 w-4 rounded border-gray-300 text-teal-600" data-index="${i}">
+                        <span class="text-sm flex-grow">${item}</span>
+                        <button class="shopping-remove text-red-400 hover:text-red-600 text-xs font-bold" data-index="${i}">✕</button>
+                    </div>`).join('');
+
+            container.innerHTML = `
+                <div class="mb-4">
+                    <h3 class="settings-title">Missing from ⭐ Favorites (${sortedMissing.length})</h3>
+                    <p class="text-sm text-gray-500 mb-3">Check items to add them to My Bar.</p>
+                    <div id="shopping-fav-list">${favHTML}</div>
+                </div>
+                <div class="border-t border-gray-200 pt-4 mt-2">
+                    <h3 class="settings-title">Add Item Manually</h3>
+                    <div class="flex gap-2 mb-3">
+                        <input type="text" id="shopping-manual-input" placeholder="e.g., Angostura bitters" class="flex-grow text-sm rounded-md border-gray-300">
+                        <button id="shopping-add-btn" class="btn text-sm py-1.5 px-3 flex-shrink-0">Add</button>
+                    </div>
+                    <div id="shopping-manual-list">${manualHTML}</div>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-200">
+                    <button id="shopping-copy-btn" class="btn bg-gray-600 hover:bg-gray-700 text-sm py-1.5 px-3">📋 Copy All</button>
+                    <button id="shopping-clear-btn" class="btn bg-red-600 hover:bg-red-700 text-sm py-1.5 px-3">🗑 Clear Manual</button>
+                </div>`;
+
+            // Wire up events inside shopping list
+            container.querySelector('#shopping-fav-list').addEventListener('change', (e) => {
+                const cb = e.target.closest('.shopping-fav-check');
+                if (!cb) return;
+                const id = parseInt(cb.dataset.id);
+                if (cb.checked && !userInventory.includes(id)) {
+                    userInventory.push(id);
+                    saveInventory();
+                    renderShoppingList();
+                    if (filterByInventory) updateRecipeView();
+                }
+            });
+            container.querySelector('#shopping-manual-list').addEventListener('change', (e) => {
+                const cb = e.target.closest('.shopping-manual-check');
+                if (!cb || !cb.checked) return;
+                const idx = parseInt(cb.dataset.index);
+                shoppingListManual.splice(idx, 1);
+                saveShoppingList();
+                renderShoppingList();
+            });
+            container.querySelector('#shopping-manual-list').addEventListener('click', (e) => {
+                const btn = e.target.closest('.shopping-remove');
+                if (!btn) return;
+                shoppingListManual.splice(parseInt(btn.dataset.index), 1);
+                saveShoppingList();
+                renderShoppingList();
+            });
+            container.querySelector('#shopping-add-btn').addEventListener('click', () => {
+                const input = container.querySelector('#shopping-manual-input');
+                const val = input.value.trim();
+                if (!val) return;
+                shoppingListManual.push(val);
+                saveShoppingList();
+                input.value = '';
+                renderShoppingList();
+            });
+            container.querySelector('#shopping-manual-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); container.querySelector('#shopping-add-btn').click(); }
+            });
+            container.querySelector('#shopping-copy-btn').addEventListener('click', () => {
+                const lines = [...sortedMissing.map(([,n]) => `- ${n}`), ...shoppingListManual.map(i => `- ${i}`)];
+                navigator.clipboard.writeText(lines.join('\n')).then(() => {
+                    const btn = container.querySelector('#shopping-copy-btn');
+                    btn.textContent = '✓ Copied!';
+                    setTimeout(() => { btn.innerHTML = '📋 Copy All'; }, 2000);
+                });
+            });
+            container.querySelector('#shopping-clear-btn').addEventListener('click', () => {
+                if (!shoppingListManual.length) return;
+                if (confirm('Clear all manually added items?')) { shoppingListManual = []; saveShoppingList(); renderShoppingList(); }
+            });
+        }
         
+        // === INVENTORY ===
         function renderInventoryList() {
             const sortedIngredients = Object.entries(ingredientMap).sort((a, b) => a[0].localeCompare(b[0]));
             const inventorySet = new Set(userInventory);
@@ -781,18 +1088,90 @@
             }
         }
 
+        // === ADD RECIPE ===
         function handleAddRecipe(event) {
             event.preventDefault();
-            alert("Adding new recipes is temporarily disabled. This feature requires an update to automatically assign ingredient IDs. For now, please manage recipes via the backup/restore feature.");
+            const form = event.target;
+            const name = form.querySelector('#recipe-name').value.trim();
+            const category = form.querySelector('#recipe-category').value.trim() || USER_RECIPE_CATEGORY;
+            const origin = form.querySelector('#recipe-origin').value.trim();
+            const glassware = form.querySelector('#recipe-glassware').value.trim();
+            const ingredientsRaw = form.querySelector('#recipe-ingredients').value.trim()
+                .split('\n').map(l => l.trim()).filter(Boolean);
+            const instructions = form.querySelector('#recipe-instructions').value.trim();
+            const garnish = form.querySelector('#recipe-garnish').value.trim();
+
+            // Auto-match ingredients
+            const allKnown = { ...ingredientMap };
+            let nextId = Math.max(200, ...Object.values(allKnown)) + 1;
+            const matchResults = ingredientsRaw.map(ing => {
+                const normalized = normalizeIngredientKey(ing);
+                const key = Object.keys(allKnown).find(k => normalized.includes(k));
+                if (key) return { text: ing, matched: true, key, id: allKnown[key] };
+                // New ingredient — assign an ID
+                const newKey = normalized.replace(/\s+/g, ' ').trim() || ing.trim().toLowerCase();
+                const id = nextId++;
+                allKnown[newKey] = id; // prevent duplicate IDs within this batch
+                return { text: ing, matched: false, key: newKey, id };
+            });
+
+            const matched = matchResults.filter(r => r.matched);
+            const unmatched = matchResults.filter(r => !r.matched);
+
+            // Show confirmation panel
+            const confirmDiv = document.getElementById('add-recipe-confirm');
+            confirmDiv.innerHTML = `
+                <div class="confirm-panel">
+                    <h3 class="font-semibold text-gray-700 mb-2">Ingredient Matching Review</h3>
+                    ${matched.length ? `<p class="text-sm text-green-700 font-medium mb-1">✓ Matched (${matched.length}):</p>
+                        <ul class="text-sm text-green-600 ml-4 mb-2 list-disc">${matched.map(r => `<li>${r.text}</li>`).join('')}</ul>` : ''}
+                    ${unmatched.length ? `<p class="text-sm text-yellow-700 font-medium mb-1">⚠ New ingredients — will be saved to your ingredient list (${unmatched.length}):</p>
+                        <ul class="text-sm text-yellow-600 ml-4 mb-2 list-disc">${unmatched.map(r => `<li>${r.text} → <em>${r.key}</em></li>`).join('')}</ul>` : ''}
+                    <div class="flex gap-3 mt-3">
+                        <button id="confirm-save-btn" class="btn text-sm py-1.5">✓ Save Recipe</button>
+                        <button id="cancel-confirm-btn" class="btn bg-gray-500 hover:bg-gray-600 text-sm py-1.5">← Back to Edit</button>
+                    </div>
+                </div>`;
+            confirmDiv.classList.remove('hidden');
+            confirmDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            document.getElementById('confirm-save-btn').addEventListener('click', () => {
+                // Persist new custom ingredients
+                unmatched.forEach(r => { customIngredients[r.key] = r.id; ingredientMap[r.key] = r.id; });
+                if (unmatched.length) saveCustomIngredients();
+
+                allRecipes.push({
+                    id: `user_${Date.now()}`,
+                    name, category, origin, glassware,
+                    ingredients: ingredientsRaw,
+                    ingredientIDs: matchResults.map(r => r.id),
+                    instructions, garnish
+                });
+                saveRecipes();
+                updateRecipeView();
+                form.reset();
+                confirmDiv.classList.add('hidden');
+                confirmDiv.innerHTML = '';
+                showSection('recipes');
+            });
+            document.getElementById('cancel-confirm-btn').addEventListener('click', () => {
+                confirmDiv.classList.add('hidden');
+                confirmDiv.innerHTML = '';
+            });
         }
         
+        // === BACKUP & RESTORE ===
         function handleBackup() {
-            const backupData = { 
-                version: "tiki-app-v3.0.0", 
-                recipes: allRecipes, 
-                favorites: favoriteRecipeIds, 
-                categoryStates: categoriesState, 
-                inventory: userInventory 
+            const backupData = {
+                version: "tiki-app-v3.1.0",
+                recipes: allRecipes,
+                favorites: favoriteRecipeIds,
+                categoryStates: categoriesState,
+                inventory: userInventory,
+                notes: recipeNotes,
+                history: drinkHistory,
+                customIngredients,
+                shoppingList: shoppingListManual
             };
             const jsonString = JSON.stringify(backupData, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json' });
@@ -827,7 +1206,12 @@
                     allRecipes = data.recipes || [];
                     favoriteRecipeIds = data.favorites || [];
                     categoriesState = data.categoryStates || {};
-                    userInventory = data.inventory || []; 
+                    userInventory = data.inventory || [];
+                    recipeNotes = data.notes || {};
+                    drinkHistory = data.history || [];
+                    customIngredients = data.customIngredients || {};
+                    shoppingListManual = data.shoppingList || [];
+                    Object.assign(ingredientMap, customIngredients);
                     
                     let stampedCount = 0;
                     allRecipes.forEach(recipe => {
@@ -845,10 +1229,8 @@
                         alert(`Restored an older backup and attempted to upgrade ${stampedCount} recipes for inventory filtering. Accuracy may vary.`);
                     }
                     
-                    saveRecipes(); 
-                    saveFavorites(); 
-                    saveCategoryStates(); 
-                    saveInventory();
+                    saveRecipes(); saveFavorites(); saveCategoryStates(); saveInventory();
+                    saveNotes(); saveHistory(); saveCustomIngredients(); saveShoppingList();
                     
                     renderInventoryList();
                     updateRecipeView();
@@ -863,6 +1245,7 @@
             reader.readAsText(file);
         }
 
+        // === NAVIGATION ===
         function showSection(sectionIdToShow) {
             Object.keys(sections).forEach(key => {
                 if (key !== sectionIdToShow) sections[key]?.classList.add('hidden');
@@ -877,16 +1260,16 @@
             window.scrollTo(0, 0);
         }
 
+        // === EVENT LISTENERS ===
         function setupEventListeners() {
-            Object.keys(navButtons).forEach(key => navButtons[key]?.addEventListener('click', () => showSection(key)));
-            
-            const originalAddRecipeForm = document.querySelector('#add-recipe-section form');
-            const originalBackupBtn = document.querySelector('#settings-section #backup-btn');
-            const originalRestoreInput = document.querySelector('#settings-section #restore-input');
-            
-            originalAddRecipeForm?.addEventListener('submit', handleAddRecipe);
-            originalBackupBtn?.addEventListener('click', handleBackup);
-            originalRestoreInput?.addEventListener('change', handleRestore);
+            Object.keys(navButtons).forEach(key => navButtons[key]?.addEventListener('click', () => {
+                showSection(key);
+                if (key === 'shopping') renderShoppingList();
+            }));
+
+            document.querySelector('#add-recipe-section form')?.addEventListener('submit', handleAddRecipe);
+            document.querySelector('#settings-section #backup-btn')?.addEventListener('click', handleBackup);
+            document.querySelector('#settings-section #restore-input')?.addEventListener('change', handleRestore);
 
             makeableToggle?.addEventListener('change', (e) => {
                 filterByInventory = e.target.checked;
@@ -894,15 +1277,26 @@
                 if (!filterByInventory) { showAlmostMakeable = false; if (almostToggle) almostToggle.checked = false; }
                 updateRecipeView();
             });
-            almostToggle?.addEventListener('change', (e) => {
-                showAlmostMakeable = e.target.checked;
+            almostToggle?.addEventListener('change', (e) => { showAlmostMakeable = e.target.checked; updateRecipeView(); });
+
+            document.getElementById('recipe-search')?.addEventListener('input', (e) => {
+                recipeSearchQuery = e.target.value.trim();
                 updateRecipeView();
             });
+            document.getElementById('sort-select')?.addEventListener('change', (e) => {
+                recipeSortOrder = e.target.value;
+                updateRecipeView();
+            });
+            document.getElementById('surprise-btn')?.addEventListener('click', handleSurpriseMe);
+            document.getElementById('theme-toggle-btn')?.addEventListener('click', () => {
+                applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
             inventoryListEl?.addEventListener('change', handleInventoryChange);
             inventorySearchEl?.addEventListener('input', handleInventorySearch);
         }
 
-        // --- PWA Install and Update Logic ---
+        // === PWA INSTALL & UPDATE ===
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredInstallPrompt = e;
@@ -921,24 +1315,32 @@
             newWorker.postMessage({ action: 'skipWaiting' });
         });
 
-        // --- Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
+        // === INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', async () => {
             const mainContent = document.querySelector('main');
             mainContent.querySelector('#add-recipe-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Add a New Tiki Recipe</h2>
                 <form id="add-recipe-form" class="space-y-4 bg-white/95 p-6 rounded-lg shadow">
-                    <div><label for="recipe-name">Recipe Name:</label><input type="text" id="recipe-name" required class="border"></div>
-                    <div><label for="recipe-category">Category:</label><input type="text" id="recipe-category" placeholder="e.g., Rum Classics, My Creations" class="border"><p class="text-xs text-gray-500 mt-1">Leave blank to add to 'User Added Recipes'.</p></div>
-                    <div><label for="recipe-origin">Origin (Optional):</label><input type="text" id="recipe-origin" class="border"></div>
-                    <div><label for="recipe-glassware">Glassware:</label><input type="text" id="recipe-glassware" required class="border"></div>
-                    <div><label for="recipe-ingredients">Ingredients (one per line, e.g., "2 oz Rum"):</label><textarea id="recipe-ingredients" rows="5" required class="border"></textarea></div>
-                    <div><label for="recipe-instructions">Instructions:</label><textarea id="recipe-instructions" rows="5" required class="border"></textarea></div>
-                    <div><label for="recipe-garnish">Garnish (Optional):</label><input type="text" id="recipe-garnish" class="border"></div>
-                    <button type="submit" class="btn"><span class="lucide icon-save"></span>Save Recipe</button>
-                </form>`;
+                    <div><label for="recipe-name">Recipe Name:</label><input type="text" id="recipe-name" required></div>
+                    <div><label for="recipe-category">Category:</label><input type="text" id="recipe-category" placeholder="e.g., Rum Classics, My Creations"><p class="text-xs text-gray-500 mt-1">Leave blank to add to 'User Added Recipes'.</p></div>
+                    <div><label for="recipe-origin">Origin (Optional):</label><input type="text" id="recipe-origin"></div>
+                    <div><label for="recipe-glassware">Glassware:</label><input type="text" id="recipe-glassware" required></div>
+                    <div><label for="recipe-ingredients">Ingredients (one per line, e.g., "2 oz blended aged rum"):</label><textarea id="recipe-ingredients" rows="6" required placeholder="1.5 oz blended aged rum&#10;0.75 oz fresh lime juice&#10;0.5 oz SC Orgeat"></textarea><p class="text-xs text-gray-500 mt-1">Ingredients will be auto-matched to the 136-item ingredient library for inventory filtering.</p></div>
+                    <div><label for="recipe-instructions">Instructions:</label><textarea id="recipe-instructions" rows="4" required></textarea></div>
+                    <div><label for="recipe-garnish">Garnish (Optional):</label><input type="text" id="recipe-garnish"></div>
+                    <button type="submit" class="btn"><span class="lucide icon-save"></span>Preview & Save</button>
+                </form>
+                <div id="add-recipe-confirm" class="hidden"></div>`;
             mainContent.querySelector('#settings-section').innerHTML = `
                 <h2 class="text-2xl font-semibold text-teal-800 mb-4">Settings</h2>
                 <div class="settings-section-container">
+                    <h3 class="settings-title">Appearance</h3>
+                    <div class="flex items-center gap-3 mb-4">
+                        <button id="theme-toggle-btn" class="btn bg-gray-700 hover:bg-gray-800 text-sm py-1.5 px-4"><span class="lucide icon-moon"></span> Dark Mode</button>
+                        <span class="text-sm text-gray-500">Toggle light/dark theme</span>
+                    </div>
+                </div>
+                <div class="settings-section-container mt-4">
                     <h3 class="settings-title">Backup & Restore</h3>
                     <p class="text-sm text-gray-600 mb-3">Save your added recipes and favorites to a file, or restore from a previous backup.</p>
                     <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
@@ -951,11 +1353,20 @@
                     <p id="restore-message" class="text-sm mt-3 text-gray-600"></p>
                 </div>`;
             
-            loadData();
+            // Initialize theme before rendering
+            const savedTheme = localStorage.getItem(THEME_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+            await loadData();
             renderInventoryList();
             updateRecipeView();
             setupEventListeners();
-            showSection('recipes');
+            // Handle PWA shortcut URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('section') === 'bar') showSection('inventory');
+            else if (urlParams.get('action') === 'surprise') { showSection('recipes'); handleSurpriseMe(); }
+            else showSection('recipes');
 
             if ('serviceWorker' in navigator) {
                 // FIX: Use an absolute path for the service worker registration
